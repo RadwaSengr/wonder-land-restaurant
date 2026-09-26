@@ -7,9 +7,10 @@
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
 [![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
 [![Responsive](https://img.shields.io/badge/Design-Fully%20Responsive-brightgreen?style=for-the-badge)](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Responsive_Design)
+[![Live Demo](https://img.shields.io/badge/Live-Demo%20Preview-FF5722?style=for-the-badge&logo=google-chrome&logoColor=white)](https://radwasengr.github.io/wonder-land-restaurant/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 
-[Explore Menu](#-menu-showcase) • [Key Features](#-key-features) • [Installation & Usage](#-getting-started) • [Contact](#-author--contact)
+[🌐 **Live Demo Website**](https://radwasengr.github.io/wonder-land-restaurant/) • [Key Features](#-key-features) • [Installation & Usage](#-getting-started) • [Contact](#-author--contact)
 
 </div>
 
