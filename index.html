@@ -5,32 +5,33 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="theme-color" content="#383848">
         
         <!-- Primary Meta Tags -->
-        <title>Wonder Land Restaurant | Best Culinary Experience</title>
-        <meta name="title" content="Wonder Land Restaurant | Best Culinary Experience">
-        <meta name="description" content="Welcome to Wonder Land Restaurant. Discover delicious food, special menus, and exceptional dining with over 20 years of experience.">
+        <title>Wonder Land Restaurant | Fine Dining & Culinary Art</title>
+        <meta name="title" content="Wonder Land Restaurant | Fine Dining & Culinary Art">
+        <meta name="description" content="Experience authentic gourmet dining at Wonder Land Restaurant. Discover artisanal pizzas, prime steaks, fresh seafood pastas, and signature desserts crafted with 20+ years of passion.">
 
         <!-- Open Graph / Facebook / WhatsApp -->
         <meta property="og:type" content="website">
-        <meta property="og:title" content="Wonder Land Restaurant">
-        <meta property="og:description" content="Experience the finest food in the world with over 20+ years of culinary tradition.">
+        <meta property="og:title" content="Wonder Land Restaurant | Fine Dining Experience">
+        <meta property="og:description" content="Experience the finest culinary traditions, signature chef specials, and exquisite dining with over 20+ years of heritage.">
         <meta property="og:image" content="./img/about_img.png">
 
         <!-- Twitter -->
         <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="Wonder Land Restaurant">
-        <meta name="twitter:description" content="Experience the finest food in the world with over 20+ years of culinary tradition.">
+        <meta name="twitter:title" content="Wonder Land Restaurant | Fine Dining Experience">
+        <meta name="twitter:description" content="Experience the finest culinary traditions, signature chef specials, and exquisite dining with over 20+ years of heritage.">
         <meta name="twitter:image" content="./img/about_img.png">
 
         <!-- Style Link -->
         <link rel="stylesheet" href="./style.css">
         
         <!-- Fontawesome -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         
         <!-- Favicon -->
-        <link rel="shortcut icon" type="image/x-icon" href="./img/favicon.svg">
+        <link rel="shortcut icon" type="image/svg+xml" href="./img/favicon.svg">
     </head>
 
     <body>
@@ -40,20 +41,28 @@
                 <a href="#home" class="logo">
                     <img src="./img/logo.png" alt="Wonder Land Restaurant Logo">
                 </a>
-                <nav role="navigation">
+                <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <nav role="navigation" id="navMenu">
                     <ul>
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#menu">Menu</a></li>
-                        <li><a href="#gallery">Gallery</a></li>
-                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#home" class="nav-link active">Home</a></li>
+                        <li><a href="#about" class="nav-link">About</a></li>
+                        <li><a href="#offers" class="nav-link">Offers</a></li>
+                        <li><a href="#menu" class="nav-link">Menu</a></li>
+                        <li><a href="#testimonials" class="nav-link">Reviews</a></li>
+                        <li><a href="#gallery" class="nav-link">Gallery</a></li>
+                        <li><a href="#contact" class="nav-link">Contact</a></li>
                     </ul>
                 </nav>
             </div>
             <div class="content">
-                <h1>Welcome To <span class="primary-text"> Wonder Land </span> Restaurant</h1>
-                <p>Here you can find the most delicate food in the world</p>
-                <a href="#contact" class="btn btn-primary">Book a Table</a>
+                <h1>Welcome To <span class="primary-text">Wonder Land</span> Restaurant</h1>
+                <p>Where passion meets flavor in every handcrafted, gourmet creation</p>
+                <div class="hero-actions">
+                    <button class="btn btn-primary open-reserve-modal">Book a Table</button>
+                    <a href="#menu" class="btn btn-third">Explore Menu</a>
+                </div>
             </div>
         </header>
         <!-- Header End -->
@@ -63,20 +72,18 @@
             <section id="about">
                 <div class="container">
                     <div class="title">
-                        <h2>The Wonder Land History</h2>
-                        <p>More than 20+ years of experience</p>
+                        <h2>The Wonder Land Story</h2>
+                        <p>More than 20+ years of authentic culinary passion</p>
                     </div>
                     <div class="about-content">
-                        <div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur, quibusdam saepe natus
-                                numquam dolorum aliquam ducimus molestias tenetur? Quaerat, atque blanditiis. Debitis
-                                voluptatem sequi quibusdam nihil eveniet obcaecati soluta rem.</p>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat nesciunt aspernatur earum
-                                sequi consequatur, quasi iste quod nam esse adipisci neque commodi voluptate deserunt architecto
-                                rerum. Blanditiis labore sed sapiente.</p>
-                            <a href="#menu" class="btn btn-secondary">LEARN MORE</a>
+                        <div class="about-text">
+                            <p>Founded on a devotion to exquisite gastronomy, Wonder Land Restaurant blends time-honored Mediterranean traditions with modern culinary flair. Every recipe is a celebration of fresh, locally harvested ingredients and artistic presentation.</p>
+                            <p>From slow-simmered sauces and hand-kneaded artisan dough to charcoal-grilled prime cuts, our kitchen is powered by seasoned chefs committed to perfection. We invite you to savor heartfelt flavors in a warm, welcoming ambiance.</p>
+                            <a href="#menu" class="btn btn-secondary">DISCOVER OUR STORY</a>
                         </div>
-                        <img src="./img/about_img.png" alt="Delicious Pizza at Wonder Land" loading="lazy">
+                        <div class="about-image-wrapper">
+                            <img src="./img/about_img.png" alt="Artisan stone-baked pizza at Wonder Land" loading="lazy">
+                        </div>
                     </div>
                 </div>
             </section>
@@ -86,32 +93,32 @@
             <section id="offers">
                 <div class="container">
                     <div class="title">
-                        <h2>Our Special Offers</h2>
-                        <p>Taste our chef's special discount dishes</p>
+                        <h2>Chef's Special Offers</h2>
+                        <p>Signature delicacies crafted with premium seasonal ingredients</p>
                     </div>
                     <div class="offers-items">
-                        <div>
+                        <div class="offer-card">
                             <img src="./img/offer1.png" alt="Alfredo Pasta with Sauce" loading="lazy">
-                            <div>
+                            <div class="offer-details">
                                 <h3>ALFREDO PASTA WITH SAUCE</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam, quibusdam.</p>
-                                <p><del>$ 40.00</del> <span class="primary-text">$20.00</span></p>
+                                <p>Silky fettuccine ribbons tossed in a rich, velvety Parmesan and garlic cream sauce with fresh herbs.</p>
+                                <p class="price"><del>$40.00</del> <span class="primary-text">$20.00</span></p>
                             </div>
                         </div>
-                        <div>
+                        <div class="offer-card">
                             <img src="./img/offer2.png" alt="Creamy Shrimp Pasta" loading="lazy">
-                            <div>
+                            <div class="offer-details">
                                 <h3>CREAMY SHRIMP PASTA</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam, quibusdam.</p>
-                                <p><del>$ 100.00</del> <span class="primary-text">$60.00</span></p>
+                                <p>Succulent wild prawns sautéed in white wine garlic butter, folded into a delicate cream sauce over linguine.</p>
+                                <p class="price"><del>$100.00</del> <span class="primary-text">$60.00</span></p>
                             </div>
                         </div>
-                        <div>
+                        <div class="offer-card">
                             <img src="./img/offer3.png" alt="Spaghetti Pasta with Bolognese Sauce" loading="lazy">
-                            <div>
-                                <h3>SPAGHETTI PASTA WITH BOLOGNESE SAUCE AND LEMONADE</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam, quibusdam.</p>
-                                <p><del>$ 50.00</del> <span class="primary-text">$35.00</span></p>
+                            <div class="offer-details">
+                                <h3>SPAGHETTI BOLOGNESE & LEMONADE</h3>
+                                <p>Slow-braised beef ragù simmered with San Marzano tomatoes and basil, paired with chilled mint lemonade.</p>
+                                <p class="price"><del>$50.00</del> <span class="primary-text">$35.00</span></p>
                             </div>
                         </div>
                     </div>
@@ -123,107 +130,121 @@
             <section id="menu">
                 <div class="container">
                     <div class="title">
-                        <h2>Our Special Menu</h2>
-                        <p>Order two and get third for free</p>
+                        <h2>Our Signature Menu</h2>
+                        <p>Handpicked specialties prepared fresh daily to elevate your palate</p>
                     </div>
-                    <div class="menu-items">
+
+                    <!-- Category Filter Tabs -->
+                    <div class="menu-tabs">
+                        <button class="menu-tab active" data-filter="all">All Dishes</button>
+                        <button class="menu-tab" data-filter="starters">Starters & Salads</button>
+                        <button class="menu-tab" data-filter="mains">Mains & Grills</button>
+                        <button class="menu-tab" data-filter="pizzas">Artisan Pizzas</button>
+                        <button class="menu-tab" data-filter="desserts">Desserts & Shakes</button>
+                    </div>
+
+                    <div class="menu-items" id="menuGrid">
+                        <!-- Left Column -->
                         <div class="menu-items-left">
-                            <div class="menu-item">
+                            <div class="menu-item" data-category="starters">
                                 <img src="./img/food1.png" alt="Chicken Caesar Salad" loading="lazy">
                                 <div>
                                     <h3>CHICKEN CAESAR SALAD <span class="primary-text">$18.00</span></h3>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo.</p>
+                                    <p>Crisp romaine hearts, herb-marinated chicken, artisanal garlic croutons, and aged parmesan shavings.</p>
                                 </div>
                             </div>
-                            <div class="menu-item">
+                            <div class="menu-item" data-category="starters">
                                 <img src="./img/food2.png" alt="Dynamite Shrimp" loading="lazy">
                                 <div>
                                     <h3>DYNAMITE SHRIMP <span class="primary-text">$24.00</span></h3>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo.</p>
+                                    <p>Golden tempura shrimp glazed in our house-crafted sweet chili sriracha sauce and fresh scallions.</p>
                                 </div>
                             </div>
-                            <div class="menu-item">
-                                <img src="./img/food3.png" alt="Milkshakes with fruits and chocolate" loading="lazy">
+                            <div class="menu-item" data-category="desserts">
+                                <img src="./img/food3.png" alt="Artisan Milkshakes" loading="lazy">
                                 <div>
-                                    <h3>MILKSHAKES WITH (FRUITS AND CHOCOLATE) <span class="primary-text">$12.00</span></h3>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo.</p>
+                                    <h3>ARTISAN CHOCOLATE & FRUIT SHAKE <span class="primary-text">$12.00</span></h3>
+                                    <p>Velvety chocolate gelato shake infused with wild berry coulis and whipped Madagascar vanilla cream.</p>
                                 </div>
                             </div>
-                            <div class="menu-item">
+                            <div class="menu-item" data-category="mains">
                                 <img src="./img/food4.png" alt="Capo Steak" loading="lazy">
                                 <div>
-                                    <h3>CAPO STEAK <span class="primary-text">$60.00</span></h3>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo.</p>
+                                    <h3>CHARCOAL CAPO STEAK <span class="primary-text">$60.00</span></h3>
+                                    <p>USDA Prime tenderloin seared to perfection, finished with rosemary truffle butter and roasted veggies.</p>
                                 </div>
                             </div>
-                            <div class="menu-item">
-                                <img src="./img/food5.png" alt="Donuts" loading="lazy">
+                            <div class="menu-item" data-category="desserts">
+                                <img src="./img/food5.png" alt="Gourmet Donuts" loading="lazy">
                                 <div>
-                                    <h3>DONUTS <span class="primary-text">$8.00</span></h3>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo.</p>
+                                    <h3>GLAZED ARTISAN DONUTS <span class="primary-text">$8.00</span></h3>
+                                    <p>Trio of light brioche donuts glazed with vanilla bean frosting, cinnamon crumb, and dark chocolate drizzle.</p>
                                 </div>
                             </div>
-                            <div class="menu-item">
-                                <img src="./img/food6.png" alt="Cheese Pizza" loading="lazy">
+                            <div class="menu-item" data-category="pizzas">
+                                <img src="./img/food6.png" alt="Classic Cheese Pizza" loading="lazy">
                                 <div>
-                                    <h3>CHEESE PIZZA <span class="primary-text">$18.00</span></h3>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo.</p>
+                                    <h3>TRADITIONAL MARGHERITA PIZZA <span class="primary-text">$18.00</span></h3>
+                                    <p>San Marzano tomato base, fresh fior di latte mozzarella, extra virgin olive oil, and sweet garden basil.</p>
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Right Column -->
                         <div class="menu-items-right">
-                            <div class="menu-item">
-                                <img src="./img/food7.jpeg" alt="Kofta Meat" loading="lazy">
+                            <div class="menu-item" data-category="mains">
+                                <img src="./img/food7.jpeg" alt="Spiced Kofta Meat" loading="lazy">
                                 <div>
-                                    <h3>KOFTA MEAT <span class="primary-text">$40.00</span></h3>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo.</p>
+                                    <h3>GRILLED SKEWERED KOFTA <span class="primary-text">$40.00</span></h3>
+                                    <p>Ground beef and lamb seasoned with aromatic spices, flame-grilled and served with sesame tahini dip.</p>
                                 </div>
                             </div>
-                            <div class="menu-item">
-                                <img src="./img/food8.jpeg" alt="Pancake" loading="lazy">
+                            <div class="menu-item" data-category="desserts">
+                                <img src="./img/food8.jpeg" alt="Fluffy Pancakes" loading="lazy">
                                 <div>
-                                    <h3>PANCAKE <span class="primary-text">$10.00</span></h3>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo.</p>
+                                    <h3>BUTTERMILK BERRY PANCAKES <span class="primary-text">$10.00</span></h3>
+                                    <p>Fluffy golden pancakes stacked with wild berries, churned butter, and 100% pure maple syrup.</p>
                                 </div>
                             </div>
-                            <div class="menu-item">
+                            <div class="menu-item" data-category="starters">
                                 <img src="./img/food9.jpeg" alt="Cheesy Garlic Flatbread" loading="lazy">
                                 <div>
-                                    <h3>CHEESY GARLIC FLATBREAD WITH HERBS <span class="primary-text">$6.00</span></h3>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo.</p>
+                                    <h3>HERBED CHEESY FLATBREAD <span class="primary-text">$6.00</span></h3>
+                                    <p>Stone-hearth flatbread brushed with garlic-infused butter, molten mozzarella, and fresh garden thyme.</p>
                                 </div>
                             </div>
-                            <div class="menu-item">
-                                <img src="./img/food10.jpeg" alt="Fruit Salad" loading="lazy">
+                            <div class="menu-item" data-category="desserts">
+                                <img src="./img/food10.jpeg" alt="Fresh Fruit Salad" loading="lazy">
                                 <div>
-                                    <h3>FRUIT SALAD <span class="primary-text">$14.00</span></h3>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo.</p>
+                                    <h3>SEASONAL TROPICAL FRUIT BOWL <span class="primary-text">$14.00</span></h3>
+                                    <p>Vibrant assortment of seasonal melons, kiwi, and berries drizzled with citrus blossom honey glaze.</p>
                                 </div>
                             </div>
-                            <div class="menu-item">
-                                <img src="./img/food11.jpeg" alt="Chicken Shawarma" loading="lazy">
+                            <div class="menu-item" data-category="mains">
+                                <img src="./img/food11.jpeg" alt="Chicken Shawarma Platter" loading="lazy">
                                 <div>
-                                    <h3>CHICKEN SHAWARMA <span class="primary-text">$20.00</span></h3>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo.</p>
+                                    <h3>AUTHENTIC CHICKEN SHAWARMA <span class="primary-text">$20.00</span></h3>
+                                    <p>Thinly carved spiced rotisserie chicken wrapped in flatbread with authentic garlic toum and pickles.</p>
                                 </div>
                             </div>
-                            <div class="menu-item">
+                            <div class="menu-item" data-category="pizzas">
                                 <img src="./img/food12.jpeg" alt="Mega Cheese Pizza" loading="lazy">
                                 <div>
-                                    <h3>MEGA CHEESE PIZZA <span class="primary-text">$30.00</span></h3>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo.</p>
+                                    <h3>QUATTRO FORMAGGI MEGA PIZZA <span class="primary-text">$30.00</span></h3>
+                                    <p>Wood-fired pizza topped with a gourmet blend of mozzarella, aged gorgonzola, smoked provolone, and parmesan.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                     <div class="text-center">
-                        <a href="#" class="btn btn-third">EXPLORE FULL MENU</a>
+                        <button class="btn btn-third open-reserve-modal">RESERVE A TASTING TABLE</button>
                     </div>
                 </div>
             </section>
             <!-- Menu Section End -->
 
-            <!-- Daytime section start-->
+            <!-- Daytime Section Start -->
             <section id="daytime">
                 <div class="container">
                     <div class="daytime-items">
@@ -245,24 +266,80 @@
                         <div class="daytime-item">
                             <img src="./img/dessertIcon.png" alt="Dessert Icon" loading="lazy">
                             <h3>Dessert</h3>
-                            <p>All day</p>
+                            <p>Available all day</p>
                         </div>
                     </div>
                 </div>
             </section>
-            <!-- Daytime section end-->
+            <!-- Daytime Section End -->
+
+            <!-- Testimonials Section Start -->
+            <section id="testimonials">
+                <div class="container">
+                    <div class="title">
+                        <h2>Guest Testimonials</h2>
+                        <p>What food lovers and critics are saying about Wonder Land</p>
+                    </div>
+                    <div class="testimonials-grid">
+                        <div class="testimonial-card">
+                            <div class="stars">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <p class="review-text">"An absolute culinary jewel in Alexandria! The wood-fired Quattro Formaggi pizza and Capo Steak were prepared to perfection. The seaside ambiance is second to none."</p>
+                            <div class="reviewer-info">
+                                <h4>Sarah Mansour</h4>
+                                <span>Verified Dining Guest</span>
+                            </div>
+                        </div>
+                        <div class="testimonial-card featured">
+                            <div class="stars">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <p class="review-text">"Wonder Land has been our family's favorite weekend tradition for years. Their creamy shrimp pasta and signature dynamite shrimp rival top Michelin-starred bistros."</p>
+                            <div class="reviewer-info">
+                                <h4>Omar Khaled</h4>
+                                <span>Culinary Critic & Blogger</span>
+                            </div>
+                        </div>
+                        <div class="testimonial-card">
+                            <div class="stars">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <p class="review-text">"Flawless hospitality from arrival to departure. The buttermilk berry pancakes paired with Belgian artisan milkshakes made our Sunday brunch truly magical!"</p>
+                            <div class="reviewer-info">
+                                <h4>Elena Rostova</h4>
+                                <span>Travel & Gourmet Enthusiast</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Testimonials Section End -->
 
             <!-- Gallery Section Start -->
             <section id="gallery">
                 <div class="container">
                     <h2>Our Food Gallery</h2>
+                    <p class="gallery-hint">Click any photo to explore dish details in high resolution</p>
                     <div class="img-gallery">
-                        <img src="./img/gallery1.jpeg" alt="Gallery Food Dish 1" loading="lazy">
-                        <img src="./img/gallery2.jpeg" alt="Gallery Food Dish 2" loading="lazy">
-                        <img src="./img/gallery3.jpeg" alt="Gallery Food Dish 3" loading="lazy">
-                        <img src="./img/gallery4.jpeg" alt="Gallery Food Dish 4" loading="lazy">
-                        <img src="./img/gallery5.jpeg" alt="Gallery Food Dish 5" loading="lazy">
-                        <img src="./img/gallery6.jpeg" alt="Gallery Food Dish 6" loading="lazy">
+                        <img src="./img/gallery1.jpeg" alt="Signature dish culinary presentation" data-caption="Signature Gourmet Seafood Course" loading="lazy">
+                        <img src="./img/gallery2.jpeg" alt="Freshly baked artisan course" data-caption="Artisan Stone-Fired Italian Special" loading="lazy">
+                        <img src="./img/gallery3.jpeg" alt="Gourmet meat specialty" data-caption="Prime Charcoal-Seared Tenderloin Steak" loading="lazy">
+                        <img src="./img/gallery4.jpeg" alt="Wood-fired oven creation" data-caption="Authentic Handcrafted Neapolitan Pizza" loading="lazy">
+                        <img src="./img/gallery5.jpeg" alt="Handcrafted dessert plate" data-caption="Decadent Chocolate Ganache & Wild Berries" loading="lazy">
+                        <img src="./img/gallery6.jpeg" alt="Chef signature presentation" data-caption="Executive Chef Signature Tasting Platter" loading="lazy">
                     </div>
                 </div>
             </section>
@@ -271,32 +348,37 @@
             <!-- Contact Section Start -->
             <section id="contact">
                 <div class="container">
+                    <div class="title">
+                        <h2>Get In Touch & Reservations</h2>
+                        <p>We'd love to host your next memorable dining experience</p>
+                    </div>
                     <div class="contact-content">
                         <div class="contact-info">
                             <div>
-                                <h3>ADDRESS</h3>
+                                <h3>VISIT US</h3>
                                 <p><i class="fa-solid fa-location-dot"></i> Sidi Gaber, Alexandria, Egypt</p>
-                                <p><i class="fa-solid fa-phone"></i> Phone: 123456789</p>
-                                <p><i class="fa-regular fa-envelope"></i> support@wonderland.com</p>
+                                <p><i class="fa-solid fa-phone"></i> +20 3 543 2100 / +20 100 123 4567</p>
+                                <p><i class="fa-regular fa-envelope"></i> reservations@wonderland-restaurant.com</p>
                             </div>
                             <div>
-                                <h3>WORKING HOURS</h3>
+                                <h3>HOURS OF SERVICE</h3>
                                 <p>8:00 am to 11:00 pm on Weekdays</p>
                                 <p>11:00 am to 1:00 am on Weekends</p>
                             </div>
                             <div>
-                                <h3>FOLLOW US</h3>
-                                <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-                                <a href="#" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
-                                <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                                <h3>CONNECT WITH US</h3>
+                                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+                                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
                             </div>
                         </div>
-                        <form action="#" method="POST">
-                            <input type="text" name="name" id="name" placeholder="Full Name" required>
-                            <input type="email" name="email" id="email" placeholder="Email Address" required>
-                            <input type="text" name="subject" id="subject" placeholder="Subject" required>
-                            <textarea name="message" id="message" cols="30" rows="5" placeholder="Message" required></textarea>
-                            <button type="submit" class="btn btn-third">SEND MESSAGE</button>
+                        <form id="contactForm">
+                            <input type="text" name="name" id="name" placeholder="Your Full Name" required>
+                            <input type="email" name="email" id="email" placeholder="Your Email Address" required>
+                            <input type="text" name="subject" id="subject" placeholder="Subject / Table Size" required>
+                            <textarea name="message" id="message" cols="30" rows="5" placeholder="Special Requests or Reservation Details..." required></textarea>
+                            <button type="submit" class="btn btn-third">SEND RESERVATION MESSAGE</button>
+                            <div id="formFeedback" class="form-feedback" style="display: none;"></div>
                         </form>
                     </div>
                 </div>
@@ -305,8 +387,257 @@
         </main>
 
         <footer id="footer">
-            <p>Copyright &copy; 2026 All rights reserved | Made by <b><a href="https://radwasengr.github.io/radwa-portfolio/" target="_blank" rel="noopener noreferrer">Radwa Sengr</a></b></p>
+            <p>Copyright &copy; 2026 <strong>Wonder Land Restaurant</strong>. All rights reserved | Designed by <b><a href="https://radwasengr.github.io/radwa-portfolio/" target="_blank" rel="noopener noreferrer">Radwa Sengr</a></b></p>
         </footer>
+
+        <!-- Back to Top Button -->
+        <a href="#home" id="backToTop" class="back-to-top" aria-label="Back to top">
+            <i class="fa-solid fa-arrow-up"></i>
+        </a>
+
+        <!-- Table Reservation Modal -->
+        <div id="reservationModal" class="modal-overlay" aria-hidden="true">
+            <div class="modal-box">
+                <button class="modal-close" id="closeReserveModal" aria-label="Close modal">&times;</button>
+                <div class="modal-header">
+                    <h3>Reserve Your Table</h3>
+                    <p>Experience exquisite dining tailored to your taste</p>
+                </div>
+                <form id="modalReserveForm">
+                    <div class="form-row">
+                        <input type="text" placeholder="Full Name" required>
+                        <input type="tel" placeholder="Phone Number" required>
+                    </div>
+                    <div class="form-row">
+                        <input type="date" required id="reserveDate">
+                        <select required>
+                            <option value="" disabled selected>Preferred Time Slot</option>
+                            <option value="12:00 PM">Lunch: 12:00 PM</option>
+                            <option value="02:00 PM">Lunch: 02:00 PM</option>
+                            <option value="05:00 PM">Evening: 05:00 PM</option>
+                            <option value="07:30 PM">Dinner: 07:30 PM</option>
+                            <option value="09:30 PM">Dinner: 09:30 PM</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <select required>
+                            <option value="" disabled selected>Number of Guests</option>
+                            <option value="1">1 Guest</option>
+                            <option value="2">2 Guests (Table for Two)</option>
+                            <option value="4">3 - 4 Guests</option>
+                            <option value="6">5 - 8 Guests</option>
+                            <option value="10">9+ Guests (VIP Hall)</option>
+                        </select>
+                        <select required>
+                            <option value="" disabled selected>Seating Preference</option>
+                            <option value="indoor">Main Dining Hall</option>
+                            <option value="outdoor">Outdoor Seaside Terrace</option>
+                            <option value="vip">Private VIP Room</option>
+                        </select>
+                    </div>
+                    <textarea rows="3" placeholder="Special requirements (e.g. Birthday, Anniversary, Dietary restrictions)..."></textarea>
+                    <button type="submit" class="btn btn-third">CONFIRM RESERVATION</button>
+                    <div id="modalFeedback" class="form-feedback" style="display: none;"></div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Gallery Lightbox Modal -->
+        <div id="lightboxModal" class="lightbox-overlay" aria-hidden="true">
+            <button class="lightbox-close" id="closeLightbox" aria-label="Close image">&times;</button>
+            <div class="lightbox-content">
+                <img id="lightboxImg" src="" alt="Enlarged Dish Photo">
+                <p id="lightboxCaption" class="lightbox-caption"></p>
+            </div>
+        </div>
+
+        <!-- Interactive JavaScript -->
+        <script>
+            // Sticky Navbar & Active Section Tracking
+            const navbar = document.getElementById('navbar');
+            const backToTop = document.getElementById('backToTop');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('header, section');
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 80) {
+                    navbar.classList.add('scrolled');
+                    backToTop.classList.add('visible');
+                } else {
+                    navbar.classList.remove('scrolled');
+                    backToTop.classList.remove('visible');
+                }
+
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 140;
+                    if (window.scrollY >= sectionTop) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+
+            // Mobile Hamburger Menu
+            const navToggle = document.getElementById('navToggle');
+            const navMenu = document.getElementById('navMenu');
+
+            if (navToggle && navMenu) {
+                navToggle.addEventListener('click', () => {
+                    navMenu.classList.toggle('active');
+                    const icon = navToggle.querySelector('i');
+                    if (navMenu.classList.contains('active')) {
+                        icon.classList.remove('fa-bars');
+                        icon.classList.add('fa-xmark');
+                    } else {
+                        icon.classList.remove('fa-xmark');
+                        icon.classList.add('fa-bars');
+                    }
+                });
+
+                navMenu.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        navMenu.classList.remove('active');
+                        const icon = navToggle.querySelector('i');
+                        icon.classList.remove('fa-xmark');
+                        icon.classList.add('fa-bars');
+                    });
+                });
+            }
+
+            // Menu Category Tabs Filtering
+            const menuTabs = document.querySelectorAll('.menu-tab');
+            const menuItems = document.querySelectorAll('.menu-item');
+
+            menuTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    menuTabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    const filter = tab.getAttribute('data-filter');
+
+                    menuItems.forEach(item => {
+                        if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                            item.style.display = 'flex';
+                            item.style.animation = 'fadeInItem 0.4s ease forwards';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // Reservation Modal Trigger & Actions
+            const reserveModal = document.getElementById('reservationModal');
+            const openReserveButtons = document.querySelectorAll('.open-reserve-modal');
+            const closeReserveModal = document.getElementById('closeReserveModal');
+            const modalReserveForm = document.getElementById('modalReserveForm');
+            const modalFeedback = document.getElementById('modalFeedback');
+
+            openReserveButtons.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    reserveModal.classList.add('active');
+                    reserveModal.setAttribute('aria-hidden', 'false');
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+
+            const hideReserveModal = () => {
+                reserveModal.classList.remove('active');
+                reserveModal.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+            };
+
+            if (closeReserveModal) {
+                closeReserveModal.addEventListener('click', hideReserveModal);
+            }
+
+            if (reserveModal) {
+                reserveModal.addEventListener('click', (e) => {
+                    if (e.target === reserveModal) hideReserveModal();
+                });
+            }
+
+            if (modalReserveForm) {
+                modalReserveForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    modalFeedback.style.display = 'block';
+                    modalFeedback.className = 'form-feedback success';
+                    modalFeedback.innerHTML = '<i class="fa-solid fa-circle-check"></i> Reservation confirmed! A confirmation SMS and email have been dispatched.';
+                    modalReserveForm.reset();
+
+                    setTimeout(() => {
+                        modalFeedback.style.display = 'none';
+                        hideReserveModal();
+                    }, 3000);
+                });
+            }
+
+            // Gallery Lightbox Modal
+            const lightbox = document.getElementById('lightboxModal');
+            const lightboxImg = document.getElementById('lightboxImg');
+            const lightboxCaption = document.getElementById('lightboxCaption');
+            const closeLightbox = document.getElementById('closeLightbox');
+            const galleryImages = document.querySelectorAll('.img-gallery img');
+
+            galleryImages.forEach(img => {
+                img.addEventListener('click', () => {
+                    lightboxImg.src = img.src;
+                    lightboxCaption.textContent = img.getAttribute('data-caption') || img.alt;
+                    lightbox.classList.add('active');
+                    lightbox.setAttribute('aria-hidden', 'false');
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+
+            const hideLightbox = () => {
+                lightbox.classList.remove('active');
+                lightbox.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+            };
+
+            if (closeLightbox) {
+                closeLightbox.addEventListener('click', hideLightbox);
+            }
+
+            if (lightbox) {
+                lightbox.addEventListener('click', (e) => {
+                    if (e.target === lightbox) hideLightbox();
+                });
+            }
+
+            // Close modals on Escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    hideReserveModal();
+                    hideLightbox();
+                }
+            });
+
+            // Contact Form Submission Feedback
+            const contactForm = document.getElementById('contactForm');
+            const feedback = document.getElementById('formFeedback');
+
+            if (contactForm) {
+                contactForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    feedback.style.display = 'block';
+                    feedback.className = 'form-feedback success';
+                    feedback.innerHTML = '<i class="fa-solid fa-circle-check"></i> Thank you! Your message has been received. Our team will contact you shortly.';
+                    contactForm.reset();
+
+                    setTimeout(() => {
+                        feedback.style.display = 'none';
+                    }, 5000);
+                });
+            }
+        </script>
     </body>
 
 </html>

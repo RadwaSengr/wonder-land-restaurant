@@ -1,125 +1,120 @@
-# Wonder Land Restaurant Website 🍽️
+<div align="center">
 
-This is a modern, responsive, and fully optimized static website for the **Wonder Land Restaurant**. It highlights the restaurant's history, special offers, full menu, photo gallery, working hours, and contact details.
+# 🍽️ Wonder Land Restaurant
 
-## 📋 Table of Contents
+**A Modern, Responsive & Elegant Culinary Experience Showcase**
 
-- [Project Structure](#project-structure)
-- [Key Features](#key-features)
-- [Optimizations & Improvements](#optimizations--improvements)
-- [Technologies Used](#technologies-used)
-- [Setup and Usage](#setup-and-usage)
-- [Video Demo](#video-demo)
-- [Contributing](#contributing)
-- [License](#license)
-- [Author](#author)
+[![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
+[![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
+[![Responsive](https://img.shields.io/badge/Design-Fully%20Responsive-brightgreen?style=for-the-badge)](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Responsive_Design)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
+
+[Explore Menu](#-menu-showcase) • [Key Features](#-key-features) • [Installation & Usage](#-getting-started) • [Contact](#-author--contact)
+
+</div>
+
+---
+
+## 📖 About The Project
+
+**Wonder Land Restaurant** is a modern, responsive culinary website crafted for a premier dining establishment. Designed with clean semantic HTML5 and custom CSS3, the site delivers a seamless experience across all device form factors—from mobile phones to widescreen desktops.
+
+It highlights the restaurant's rich culinary heritage, seasonal offers, comprehensive categorized menu, interactive photo gallery, operating hours, and an accessible booking/inquiry section.
+
+---
+
+## ✨ Key Features
+
+- 📱 **Fully Responsive Layout**: Adaptive layout optimized for mobile devices, tablets, laptops, and ultra-wide screens.
+- 🎨 **Modern Visual Design**: Warm gourmet color scheme featuring gold accents, subtle shadows, and clean typography.
+- 🎯 **Sticky Glassmorphic Navigation**: Smooth header with dynamic blur effect and active scroll tracking.
+- 🍽️ **Interactive Menu Filter Tabs**: Dynamic category switching (`All`, `Starters`, `Mains`, `Pizzas`, `Desserts`) with smooth animation.
+- 🗓️ **Dedicated Reservation Modal**: Complete table booking modal with guest count, seating preference, and instant confirmation toast.
+- 🔍 **Gallery Lightbox Modal**: High-resolution image viewer with captions and smooth keyboard `Esc` dismiss.
+- ⭐ **Guest Testimonials & Reviews**: Verified customer critique cards and 5-star ratings.
+- ⏰ **Service Hours Schedule**: Clear breakdown of daily service windows (Breakfast, Lunch, Dinner, Dessert).
+- ✉️ **Interactive Contact Form**: In-place validation and client feedback notification.
+- ⚡ **Performance & SEO Optimized**: Open Graph and Twitter meta tags, with lazy loading on assets.
 
 ---
 
 ## 📁 Project Structure
 
 ```plaintext
-Wonder-Land-Restaurant/
+WonderlandResturant/
 ├── img/
-│   ├── about_img.png
-│   ├── breckfastIcon.png
-│   ├── dinnerIcon.png
-│   ├── food1.png
-│   ├── food2.png
-│   ├── food3.png
-│   ├── food4.png
-│   ├── food5.png
-│   ├── food6.png
-│   ├── food7.jpeg
-│   ├── food8.jpeg
-│   ├── food9.jpeg
-│   ├── food10.jpeg
-│   ├── food11.jpeg
-│   ├── food12.jpeg
-│   ├── gallery1.jpeg
-│   ├── gallery2.jpeg
-│   ├── gallery3.jpeg
-│   ├── gallery4.jpeg
-│   ├── gallery5.jpeg
-│   ├── gallery6.jpeg
-│   ├── logo.png
-│   ├── offer1.png
-│   ├── offer2.png
-│   ├── offer3.png
+│   ├── about_img.png           # Story & about section feature image
+│   ├── home_bg.jpeg            # Hero banner background
+│   ├── daytime_bg.jpeg         # Operating hours background
+│   ├── offer-background.jpg    # Special offers & gallery background
+│   ├── breckfastIcon.png       # Service category icons
 │   ├── lunchIcon.png
+│   ├── dinnerIcon.png
 │   ├── dessertIcon.png
-│   └── favicon.svg
-├── style.css
-├── index.html
-└── README.md
+│   ├── food1.png - food12.jpeg # Signature menu dishes
+│   ├── gallery1 - gallery6     # Photo gallery items
+│   ├── offer1.png - offer3.png # Special discount dishes
+│   ├── logo.png                # Brand logo
+│   └── favicon.svg             # Web browser icon
+├── index.html                  # Semantic markup & content
+├── style.css                   # Custom CSS styling & responsive queries
+└── README.md                   # Project documentation
 ```
-
-## ✨ Key Features
--📱 Fully Responsive: Smooth layout transitions across mobile, tablet, and desktop screens.
-
--🎯 Smooth Navigation: In-page links for easy navigation across all sections.
-
--🍕 Special Offers & Menu Showcase: Clearly formatted pricing and menu options with image cards.
-
--🖼️ Interactive Food Gallery: Hover animations (transform & opacity) showcasing signature dishes.
-
--📬 Contact Form & Info: Section including direct contact channels and location details.
-
-
-## 🚀 Optimizations & Improvements
--SEO & Social Sharing: Integrated Meta tags, Open Graph (OG), and Twitter Card meta tags for better preview rendering on WhatsApp, Facebook, and X.
-
--Performance: Implemented loading="lazy" attributes on images for faster initial page loads.
-
--Accessibility (a11y): Descriptive alt tags added to images and aria-label tags for social links.
-
--Clean Code & Syntax: Resolved CSS media query nesting errors and cleaned up semantic HTML hierarchy.
-
-## 🛠️ Technologies Used
--HTML5 (Semantic Elements & Accessibility)
-
--CSS3 (Flexbox, Media Queries, Custom Styling & Animations)
-
--FontAwesome v6 (Icons)
-
--Google Fonts (Quicksand Font Family)
-
-## Setup and Usage
-
-1. **Clone the Repository:**
-   ```sh
-   git clone https://github.com/RadwaSengr/wonder-land-restaurant.git
-   ```
-2. **Navigate to the Project Directory:**
-   ```sh
-   cd wonder-land-restaurant
-   ```
-3. **Open `index.html` in Your Browser:**
-   Simply open the `index.html` file in your preferred web browser.
-
-   Alternatively, you can use Visual Studio Code with the Live Server extension for a better development experience:
-   - Open the project folder in Visual Studio Code.
-   - Install the Live Server extension.
-   - Right-click on `index.html` and select `Open with Live Server`.
-
-## 🎥 Video Demo
-For a visual walkthrough of the Wonder Land Restaurant website, check out the video demo below:
-
-[![Watch the video](https://img.youtube.com/vi/MR2iKtGD-IE/0.jpg)](https://www.youtube.com/watch?v=MR2iKtGD-IE)
-
-## Contributing
-
-If you would like to contribute to this project, please fork the repository and submit a pull request. We welcome all contributions!
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
-## Author
-
-This website was created by [Radwa Sengr](https://radwasengr.com). Feel free to get in touch!
 
 ---
 
-Thank you for visiting Wonder Land Restaurant's website! Enjoy your stay!
-```
+## 🛠️ Built With
+
+* **HTML5**: Semantic elements, accessibility attributes (`aria-label`, `alt`), and modern meta tags.
+* **CSS3**: CSS Custom Properties (`:root`), Flexbox layouts, animations, and responsive media queries.
+* **Google Fonts**: [Quicksand](https://fonts.google.com/specimen/Quicksand) font family for clean, modern readability.
+* **Font Awesome v6**: Vector icons for contacts, location, and social links.
+
+---
+
+## 🚀 Getting Started
+
+Follow these simple steps to get a local copy up and running:
+
+### Prerequisites
+All you need is a modern web browser (Google Chrome, Mozilla Firefox, Microsoft Edge, or Safari).
+
+### Setup Steps
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/RadwaSengr/wonder-land-restaurant.git
+   ```
+2. **Navigate into the project directory:**
+   ```bash
+   cd wonder-land-restaurant/WonderlandResturant
+   ```
+3. **Open in browser:**
+   - Double-click `index.html` to open it directly in your browser.
+   - Or open the folder in **VS Code** and use the **Live Server** extension (`Alt + L, Alt + O`) for hot-reloading.
+
+---
+
+## 🎥 Video Demo
+
+Watch the visual walkthrough of the Wonder Land Restaurant website:
+
+[![Watch the video](https://img.youtube.com/vi/MR2iKtGD-IE/0.jpg)](https://www.youtube.com/watch?v=MR2iKtGD-IE)
+
+---
+
+## 📄 License
+
+Distributed under the MIT License. See the `LICENSE` file for more information.
+
+---
+
+## 👩‍💻 Author & Contact
+
+**Radwa Sengr**
+- Portfolio: [radwasengr.github.io/radwa-portfolio](https://radwasengr.github.io/radwa-portfolio/)
+- GitHub: [@RadwaSengr](https://github.com/RadwaSengr)
+- Email: [radwaosama410@gmail.com](mailto:radwaosama410@gmail.com)
+
+<div align="center">
+  <sub>Made with ❤️ by Radwa Sengr • Wonder Land Restaurant © 2026</sub>
+</div>
