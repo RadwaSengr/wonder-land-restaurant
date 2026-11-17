@@ -6,1894 +6,1368 @@ if (!fs.existsSync(outDir)) {
     fs.mkdirSync(outDir, { recursive: true });
 }
 
-// Helper to save SVG
 function saveSvg(filename, svgContent) {
     const filePath = path.join(outDir, filename);
     fs.writeFileSync(filePath, svgContent.trim(), 'utf8');
     console.log(`Saved: ${filename}`);
 }
 
-// ---------------------------------------------------------------------------
-// 1. USE CASE DIAGRAM
-// ---------------------------------------------------------------------------
-const useCaseSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 800" width="1100" height="800">
+// Global Theme Constants for Diagrams
+const THEME = {
+    navyDark: '#0A1128',
+    navyMid: '#0F172A',
+    slateDark: '#1E293B',
+    slateLight: '#F1F5F9',
+    gold: '#E4B95B',
+    goldDark: '#B45309',
+    goldLight: '#FFFDF5',
+    white: '#FFFFFF',
+    border: '#CBD5E1',
+    textDark: '#0F172A',
+    textMuted: '#64748B',
+    emerald: '#059669',
+    amber: '#D97706',
+    rose: '#E11D48',
+    blue: '#2563EB'
+};
+
+// ===========================================================================
+// 1. VISUAL UML: USE CASE DIAGRAM
+// ===========================================================================
+const useCaseSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 860" width="1200" height="860">
   <defs>
     <style>
-      .bg { fill: #f8fafc; }
-      .system-box { fill: #ffffff; stroke: #3b82f6; stroke-width: 2.5; stroke-dasharray: 6,4; rx: 12; }
-      .system-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #1e3a8a; text-anchor: middle; }
-      .actor-head { fill: #fef08a; stroke: #1e293b; stroke-width: 2; }
-      .actor-body { stroke: #1e293b; stroke-width: 2; stroke-linecap: round; }
-      .actor-label { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #0f172a; text-anchor: middle; }
-      .usecase-ellipse { fill: #eff6ff; stroke: #2563eb; stroke-width: 1.8; rx: 85; ry: 26; }
-      .usecase-label { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: 600; fill: #1e40af; text-anchor: middle; dominant-baseline: central; }
-      .line { stroke: #475569; stroke-width: 1.5; }
-      .include-line { stroke: #059669; stroke-width: 1.5; stroke-dasharray: 5,4; marker-end: url(#arrowGreen); }
-      .extend-line { stroke: #d97706; stroke-width: 1.5; stroke-dasharray: 5,4; marker-end: url(#arrowOrange); }
-      .dep-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-style: italic; font-weight: 600; }
+      .canvas-bg { fill: #f8fafc; }
+      .header-bg { fill: #0a1128; }
+      .header-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #ffffff; }
+      .header-tag { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #e4b95b; letter-spacing: 1.5px; }
+      .sys-box { fill: #ffffff; stroke: #e4b95b; stroke-width: 2; rx: 12; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.05)); }
+      .sys-header { fill: #0f172a; }
+      .sys-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #e4b95b; letter-spacing: 1px; }
+      .actor-card { fill: #ffffff; stroke: #0a1128; stroke-width: 1.8; rx: 10; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.06)); }
+      .actor-badge { fill: #0a1128; }
+      .actor-badge-gold { fill: #b45309; }
+      .actor-badge-green { fill: #059669; }
+      .actor-name { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: bold; fill: #0f172a; text-anchor: middle; }
+      .actor-role { font-family: 'Segoe UI', Arial, sans-serif; font-size: 10px; font-weight: 600; fill: #64748b; text-anchor: middle; }
+      .uc-capsule { fill: #fffdf7; stroke: #d4af37; stroke-width: 1.8; rx: 22; ry: 22; filter: drop-shadow(0 2px 6px rgba(228,185,91,0.15)); }
+      .uc-label { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: 700; fill: #0f172a; text-anchor: middle; dominant-baseline: central; }
+      .assoc-line { stroke: #334155; stroke-width: 1.6; }
+      .inc-line { stroke: #059669; stroke-width: 1.6; stroke-dasharray: 5,4; marker-end: url(#arrowGreen); }
+      .ext-line { stroke: #d97706; stroke-width: 1.6; stroke-dasharray: 5,4; marker-end: url(#arrowAmber); }
+      .tag-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 10px; font-style: italic; font-weight: bold; }
     </style>
-    <marker id="arrowGreen" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M 0 1 L 10 5 L 0 9 z" fill="#059669" />
     </marker>
-    <marker id="arrowOrange" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <marker id="arrowAmber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M 0 1 L 10 5 L 0 9 z" fill="#d97706" />
     </marker>
   </defs>
 
-  <rect width="100%" height="100%" class="bg" />
+  <rect width="100%" height="100%" class="canvas-bg" />
 
-  <!-- Diagram Header -->
-  <text x="550" y="35" font-family="'Segoe UI', Arial, sans-serif" font-size="24" font-weight="bold" fill="#0f172a" text-anchor="middle">Use Case Diagram: Wonder Land Restaurant Management System</text>
-
-  <!-- System Boundary -->
-  <rect x="220" y="55" width="660" height="720" class="system-box" />
-  <text x="550" y="85" class="system-title">&lt;&lt;System&gt;&gt; Wonder Land Restaurant Platform</text>
+  <!-- Top Executive Banner -->
+  <rect x="0" y="0" width="1200" height="70" class="header-bg" />
+  <rect x="0" y="68" width="1200" height="3" fill="#e4b95b" />
+  <text x="35" y="30" class="header-tag">WONDER LAND RESTAURANT SYSTEM • UML BEHAVIORAL MODEL</text>
+  <text x="35" y="55" class="header-title">Visual UML: Use Case Diagram &amp; Operational Boundaries</text>
 
   <!-- Left Actor: Customer -->
-  <g transform="translate(100, 260)">
-    <circle cx="0" cy="0" r="16" class="actor-head" />
-    <line x1="0" y1="16" x2="0" y2="60" class="actor-body" />
-    <line x1="-24" y1="32" x2="24" y2="32" class="actor-body" />
-    <line x1="0" y1="60" x2="-20" y2="105" class="actor-body" />
-    <line x1="0" y1="60" x2="20" y2="105" class="actor-body" />
-    <text x="0" y="125" class="actor-label">Customer</text>
+  <g transform="translate(45, 300)">
+    <rect width="130" height="150" class="actor-card" />
+    <rect width="130" height="36" class="actor-badge" rx="8" />
+    <text x="65" y="23" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="bold" fill="#e4b95b" text-anchor="middle">PRIMARY ACTOR</text>
+    <circle cx="65" cy="72" r="18" fill="#e4b95b" stroke="#0a1128" stroke-width="2" />
+    <path d="M 52 110 C 52 94, 78 94, 78 110 Z" fill="#0a1128" />
+    <text x="65" y="128" class="actor-name">Customer</text>
+    <text x="65" y="142" class="actor-role">Online Guest</text>
   </g>
+
+  <!-- System Boundary Container -->
+  <rect x="210" y="95" width="760" height="735" class="sys-box" />
+  <path d="M 210 95 L 970 95 L 970 135 L 210 135 Z" class="sys-header" rx="10" />
+  <text x="590" y="120" class="sys-title" text-anchor="middle">&lt;&lt;System Boundary&gt;&gt; WONDER LAND INTEGRATED PLATFORM</text>
+
+  <!-- Customer Use Cases -->
+  <!-- UC01 -->
+  <g transform="translate(360, 180)">
+    <rect x="-105" y="-22" width="210" height="44" class="uc-capsule" />
+    <text x="0" y="0" class="uc-label">UC-01: Browse &amp; Search Menu</text>
+  </g>
+  <!-- UC02 (Extend) -->
+  <g transform="translate(680, 180)">
+    <rect x="-105" y="-22" width="210" height="44" class="uc-capsule" stroke="#d97706" />
+    <text x="0" y="0" class="uc-label" fill="#9a3412">UC-02: Filter by Category</text>
+  </g>
+
+  <!-- UC03 -->
+  <g transform="translate(360, 260)">
+    <rect x="-105" y="-22" width="210" height="44" class="uc-capsule" />
+    <text x="0" y="0" class="uc-label">UC-03: Manage Cart Items</text>
+  </g>
+
+  <!-- UC04 -->
+  <g transform="translate(360, 350)">
+    <rect x="-105" y="-22" width="210" height="44" class="uc-capsule" stroke="#b45309" stroke-width="2.2" />
+    <text x="0" y="0" class="uc-label" fill="#b45309">UC-04: Checkout Food Order</text>
+  </g>
+
+  <!-- UC05 (Include from Checkout) -->
+  <g transform="translate(680, 350)">
+    <rect x="-115" y="-24" width="230" height="48" class="uc-capsule" stroke="#059669" stroke-width="2.2" fill="#f0fdf4" />
+    <text x="0" y="-3" class="uc-label" fill="#047857">UC-05: Place Order (COD / Card)</text>
+    <text x="0" y="13" font-family="'Segoe UI', Arial, sans-serif" font-size="10" font-weight="600" fill="#059669" text-anchor="middle">&lt;&lt;Included Payment Subsystem&gt;&gt;</text>
+  </g>
+
+  <!-- UC06 -->
+  <g transform="translate(360, 440)">
+    <rect x="-105" y="-22" width="210" height="44" class="uc-capsule" />
+    <text x="0" y="0" class="uc-label">UC-06: Track Live Order (5-Stage)</text>
+  </g>
+
+  <!-- UC07 -->
+  <g transform="translate(360, 530)">
+    <rect x="-105" y="-22" width="210" height="44" class="uc-capsule" />
+    <text x="0" y="0" class="uc-label">UC-07: Reserve Dining Table</text>
+  </g>
+
+  <!-- UC08 -->
+  <g transform="translate(360, 620)">
+    <rect x="-105" y="-22" width="210" height="44" class="uc-capsule" />
+    <text x="0" y="0" class="uc-label">UC-08: Submit Guest Review</text>
+  </g>
+
+  <!-- Staff / Admin Use Cases -->
+  <!-- UC09 -->
+  <g transform="translate(800, 620)">
+    <rect x="-115" y="-22" width="230" height="44" class="uc-capsule" stroke="#0a1128" />
+    <text x="0" y="0" class="uc-label">UC-09: Authenticate Admin PIN</text>
+  </g>
+  <!-- UC10 -->
+  <g transform="translate(800, 700)">
+    <rect x="-115" y="-22" width="230" height="44" class="uc-capsule" stroke="#0a1128" />
+    <text x="0" y="0" class="uc-label">UC-10: Manage Menu Catalog CRUD</text>
+  </g>
+  <!-- UC11 -->
+  <g transform="translate(800, 490)">
+    <rect x="-115" y="-22" width="230" height="44" class="uc-capsule" stroke="#b45309" />
+    <text x="0" y="0" class="uc-label" fill="#b45309">UC-11: Kitchen Ticket Dispatch</text>
+  </g>
+  <!-- UC12 -->
+  <g transform="translate(800, 775)">
+    <rect x="-115" y="-22" width="230" height="44" class="uc-capsule" stroke="#059669" fill="#f0fdf4" />
+    <text x="0" y="0" class="uc-label" fill="#047857">UC-12: 1-Click Excel Export</text>
+  </g>
+
+  <!-- Customer Associations (Solid Lines) -->
+  <line x1="175" y1="340" x2="255" y2="180" class="assoc-line" />
+  <line x1="175" y1="360" x2="255" y2="260" class="assoc-line" />
+  <line x1="175" y1="375" x2="255" y2="350" class="assoc-line" stroke-width="2" stroke="#b45309" />
+  <line x1="175" y1="390" x2="255" y2="440" class="assoc-line" />
+  <line x1="175" y1="410" x2="255" y2="530" class="assoc-line" />
+  <line x1="175" y1="430" x2="255" y2="620" class="assoc-line" />
+
+  <!-- Include / Extend Relations -->
+  <!-- UC01 -> UC02 (Extend) -->
+  <line x1="465" y1="180" x2="570" y2="180" class="ext-line" />
+  <text x="518" y="172" class="tag-text" fill="#d97706" text-anchor="middle">&lt;&lt;extend&gt;&gt;</text>
+
+  <!-- UC04 -> UC05 (Include) -->
+  <line x1="465" y1="350" x2="560" y2="350" class="inc-line" stroke-width="2" />
+  <text x="512" y="342" class="tag-text" fill="#059669" text-anchor="middle">&lt;&lt;include&gt;&gt;</text>
 
   <!-- Right Actor: Admin / Manager -->
-  <g transform="translate(990, 220)">
-    <circle cx="0" cy="0" r="16" class="actor-head" fill="#fed7aa" />
-    <line x1="0" y1="16" x2="0" y2="60" class="actor-body" />
-    <line x1="-24" y1="32" x2="24" y2="32" class="actor-body" />
-    <line x1="0" y1="60" x2="-20" y2="105" class="actor-body" />
-    <line x1="0" y1="60" x2="20" y2="105" class="actor-body" />
-    <text x="0" y="125" class="actor-label">Restaurant Admin</text>
+  <g transform="translate(1015, 600)">
+    <rect width="145" height="150" class="actor-card" />
+    <rect width="145" height="36" class="actor-badge-gold" rx="8" />
+    <text x="72" y="23" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">ADMINISTRATOR</text>
+    <circle cx="72" cy="72" r="18" fill="#fed7aa" stroke="#b45309" stroke-width="2" />
+    <path d="M 59 110 C 59 94, 85 94, 85 110 Z" fill="#b45309" />
+    <text x="72" y="128" class="actor-name">Restaurant Admin</text>
+    <text x="72" y="142" class="actor-role">General Manager</text>
   </g>
 
-  <!-- Right Actor: Kitchen Staff / Chef -->
-  <g transform="translate(990, 520)">
-    <circle cx="0" cy="0" r="16" class="actor-head" fill="#bbf7d0" />
-    <line x1="0" y1="16" x2="0" y2="60" class="actor-body" />
-    <line x1="-24" y1="32" x2="24" y2="32" class="actor-body" />
-    <line x1="0" y1="60" x2="-20" y2="105" class="actor-body" />
-    <line x1="0" y1="60" x2="20" y2="105" class="actor-body" />
-    <text x="0" y="125" class="actor-label">Kitchen Staff / Chef</text>
+  <!-- Right Actor: Kitchen Chef -->
+  <g transform="translate(1015, 340)">
+    <rect width="145" height="150" class="actor-card" />
+    <rect width="145" height="36" class="actor-badge-green" rx="8" />
+    <text x="72" y="23" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">KITCHEN CHEF</text>
+    <circle cx="72" cy="72" r="18" fill="#bbf7d0" stroke="#059669" stroke-width="2" />
+    <path d="M 59 110 C 59 94, 85 94, 85 110 Z" fill="#059669" />
+    <text x="72" y="128" class="actor-name">Executive Chef</text>
+    <text x="72" y="142" class="actor-role">Food Prep &amp; KOT</text>
   </g>
 
-  <!-- Use Cases: Customer Side -->
-  <!-- UC1: Browse Menu & Search -->
-  <g transform="translate(370, 130)">
-    <ellipse cx="0" cy="0" class="usecase-ellipse" />
-    <text x="0" y="0" class="usecase-label">UC01: Browse &amp; Search Menu</text>
-  </g>
-  <!-- UC2: Filter Category -->
-  <g transform="translate(680, 130)">
-    <ellipse cx="0" cy="0" class="usecase-ellipse" />
-    <text x="0" y="0" class="usecase-label">UC02: Filter Menu by Category</text>
-  </g>
-  <!-- UC3: Manage Cart -->
-  <g transform="translate(370, 220)">
-    <ellipse cx="0" cy="0" class="usecase-ellipse" />
-    <text x="0" y="0" class="usecase-label">UC03: Manage Cart Items</text>
-  </g>
-  <!-- UC4: Checkout & Order -->
-  <g transform="translate(370, 310)">
-    <ellipse cx="0" cy="0" class="usecase-ellipse" />
-    <text x="0" y="0" class="usecase-label">UC04: Checkout &amp; Place Order</text>
-  </g>
-  <!-- UC5: Process Payment -->
-  <g transform="translate(680, 310)">
-    <ellipse cx="0" cy="0" class="usecase-ellipse" fill="#f0fdf4" stroke="#16a34a" />
-    <text x="0" y="0" class="usecase-label" fill="#15803d">UC05: Process Payment</text>
-  </g>
-  <!-- UC6: Track Order Status -->
-  <g transform="translate(370, 400)">
-    <ellipse cx="0" cy="0" class="usecase-ellipse" />
-    <text x="0" y="0" class="usecase-label">UC06: Track Live Order Status</text>
-  </g>
-  <!-- UC7: Book Table Reservation -->
-  <g transform="translate(370, 490)">
-    <ellipse cx="0" cy="0" class="usecase-ellipse" />
-    <text x="0" y="0" class="usecase-label">UC07: Reserve Dining Table</text>
-  </g>
-  <!-- UC8: Submit Review & Rating -->
-  <g transform="translate(370, 580)">
-    <ellipse cx="0" cy="0" class="usecase-ellipse" />
-    <text x="0" y="0" class="usecase-label">UC08: Submit Review &amp; Rating</text>
-  </g>
-
-  <!-- Use Cases: Admin & Kitchen Side -->
-  <!-- UC9: Admin Login / Auth -->
-  <g transform="translate(680, 220)">
-    <ellipse cx="0" cy="0" class="usecase-ellipse" fill="#fff7ed" stroke="#ea580c" />
-    <text x="0" y="0" class="usecase-label" fill="#c2410c">UC09: Authenticate / Login</text>
-  </g>
-  <!-- UC10: Manage Menu Catalog -->
-  <g transform="translate(680, 400)">
-    <ellipse cx="0" cy="0" class="usecase-ellipse" fill="#fff7ed" stroke="#ea580c" />
-    <text x="0" y="0" class="usecase-label" fill="#c2410c">UC10: Manage Menu (CRUD)</text>
-  </g>
-  <!-- UC11: Manage Orders -->
-  <g transform="translate(680, 490)">
-    <ellipse cx="0" cy="0" class="usecase-ellipse" fill="#fff7ed" stroke="#ea580c" />
-    <text x="0" y="0" class="usecase-label" fill="#c2410c">UC11: Manage &amp; Update Orders</text>
-  </g>
-  <!-- UC12: Manage Reservations -->
-  <g transform="translate(680, 580)">
-    <ellipse cx="0" cy="0" class="usecase-ellipse" fill="#fff7ed" stroke="#ea580c" />
-    <text x="0" y="0" class="usecase-label" fill="#c2410c">UC12: Manage Reservations</text>
-  </g>
-  <!-- UC13: View Analytics & Reports -->
-  <g transform="translate(680, 670)">
-    <ellipse cx="0" cy="0" class="usecase-ellipse" fill="#fff7ed" stroke="#ea580c" />
-    <text x="0" y="0" class="usecase-label" fill="#c2410c">UC13: View Sales Analytics</text>
-  </g>
-  <!-- UC14: Update Cooking Status -->
-  <g transform="translate(420, 670)">
-    <ellipse cx="0" cy="0" class="usecase-ellipse" fill="#f0fdf4" stroke="#16a34a" />
-    <text x="0" y="0" class="usecase-label" fill="#15803d">UC14: Update Kitchen Status</text>
-  </g>
-
-  <!-- Associations: Customer to UCs -->
-  <line x1="125" y1="280" x2="285" y2="135" class="line" />
-  <line x1="125" y1="290" x2="285" y2="220" class="line" />
-  <line x1="125" y1="300" x2="285" y2="310" class="line" />
-  <line x1="125" y1="315" x2="285" y2="400" class="line" />
-  <line x1="125" y1="330" x2="285" y2="490" class="line" />
-  <line x1="125" y1="345" x2="285" y2="580" class="line" />
-
-  <!-- Associations: Admin to UCs -->
-  <line x1="965" y1="240" x2="765" y2="220" class="line" />
-  <line x1="965" y1="250" x2="765" y2="400" class="line" />
-  <line x1="965" y1="260" x2="765" y2="490" class="line" />
-  <line x1="965" y1="270" x2="765" y2="580" class="line" />
-  <line x1="965" y1="280" x2="765" y2="670" class="line" />
-
-  <!-- Associations: Kitchen Staff to UCs -->
-  <line x1="965" y1="540" x2="765" y2="490" class="line" />
-  <line x1="965" y1="560" x2="505" y2="670" class="line" />
-
-  <!-- Relationships: Include / Extend -->
-  <!-- UC04 includes UC05 (Process Payment) -->
-  <line x1="455" y1="310" x2="595" y2="310" class="include-line" />
-  <text x="525" y="302" class="dep-text" fill="#059669" text-anchor="middle">&lt;&lt;include&gt;&gt;</text>
-
-  <!-- UC01 extends UC02 (Filter) -->
-  <line x1="595" y1="130" x2="455" y2="130" class="extend-line" />
-  <text x="525" y="122" class="dep-text" fill="#d97706" text-anchor="middle">&lt;&lt;extend&gt;&gt;</text>
+  <!-- Staff Associations -->
+  <line x1="1015" y1="415" x2="915" y2="490" class="assoc-line" />
+  <line x1="1015" y1="675" x2="915" y2="620" class="assoc-line" />
+  <line x1="1015" y1="685" x2="915" y2="700" class="assoc-line" />
+  <line x1="1015" y1="710" x2="915" y2="775" class="assoc-line" stroke="#059669" stroke-width="1.8" />
 </svg>`;
 
 saveSvg('01_use_case_diagram.svg', useCaseSvg);
 
-// ---------------------------------------------------------------------------
-// 2. CLASS DIAGRAM
-// ---------------------------------------------------------------------------
-const classDiagramSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 950" width="1300" height="950">
+// ===========================================================================
+// 2. VISUAL UML: DOMAIN CLASS DIAGRAM
+// ===========================================================================
+const classDiagramSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900">
   <defs>
     <style>
-      .bg { fill: #f8fafc; }
-      .class-box { fill: #ffffff; stroke: #334155; stroke-width: 1.8; rx: 6; }
-      .class-header { fill: #1e293b; }
-      .class-header-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; font-weight: bold; fill: #ffffff; text-anchor: middle; }
-      .class-section-divider { stroke: #cbd5e1; stroke-width: 1.2; }
-      .attr-text { font-family: 'Consolas', monospace; font-size: 11.5px; fill: #0f172a; }
-      .method-text { font-family: 'Consolas', monospace; font-size: 11.5px; fill: #1e3a8a; }
-      .assoc-line { stroke: #475569; stroke-width: 1.5; }
-      .multiplicity { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #64748b; }
-      .inheritance-line { stroke: #0284c7; stroke-width: 1.8; marker-end: url(#hollowTriangle); }
-      .comp-diamond { fill: #0f172a; stroke: #0f172a; }
-      .agg-diamond { fill: #ffffff; stroke: #0f172a; stroke-width: 1.5; }
+      .canvas-bg { fill: #f8fafc; }
+      .header-bg { fill: #0a1128; }
+      .header-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #ffffff; }
+      .header-tag { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #e4b95b; letter-spacing: 1.5px; }
+      .class-card { fill: #ffffff; stroke: #0f172a; stroke-width: 1.8; rx: 8; filter: drop-shadow(0 3px 10px rgba(0,0,0,0.06)); }
+      .class-hdr { fill: #0a1128; }
+      .class-hdr-gold { fill: #b45309; }
+      .class-hdr-green { fill: #065f46; }
+      .class-hdr-blue { fill: #1e3a8a; }
+      .class-stereo { font-family: 'Segoe UI', Arial, sans-serif; font-size: 10px; font-style: italic; fill: #e4b95b; text-anchor: middle; }
+      .class-name { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #ffffff; text-anchor: middle; }
+      .comp-line { stroke: #cbd5e1; stroke-width: 1; }
+      .member-text { font-family: 'Consolas', 'Courier New', monospace; font-size: 11px; fill: #0f172a; }
+      .method-text { font-family: 'Consolas', 'Courier New', monospace; font-size: 11px; fill: #1e3a8a; }
+      .vis-plus { fill: #059669; font-weight: bold; }
+      .vis-minus { fill: #dc2626; font-weight: bold; }
+      .vis-prot { fill: #d97706; font-weight: bold; }
+      .rel-line { stroke: #1e293b; stroke-width: 1.6; }
+      .inher-arrow { fill: #ffffff; stroke: #0a1128; stroke-width: 1.8; }
+      .comp-diamond { fill: #0a1128; stroke: #0a1128; stroke-width: 1.5; }
+      .card-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #b45309; }
     </style>
-    <marker id="hollowTriangle" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="10" markerHeight="10" orient="auto">
-      <polygon points="0 0, 11 6, 0 12" fill="#ffffff" stroke="#0284c7" stroke-width="1.5" />
-    </marker>
   </defs>
 
-  <rect width="100%" height="100%" class="bg" />
+  <rect width="100%" height="100%" class="canvas-bg" />
 
-  <text x="650" y="32" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="bold" fill="#0f172a" text-anchor="middle">Class Diagram: Wonder Land Restaurant System Domain Model</text>
+  <!-- Top Executive Banner -->
+  <rect x="0" y="0" width="1200" height="70" class="header-bg" />
+  <rect x="0" y="68" width="1200" height="3" fill="#e4b95b" />
+  <text x="35" y="30" class="header-tag">WONDER LAND RESTAURANT SYSTEM • UML STRUCTURAL MODEL</text>
+  <text x="35" y="55" class="header-title">Visual UML: Class Diagram &amp; Domain Object Hierarchy</text>
 
-  <!-- CLASS: User (Abstract Base) -->
-  <g transform="translate(60, 60)">
-    <rect width="220" height="150" class="class-box" />
-    <rect width="220" height="32" class="class-header" fill="#0f172a" />
-    <text x="110" y="21" class="class-header-text">&lt;&lt;abstract&gt;&gt; User</text>
-    <text x="10" y="52" class="attr-text"># id: String</text>
-    <text x="10" y="68" class="attr-text"># fullName: String</text>
-    <text x="10" y="84" class="attr-text"># email: String</text>
-    <text x="10" y="100" class="attr-text"># phone: String</text>
-    <line x1="0" y1="108" x2="220" y2="108" class="class-section-divider" />
-    <text x="10" y="126" class="method-text">+ login(credentials): Boolean</text>
-    <text x="10" y="142" class="method-text">+ logout(): Void</text>
+  <!-- Class 1: User (Abstract Base) -->
+  <g transform="translate(480, 95)">
+    <rect width="240" height="170" class="class-card" />
+    <path d="M 0 0 L 240 0 L 240 40 L 0 40 Z" class="class-hdr" rx="8" />
+    <text x="120" y="16" class="class-stereo">&lt;&lt;abstract&gt;&gt;</text>
+    <text x="120" y="32" class="class-name">User</text>
+    <!-- Attributes -->
+    <text x="12" y="58" class="member-text"><tspan class="vis-prot">#</tspan> id: String</text>
+    <text x="12" y="74" class="member-text"><tspan class="vis-prot">#</tspan> fullName: String</text>
+    <text x="12" y="90" class="member-text"><tspan class="vis-prot">#</tspan> email: String</text>
+    <text x="12" y="106" class="member-text"><tspan class="vis-prot">#</tspan> phone: String</text>
+    <line x1="0" y1="116" x2="240" y2="116" class="comp-line" />
+    <!-- Methods -->
+    <text x="12" y="134" class="method-text"><tspan class="vis-plus">+</tspan> login(credentials): Boolean</text>
+    <text x="12" y="152" class="method-text"><tspan class="vis-plus">+</tspan> logout(): Void</text>
   </g>
 
-  <!-- CLASS: Customer (inherits User) -->
-  <g transform="translate(30, 260)">
-    <rect width="240" height="150" class="class-box" />
-    <rect width="240" height="32" class="class-header" fill="#0369a1" />
-    <text x="120" y="21" class="class-header-text">Customer</text>
-    <text x="10" y="52" class="attr-text">- deliveryAddress: String</text>
-    <text x="10" y="68" class="attr-text">- orderHistory: List&lt;Order&gt;</text>
-    <text x="10" y="84" class="attr-text">- loyaltyPoints: Integer</text>
-    <line x1="0" y1="92" x2="240" y2="92" class="class-section-divider" />
-    <text x="10" y="110" class="method-text">+ placeOrder(cart): Order</text>
-    <text x="10" y="126" class="method-text">+ trackOrder(orderId): OrderStatus</text>
-    <text x="10" y="142" class="method-text">+ bookTable(reservation): Boolean</text>
-  </g>
-  <!-- Inheritance Customer -> User -->
-  <line x1="150" y1="260" x2="150" y2="210" class="inheritance-line" />
-
-  <!-- CLASS: Admin (inherits User) -->
-  <g transform="translate(320, 60)">
-    <rect width="230" height="150" class="class-box" />
-    <rect width="230" height="32" class="class-header" fill="#b45309" />
-    <text x="115" y="21" class="class-header-text">Admin</text>
-    <text x="10" y="52" class="attr-text">- role: String = "Manager"</text>
-    <text x="10" y="68" class="attr-text">- accessLevel: Integer = 1</text>
-    <text x="10" y="84" class="attr-text">- adminPin: String</text>
-    <line x1="0" y1="92" x2="230" y2="92" class="class-section-divider" />
-    <text x="10" y="110" class="method-text">+ manageMenu(action, item): Void</text>
-    <text x="10" y="126" class="method-text">+ updateOrderStatus(id, st): Void</text>
-    <text x="10" y="142" class="method-text">+ getFinancialSummary(): Report</text>
-  </g>
-  <!-- Inheritance Admin -> User -->
-  <line x1="320" y1="135" x2="280" y2="135" class="inheritance-line" />
-
-  <!-- CLASS: Order -->
-  <g transform="translate(360, 260)">
-    <rect width="250" height="230" class="class-box" />
-    <rect width="250" height="32" class="class-header" fill="#15803d" />
-    <text x="125" y="21" class="class-header-text">Order</text>
-    <text x="10" y="52" class="attr-text">- orderId: String</text>
-    <text x="10" y="68" class="attr-text">- orderDate: DateTime</text>
-    <text x="10" y="84" class="attr-text">- customerInfo: CustomerInfo</text>
-    <text x="10" y="100" class="attr-text">- status: OrderStatus</text>
-    <text x="10" y="116" class="attr-text">- subtotal: Double</text>
-    <text x="10" y="132" class="attr-text">- tax: Double</text>
-    <text x="10" y="148" class="attr-text">- deliveryFee: Double</text>
-    <text x="10" y="164" class="attr-text">- totalAmount: Double</text>
-    <line x1="0" y1="172" x2="250" y2="172" class="class-section-divider" />
-    <text x="10" y="190" class="method-text">+ calculateTotals(): Double</text>
-    <text x="10" y="206" class="method-text">+ advanceStatus(): OrderStatus</text>
-    <text x="10" y="222" class="method-text">+ cancelOrder(): Boolean</text>
+  <!-- Class 2: Customer (Inherits User) -->
+  <g transform="translate(180, 320)">
+    <rect width="250" height="175" class="class-card" />
+    <path d="M 0 0 L 250 0 L 250 38 L 0 38 Z" class="class-hdr-blue" rx="8" />
+    <text x="125" y="15" class="class-stereo">&lt;&lt;entity&gt;&gt;</text>
+    <text x="125" y="30" class="class-name">Customer</text>
+    <!-- Attributes -->
+    <text x="12" y="56" class="member-text"><tspan class="vis-minus">-</tspan> deliveryAddress: String</text>
+    <text x="12" y="72" class="member-text"><tspan class="vis-minus">-</tspan> orderHistory: List&lt;Order&gt;</text>
+    <text x="12" y="88" class="member-text"><tspan class="vis-minus">-</tspan> loyaltyPoints: Integer</text>
+    <line x1="0" y1="100" x2="250" y2="100" class="comp-line" />
+    <!-- Methods -->
+    <text x="12" y="118" class="method-text"><tspan class="vis-plus">+</tspan> placeOrder(cart, payMethod): Order</text>
+    <text x="12" y="136" class="method-text"><tspan class="vis-plus">+</tspan> trackOrder(orderId): Status</text>
+    <text x="12" y="154" class="method-text"><tspan class="vis-plus">+</tspan> bookTable(details): Reservation</text>
   </g>
 
-  <!-- Customer -> Order (1 to 0..*) -->
-  <line x1="270" y1="335" x2="360" y2="335" class="assoc-line" />
-  <text x="278" y="325" class="multiplicity">1</text>
-  <text x="335" y="325" class="multiplicity">0..*</text>
-
-  <!-- CLASS: OrderItem (Composition with Order) -->
-  <g transform="translate(710, 260)">
-    <rect width="220" height="150" class="class-box" />
-    <rect width="220" height="32" class="class-header" fill="#15803d" />
-    <text x="110" y="21" class="class-header-text">OrderItem</text>
-    <text x="10" y="52" class="attr-text">- itemId: String</text>
-    <text x="10" y="68" class="attr-text">- quantity: Integer</text>
-    <text x="10" y="84" class="attr-text">- unitPrice: Double</text>
-    <text x="10" y="100" class="attr-text">- specialInstructions: String</text>
-    <line x1="0" y1="108" x2="220" y2="108" class="class-section-divider" />
-    <text x="10" y="126" class="method-text">+ getLineTotal(): Double</text>
-    <text x="10" y="142" class="method-text">+ updateQuantity(qty): Void</text>
+  <!-- Class 3: Admin (Inherits User) -->
+  <g transform="translate(770, 320)">
+    <rect width="250" height="175" class="class-card" />
+    <path d="M 0 0 L 250 0 L 250 38 L 0 38 Z" class="class-hdr-gold" rx="8" />
+    <text x="125" y="15" class="class-stereo">&lt;&lt;entity&gt;&gt;</text>
+    <text x="125" y="30" class="class-name">Admin</text>
+    <!-- Attributes -->
+    <text x="12" y="56" class="member-text"><tspan class="vis-minus">-</tspan> role: String = "Manager"</text>
+    <text x="12" y="72" class="member-text"><tspan class="vis-minus">-</tspan> accessPin: String = "admin123"</text>
+    <text x="12" y="88" class="member-text"><tspan class="vis-minus">-</tspan> telemetryLogs: List</text>
+    <line x1="0" y1="100" x2="250" y2="100" class="comp-line" />
+    <!-- Methods -->
+    <text x="12" y="118" class="method-text"><tspan class="vis-plus">+</tspan> mutateOrderStatus(id, status)</text>
+    <text x="12" y="136" class="method-text"><tspan class="vis-plus">+</tspan> manageCatalogCRUD(item, op)</text>
+    <text x="12" y="154" class="method-text"><tspan class="vis-plus">+</tspan> exportOrdersToExcel(): CSVBlob</text>
   </g>
 
-  <!-- Order Composition diamond to OrderItem -->
-  <polygon points="610,335 622,329 634,335 622,341" class="comp-diamond" />
-  <line x1="634" y1="335" x2="710" y2="335" class="assoc-line" />
-  <text x="640" y="325" class="multiplicity">1</text>
-  <text x="690" y="325" class="multiplicity">1..*</text>
+  <!-- Inheritance lines from Customer & Admin to User -->
+  <path d="M 305 320 L 305 285 L 600 285 L 600 265" fill="none" class="rel-line" />
+  <path d="M 895 320 L 895 285 L 600 285" fill="none" class="rel-line" />
+  <polygon points="600,265 590,285 610,285" class="inher-arrow" />
 
-  <!-- CLASS: MenuItem -->
-  <g transform="translate(1010, 260)">
-    <rect width="240" height="190" class="class-box" />
-    <rect width="240" height="32" class="class-header" fill="#7c3aed" />
-    <text x="120" y="21" class="class-header-text">MenuItem</text>
-    <text x="10" y="52" class="attr-text">- id: String</text>
-    <text x="10" y="68" class="attr-text">- title: String</text>
-    <text x="10" y="84" class="attr-text">- category: String</text>
-    <text x="10" y="100" class="attr-text">- price: Double</text>
-    <text x="10" y="116" class="attr-text">- description: String</text>
-    <text x="10" y="132" class="attr-text">- imagePath: String</text>
-    <text x="10" y="148" class="attr-text">- isAvailable: Boolean</text>
-    <line x1="0" y1="154" x2="240" y2="154" class="class-section-divider" />
-    <text x="10" y="172" class="method-text">+ updateDetails(data): Void</text>
-    <text x="10" y="188" class="method-text">+ toggleAvailability(): Boolean</text>
-  </g>
-  <!-- OrderItem -> MenuItem (Association) -->
-  <line x1="930" y1="335" x2="1010" y2="335" class="assoc-line" />
-  <text x="940" y="325" class="multiplicity">1..*</text>
-  <text x="990" y="325" class="multiplicity">1</text>
-
-  <!-- CLASS: Category -->
-  <g transform="translate(1030, 60)">
-    <rect width="200" height="130" class="class-box" />
-    <rect width="200" height="32" class="class-header" fill="#6d28d9" />
-    <text x="100" y="21" class="class-header-text">Category</text>
-    <text x="10" y="52" class="attr-text">- slug: String</text>
-    <text x="10" y="68" class="attr-text">- displayName: String</text>
-    <text x="10" y="84" class="attr-text">- icon: String</text>
-    <line x1="0" y1="92" x2="200" y2="92" class="class-section-divider" />
-    <text x="10" y="112" class="method-text">+ getItems(): List&lt;MenuItem&gt;</text>
-  </g>
-  <!-- MenuItem -> Category (Aggregation) -->
-  <polygon points="1130,260 1124,248 1130,236 1136,248" class="agg-diamond" />
-  <line x1="1130" y1="236" x2="1130" y2="190" class="assoc-line" />
-  <text x="1140" y="248" class="multiplicity">*</text>
-  <text x="1140" y="205" class="multiplicity">1</text>
-
-  <!-- CLASS: Payment (Abstract) & Subclasses -->
-  <g transform="translate(360, 560)">
-    <rect width="250" height="140" class="class-box" />
-    <rect width="250" height="32" class="class-header" fill="#047857" />
-    <text x="125" y="21" class="class-header-text">&lt;&lt;abstract&gt;&gt; Payment</text>
-    <text x="10" y="52" class="attr-text"># paymentId: String</text>
-    <text x="10" y="68" class="attr-text"># amount: Double</text>
-    <text x="10" y="84" class="attr-text"># paymentDate: DateTime</text>
-    <text x="10" y="100" class="attr-text"># status: PaymentStatus</text>
-    <line x1="0" y1="108" x2="250" y2="108" class="class-section-divider" />
-    <text x="10" y="126" class="method-text">+ processPayment(): Boolean</text>
-  </g>
-  <!-- Order -> Payment (1 to 1) -->
-  <line x1="485" y1="490" x2="485" y2="560" class="assoc-line" />
-  <text x="495" y="505" class="multiplicity">1</text>
-  <text x="495" y="545" class="multiplicity">1</text>
-
-  <!-- Subclasses of Payment -->
-  <!-- CashPayment -->
-  <g transform="translate(200, 750)">
-    <rect width="180" height="90" class="class-box" />
-    <rect width="180" height="28" class="class-header" fill="#059669" />
-    <text x="90" y="19" class="class-header-text" font-size="13">CashPayment</text>
-    <text x="10" y="46" class="attr-text">- tenderedAmount: Double</text>
-    <text x="10" y="62" class="attr-text">- changeDue: Double</text>
-    <text x="10" y="80" class="method-text">+ processPayment(): Bool</text>
-  </g>
-  <line x1="290" y1="750" x2="420" y2="700" class="inheritance-line" />
-
-  <!-- CreditCardPayment -->
-  <g transform="translate(400, 750)">
-    <rect width="200" height="105" class="class-box" />
-    <rect width="200" height="28" class="class-header" fill="#059669" />
-    <text x="100" y="19" class="class-header-text" font-size="13">CreditCardPayment</text>
-    <text x="10" y="46" class="attr-text">- cardNumberMasked: String</text>
-    <text x="10" y="62" class="attr-text">- cardHolder: String</text>
-    <text x="10" y="78" class="attr-text">- authTransactionId: String</text>
-    <text x="10" y="96" class="method-text">+ processPayment(): Bool</text>
-  </g>
-  <line x1="485" y1="750" x2="485" y2="700" class="inheritance-line" />
-
-  <!-- DigitalWalletPayment -->
-  <g transform="translate(620, 750)">
-    <rect width="200" height="90" class="class-box" />
-    <rect width="200" height="28" class="class-header" fill="#059669" />
-    <text x="100" y="19" class="class-header-text" font-size="13">DigitalWalletPayment</text>
-    <text x="10" y="46" class="attr-text">- provider: String // Fawry/VF</text>
-    <text x="10" y="62" class="attr-text">- walletPhone: String</text>
-    <text x="10" y="80" class="method-text">+ processPayment(): Bool</text>
-  </g>
-  <line x1="680" y1="750" x2="550" y2="700" class="inheritance-line" />
-
-  <!-- CLASS: TableReservation -->
-  <g transform="translate(30, 480)">
-    <rect width="240" height="200" class="class-box" />
-    <rect width="240" height="32" class="class-header" fill="#c026d3" />
-    <text x="120" y="21" class="class-header-text">TableReservation</text>
-    <text x="10" y="52" class="attr-text">- reservationId: String</text>
-    <text x="10" y="68" class="attr-text">- guestName: String</text>
-    <text x="10" y="84" class="attr-text">- guestPhone: String</text>
-    <text x="10" y="100" class="attr-text">- reserveDate: Date</text>
-    <text x="10" y="116" class="attr-text">- timeSlot: String</text>
-    <text x="10" y="132" class="attr-text">- partySize: Integer</text>
-    <text x="10" y="148" class="attr-text">- seatingZone: SeatingZone</text>
-    <text x="10" y="164" class="attr-text">- status: ReserveStatus</text>
-    <line x1="0" y1="172" x2="240" y2="172" class="class-section-divider" />
-    <text x="10" y="190" class="method-text">+ confirmBooking(): Void</text>
-  </g>
-  <!-- Customer -> TableReservation (1 to 0..*) -->
-  <line x1="150" y1="410" x2="150" y2="480" class="assoc-line" />
-  <text x="160" y="425" class="multiplicity">1</text>
-  <text x="160" y="465" class="multiplicity">0..*</text>
-
-  <!-- CLASS: Review -->
-  <g transform="translate(710, 480)">
-    <rect width="220" height="150" class="class-box" />
-    <rect width="220" height="32" class="class-header" fill="#e11d48" />
-    <text x="110" y="21" class="class-header-text">Review</text>
-    <text x="10" y="52" class="attr-text">- reviewId: String</text>
-    <text x="10" y="68" class="attr-text">- customerName: String</text>
-    <text x="10" y="84" class="attr-text">- ratingStars: Integer (1-5)</text>
-    <text x="10" y="100" class="attr-text">- comment: String</text>
-    <text x="10" y="116" class="attr-text">- createdAt: DateTime</text>
-    <line x1="0" y1="124" x2="220" y2="124" class="class-section-divider" />
-    <text x="10" y="142" class="method-text">+ publishReview(): Void</text>
+  <!-- Class 4: Order (Composition with OrderItem) -->
+  <g transform="translate(180, 560)">
+    <rect width="260" height="210" class="class-card" />
+    <path d="M 0 0 L 260 0 L 260 38 L 0 38 Z" class="class-hdr" rx="8" />
+    <text x="130" y="15" class="class-stereo">&lt;&lt;aggregate root&gt;&gt;</text>
+    <text x="130" y="30" class="class-name">Order</text>
+    <text x="12" y="56" class="member-text"><tspan class="vis-minus">-</tspan> orderId: String</text>
+    <text x="12" y="72" class="member-text"><tspan class="vis-minus">-</tspan> subtotal: Double</text>
+    <text x="12" y="88" class="member-text"><tspan class="vis-minus">-</tspan> tax14: Double</text>
+    <text x="12" y="104" class="member-text"><tspan class="vis-minus">-</tspan> deliveryFee: Double = 3.00</text>
+    <text x="12" y="120" class="member-text"><tspan class="vis-minus">-</tspan> totalAmount: Double</text>
+    <text x="12" y="136" class="member-text"><tspan class="vis-minus">-</tspan> status: OrderStatus</text>
+    <line x1="0" y1="146" x2="260" y2="146" class="comp-line" />
+    <text x="12" y="164" class="method-text"><tspan class="vis-plus">+</tspan> calculateTotals(): Double</text>
+    <text x="12" y="182" class="method-text"><tspan class="vis-plus">+</tspan> advanceState(): OrderStatus</text>
+    <text x="12" y="200" class="method-text"><tspan class="vis-plus">+</tspan> canCancel(): Boolean</text>
   </g>
 
-  <!-- CLASS: LocalStorageDataStore (Singleton Repository) -->
-  <g transform="translate(980, 560)">
-    <rect width="280" height="180" class="class-box" />
-    <rect width="280" height="32" class="class-header" fill="#334155" />
-    <text x="140" y="21" class="class-header-text">&lt;&lt;Singleton&gt;&gt; RestaurantDataStore</text>
-    <text x="10" y="52" class="attr-text">- instance: RestaurantDataStore</text>
-    <text x="10" y="68" class="attr-text">- storageKey: String = "WL_DATA"</text>
-    <line x1="0" y1="76" x2="280" y2="76" class="class-section-divider" />
-    <text x="10" y="94" class="method-text">+ getAllOrders(): List&lt;Order&gt;</text>
-    <text x="10" y="110" class="method-text">+ saveOrder(order): Boolean</text>
-    <text x="10" y="126" class="method-text">+ getMenuItems(): List&lt;MenuItem&gt;</text>
-    <text x="10" y="142" class="method-text">+ getReservations(): List&lt;Reserve&gt;</text>
-    <text x="10" y="158" class="method-text">+ syncState(): Void</text>
+  <!-- Customer 1 -> * Order Association -->
+  <line x1="305" y1="495" x2="305" y2="560" class="rel-line" />
+  <text x="315" y="515" class="card-text">1</text>
+  <text x="315" y="550" class="card-text">0..*</text>
+
+  <!-- Class 5: OrderItem -->
+  <g transform="translate(560, 560)">
+    <rect width="210" height="145" class="class-card" />
+    <path d="M 0 0 L 210 0 L 210 38 L 0 38 Z" class="class-hdr" rx="8" />
+    <text x="105" y="15" class="class-stereo">&lt;&lt;entity&gt;&gt;</text>
+    <text x="105" y="30" class="class-name">OrderItem</text>
+    <text x="12" y="56" class="member-text"><tspan class="vis-minus">-</tspan> quantity: Integer</text>
+    <text x="12" y="72" class="member-text"><tspan class="vis-minus">-</tspan> unitPrice: Double</text>
+    <text x="12" y="88" class="member-text"><tspan class="vis-minus">-</tspan> itemTotal: Double</text>
+    <line x1="0" y1="100" x2="210" y2="100" class="comp-line" />
+    <text x="12" y="120" class="method-text"><tspan class="vis-plus">+</tspan> computeItemTotal(): Double</text>
   </g>
+
+  <!-- Composition: Order ◆── OrderItem -->
+  <line x1="440" y1="620" x2="560" y2="620" class="rel-line" />
+  <polygon points="440,620 452,614 464,620 452,626" class="comp-diamond" />
+  <text x="470" y="612" class="card-text">1</text>
+  <text x="540" y="612" class="card-text">1..*</text>
+
+  <!-- Class 6: MenuItem -->
+  <g transform="translate(880, 560)">
+    <rect width="240" height="175" class="class-card" />
+    <path d="M 0 0 L 240 0 L 240 38 L 0 38 Z" class="class-hdr-green" rx="8" />
+    <text x="120" y="15" class="class-stereo">&lt;&lt;catalog item&gt;&gt;</text>
+    <text x="120" y="30" class="class-name">MenuItem</text>
+    <text x="12" y="56" class="member-text"><tspan class="vis-prot">#</tspan> id: String</text>
+    <text x="12" y="72" class="member-text"><tspan class="vis-prot">#</tspan> title: String</text>
+    <text x="12" y="88" class="member-text"><tspan class="vis-prot">#</tspan> category: CategoryEnum</text>
+    <text x="12" y="104" class="member-text"><tspan class="vis-prot">#</tspan> price: Double</text>
+    <text x="12" y="120" class="member-text"><tspan class="vis-prot">#</tspan> isAvailable: Boolean</text>
+    <line x1="0" y1="130" x2="240" y2="130" class="comp-line" />
+    <text x="12" y="150" class="method-text"><tspan class="vis-plus">+</tspan> toggleAvailability(): Boolean</text>
+    <text x="12" y="166" class="method-text"><tspan class="vis-plus">+</tspan> updatePrice(newPrice)</text>
+  </g>
+
+  <!-- OrderItem --> MenuItem aggregation
+  <line x1="770" y1="620" x2="880" y2="620" class="rel-line" />
+  <text x="785" y="612" class="card-text">*</text>
+  <text x="860" y="612" class="card-text">1</text>
+
+  <!-- Class 7: Payment Polymorphism -->
+  <g transform="translate(180, 800)">
+    <rect width="260" height="75" class="class-card" />
+    <path d="M 0 0 L 260 0 L 260 28 L 0 28 Z" class="class-hdr" rx="8" />
+    <text x="130" y="18" class="class-name">Payment (COD / Card)</text>
+    <text x="12" y="46" class="member-text">method: "Cash on Delivery" | "Card"</text>
+    <text x="12" y="62" class="method-text">+ processPayment(): Boolean</text>
+  </g>
+  <line x1="305" y1="770" x2="305" y2="800" class="rel-line" />
+  <text x="315" y="790" class="card-text">1:1</text>
 </svg>`;
 
 saveSvg('02_class_diagram.svg', classDiagramSvg);
 
-// ---------------------------------------------------------------------------
-// 3. SEQUENCE DIAGRAM: ORDER FOOD & CHECKOUT
-// ---------------------------------------------------------------------------
-const seqOrderSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 800" width="1100" height="800">
+// ===========================================================================
+// 3. VISUAL UML: SEQUENCE DIAGRAM (CHECKOUT & COD ORDER)
+// ===========================================================================
+const seqCheckoutCodSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 860" width="1200" height="860">
   <defs>
     <style>
-      .bg { fill: #f8fafc; }
-      .lifeline { stroke: #94a3b8; stroke-width: 1.5; stroke-dasharray: 4,4; }
-      .actor-box { fill: #1e293b; rx: 6; }
-      .actor-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: bold; fill: #ffffff; text-anchor: middle; dominant-baseline: central; }
-      .activation { fill: #dbeafe; stroke: #2563eb; stroke-width: 1.5; }
-      .sync-msg { stroke: #1e3a8a; stroke-width: 1.6; marker-end: url(#arrowBlue); }
-      .reply-msg { stroke: #059669; stroke-width: 1.5; stroke-dasharray: 5,4; marker-end: url(#arrowGreen); }
-      .msg-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: 600; fill: #0f172a; }
-      .alt-box { fill: none; stroke: #d97706; stroke-width: 1.5; stroke-dasharray: 4,4; rx: 4; }
-      .alt-header { fill: #fef3c7; stroke: #d97706; stroke-width: 1; }
-      .alt-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #92400e; }
+      .canvas-bg { fill: #f8fafc; }
+      .header-bg { fill: #0a1128; }
+      .header-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #ffffff; }
+      .header-tag { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #e4b95b; letter-spacing: 1.5px; }
+      .lifeline-header { rx: 8; fill: #0f172a; stroke: #e4b95b; stroke-width: 1.5; }
+      .lifeline-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: bold; fill: #ffffff; text-anchor: middle; dominant-baseline: central; }
+      .lifeline-dash { stroke: #94a3b8; stroke-width: 1.5; stroke-dasharray: 5,4; }
+      .act-bar { fill: #fdf6e2; stroke: #b45309; stroke-width: 1.6; }
+      .sync-arrow { stroke: #0a1128; stroke-width: 1.8; marker-end: url(#arrowDark); }
+      .reply-arrow { stroke: #059669; stroke-width: 1.6; stroke-dasharray: 5,4; marker-end: url(#arrowGreen); }
+      .msg-label { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: 700; fill: #0f172a; }
+      .alt-container { fill: #fffdf5; stroke: #d97706; stroke-width: 1.6; rx: 8; }
+      .alt-header-tag { fill: #d97706; rx: 6; }
+      .alt-tag-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #ffffff; text-anchor: middle; dominant-baseline: central; }
     </style>
-    <marker id="arrowBlue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M 0 1 L 10 5 L 0 9 z" fill="#1e3a8a" />
+    <marker id="arrowDark" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#0a1128" />
+    </marker>
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#059669" />
+    </marker>
+    <marker id="arrowGold" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#b45309" />
+    </marker>
+  </defs>
+
+  <rect width="100%" height="100%" class="canvas-bg" />
+
+  <!-- Top Executive Banner -->
+  <rect x="0" y="0" width="1200" height="70" class="header-bg" />
+  <rect x="0" y="68" width="1200" height="3" fill="#e4b95b" />
+  <text x="35" y="30" class="header-tag">WONDER LAND RESTAURANT SYSTEM • UML DYNAMIC INTERACTION MODEL</text>
+  <text x="35" y="55" class="header-title">Visual UML: Sequence Diagram (Checkout &amp; Cash on Delivery - COD Order)</text>
+
+  <!-- Lifeline 1: Customer -->
+  <rect x="50" y="95" width="140" height="42" class="lifeline-header" />
+  <text x="120" y="116" class="lifeline-text">:Customer</text>
+  <line x1="120" y1="137" x2="120" y2="820" class="lifeline-dash" />
+
+  <!-- Lifeline 2: WebGUI -->
+  <rect x="290" y="95" width="160" height="42" class="lifeline-header" />
+  <text x="370" y="116" class="lifeline-text">:CustomerWebGUI</text>
+  <line x1="370" y1="137" x2="370" y2="820" class="lifeline-dash" />
+
+  <!-- Lifeline 3: CartController -->
+  <rect x="550" y="95" width="160" height="42" class="lifeline-header" />
+  <text x="630" y="116" class="lifeline-text">:CartController</text>
+  <line x1="630" y1="137" x2="630" y2="820" class="lifeline-dash" />
+
+  <!-- Lifeline 4: PaymentService -->
+  <rect x="790" y="95" width="160" height="42" class="lifeline-header" />
+  <text x="870" y="116" class="lifeline-text">:PaymentService</text>
+  <line x1="870" y1="137" x2="870" y2="820" class="lifeline-dash" />
+
+  <!-- Lifeline 5: RestaurantDataStore -->
+  <rect x="1010" y="95" width="160" height="42" class="lifeline-header" />
+  <text x="1090" y="116" class="lifeline-text">:RestaurantDataStore</text>
+  <line x1="1090" y1="137" x2="1090" y2="820" class="lifeline-dash" />
+
+  <!-- Activations -->
+  <rect x="115" y="160" width="10" height="640" class="act-bar" />
+  <rect x="365" y="170" width="10" height="620" class="act-bar" />
+  <rect x="625" y="190" width="10" height="410" class="act-bar" />
+  <rect x="865" y="400" width="10" height="110" class="act-bar" />
+  <rect x="1085" y="520" width="10" height="130" class="act-bar" />
+
+  <!-- Step 1: Add Item -->
+  <line x1="125" y1="180" x2="365" y2="180" class="sync-arrow" />
+  <text x="245" y="173" class="msg-label" text-anchor="middle">1: clickAddToCart(dishId, qty)</text>
+
+  <!-- Step 2: Forward to Cart -->
+  <line x1="375" y1="205" x2="625" y2="205" class="sync-arrow" />
+  <text x="500" y="198" class="msg-label" text-anchor="middle">2: addItemToCart(dishId, qty)</text>
+
+  <!-- Step 3: Self-Call Totals -->
+  <path d="M 635 225 L 675 225 L 675 250 L 635 250" fill="none" stroke="#b45309" stroke-width="1.6" marker-end="url(#arrowGold)" />
+  <text x="685" y="242" class="msg-label" fill="#b45309">3: computeTotals(subtotal + 14% VAT + $3 delivery)</text>
+
+  <!-- Step 4: Return Cart Badge -->
+  <line x1="625" y1="275" x2="375" y2="275" class="reply-arrow" />
+  <text x="500" y="268" class="msg-label" text-anchor="middle">4: updateCartBadge(count, total)</text>
+
+  <!-- Step 5: Customer opens checkout -->
+  <line x1="125" y1="310" x2="365" y2="310" class="sync-arrow" />
+  <text x="245" y="303" class="msg-label" text-anchor="middle">5: openCheckoutModal()</text>
+
+  <line x1="365" y1="335" x2="125" y2="335" class="reply-arrow" />
+  <text x="245" y="328" class="msg-label" text-anchor="middle">6: renderCheckoutForm(summary)</text>
+
+  <!-- Step 7: Submit Order with COD -->
+  <line x1="125" y1="375" x2="365" y2="375" class="sync-arrow" stroke-width="2.2" stroke="#b45309" />
+  <text x="245" y="367" class="msg-label" text-anchor="middle" fill="#b45309">7: submitOrder(info, paymentMethod: "COD")</text>
+
+  <!-- Step 8: Forward to Controller -->
+  <line x1="375" y1="400" x2="625" y2="400" class="sync-arrow" />
+  <text x="500" y="393" class="msg-label" text-anchor="middle">8: processCheckout(cart, info, isCOD: true)</text>
+
+  <!-- Step 9: Verify COD Policy -->
+  <line x1="635" y1="425" x2="865" y2="425" class="sync-arrow" />
+  <text x="750" y="418" class="msg-label" text-anchor="middle">9: verifyCODAvailability(address, total)</text>
+
+  <!-- Alt Container: [COD Policy Approved] -->
+  <rect x="610" y="445" width="560" height="215" class="alt-container" />
+  <rect x="610" y="445" width="160" height="24" class="alt-header-tag" />
+  <text x="690" y="457" class="alt-tag-text">[Alt: COD Approved]</text>
+
+  <!-- Step 10: COD Accepted -->
+  <line x1="865" y1="485" x2="635" y2="485" class="reply-arrow" />
+  <text x="750" y="478" class="msg-label" text-anchor="middle">10: codAccepted(flag: "Collect on Handover")</text>
+
+  <!-- Step 11: Persist in Store -->
+  <line x1="635" y1="525" x2="1085" y2="525" class="sync-arrow" stroke-width="2" stroke="#059669" />
+  <text x="860" y="518" class="msg-label" text-anchor="middle" fill="#047857">11: persistOrder(newOrder, status: "Pending")</text>
+
+  <!-- Step 12: Confirm Save -->
+  <line x1="1085" y1="565" x2="635" y2="565" class="reply-arrow" />
+  <text x="860" y="558" class="msg-label" text-anchor="middle">12: orderCommitted(orderId: "#WL-8492")</text>
+
+  <!-- Step 13: Forward Confirmation -->
+  <line x1="625" y1="605" x2="375" y2="605" class="reply-arrow" />
+  <text x="500" y="598" class="msg-label" text-anchor="middle">13: return confirmationReceipt(orderId)</text>
+
+  <!-- Step 14: Show Receipt & Stepper -->
+  <line x1="365" y1="645" x2="125" y2="645" class="reply-arrow" />
+  <text x="245" y="638" class="msg-label" text-anchor="middle">14: displayOrderReceiptAndLiveTracker()</text>
+
+  <!-- Step 15: Polling / Sync -->
+  <line x1="125" y1="700" x2="365" y2="700" class="sync-arrow" />
+  <text x="245" y="693" class="msg-label" text-anchor="middle">15: pollOrderStatus(orderId)</text>
+
+  <!-- Step 16: Render Stepper -->
+  <line x1="365" y1="740" x2="125" y2="740" class="reply-arrow" stroke="#b45309" stroke-width="2" />
+  <text x="245" y="733" class="msg-label" text-anchor="middle" fill="#b45309">16: renderStepperNode("Node 1: Pending")</text>
+</svg>`;
+
+saveSvg('03_sequence_order_food.svg', seqCheckoutCodSvg);
+
+// ===========================================================================
+// 4. VISUAL UML: SEQUENCE DIAGRAM (ADMIN MANAGEMENT & EXCEL)
+// ===========================================================================
+const seqAdminExcelSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 860" width="1200" height="860">
+  <defs>
+    <style>
+      .canvas-bg { fill: #f8fafc; }
+      .header-bg { fill: #0a1128; }
+      .header-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #ffffff; }
+      .header-tag { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #e4b95b; letter-spacing: 1.5px; }
+      .lifeline-header { rx: 8; fill: #0f172a; stroke: #e4b95b; stroke-width: 1.5; }
+      .lifeline-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: bold; fill: #ffffff; text-anchor: middle; dominant-baseline: central; }
+      .lifeline-dash { stroke: #94a3b8; stroke-width: 1.5; stroke-dasharray: 5,4; }
+      .act-bar { fill: #fdf6e2; stroke: #b45309; stroke-width: 1.6; }
+      .sync-arrow { stroke: #0a1128; stroke-width: 1.8; marker-end: url(#arrowDark); }
+      .reply-arrow { stroke: #059669; stroke-width: 1.6; stroke-dasharray: 5,4; marker-end: url(#arrowGreen); }
+      .msg-label { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: 700; fill: #0f172a; }
+      .excel-tag { fill: #065f46; stroke: #10b981; stroke-width: 1.5; rx: 6; }
+    </style>
+    <marker id="arrowDark" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#0a1128" />
     </marker>
     <marker id="arrowGreen" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M 0 1 L 10 5 L 0 9 z" fill="#059669" />
     </marker>
   </defs>
 
-  <rect width="100%" height="100%" class="bg" />
+  <rect width="100%" height="100%" class="canvas-bg" />
 
-  <text x="550" y="32" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="bold" fill="#0f172a" text-anchor="middle">Sequence Diagram: Customer Checkout &amp; Cash on Delivery (COD) Order</text>
+  <!-- Top Executive Banner -->
+  <rect x="0" y="0" width="1200" height="70" class="header-bg" />
+  <rect x="0" y="68" width="1200" height="3" fill="#e4b95b" />
+  <text x="35" y="30" class="header-tag">WONDER LAND RESTAURANT SYSTEM • BACK-OFFICE TELEMETRY</text>
+  <text x="35" y="55" class="header-title">Visual UML: Sequence Diagram (Admin Management &amp; Excel Export)</text>
 
-  <!-- Lifeline Headers -->
-  <!-- 1. Customer -->
-  <rect x="50" y="60" width="120" height="40" class="actor-box" fill="#0284c7" />
-  <text x="110" y="80" class="actor-title">:Customer</text>
-  <line x1="110" y1="100" x2="110" y2="760" class="lifeline" />
+  <!-- Lifeline 1: Admin / Manager -->
+  <rect x="60" y="95" width="160" height="42" class="lifeline-header" fill="#b45309" />
+  <text x="140" y="116" class="lifeline-text">:Admin / Manager</text>
+  <line x1="140" y1="137" x2="140" y2="820" class="lifeline-dash" />
 
-  <!-- 2. UI / Boundary -->
-  <rect x="250" y="60" width="130" height="40" class="actor-box" fill="#475569" />
-  <text x="315" y="80" class="actor-title">:WebGUI (Client)</text>
-  <line x1="315" y1="100" x2="315" y2="760" class="lifeline" />
+  <!-- Lifeline 2: AdminDashboardGUI -->
+  <rect x="340" y="95" width="170" height="42" class="lifeline-header" />
+  <text x="425" y="116" class="lifeline-text">:AdminDashboardGUI</text>
+  <line x1="425" y1="137" x2="425" y2="820" class="lifeline-dash" />
 
-  <!-- 3. CartController -->
-  <rect x="470" y="60" width="130" height="40" class="actor-box" fill="#2563eb" />
-  <text x="535" y="80" class="actor-title">:CartController</text>
-  <line x1="535" y1="100" x2="535" y2="760" class="lifeline" />
+  <!-- Lifeline 3: AdminService -->
+  <rect x="630" y="95" width="160" height="42" class="lifeline-header" />
+  <text x="710" y="116" class="lifeline-text">:AdminService</text>
+  <line x1="710" y1="137" x2="710" y2="820" class="lifeline-dash" />
 
-  <!-- 4. PaymentGateway -->
-  <rect x="680" y="60" width="140" height="40" class="actor-box" fill="#059669" />
-  <text x="750" y="80" class="actor-title">:PaymentGateway</text>
-  <line x1="750" y1="100" x2="750" y2="760" class="lifeline" />
-
-  <!-- 5. DataStore / Storage -->
-  <rect x="900" y="60" width="150" height="40" class="actor-box" fill="#7c3aed" />
-  <text x="975" y="80" class="actor-title">:RestaurantDataStore</text>
-  <line x1="975" y1="100" x2="975" y2="760" class="lifeline" />
+  <!-- Lifeline 4: ExcelExportEngine -->
+  <rect x="910" y="95" width="180" height="42" class="lifeline-header" fill="#065f46" stroke="#10b981" />
+  <text x="1000" y="116" class="lifeline-text">:ExcelExportEngine</text>
+  <line x1="1000" y1="137" x2="1000" y2="820" class="lifeline-dash" />
 
   <!-- Activations -->
-  <rect x="105" y="120" width="10" height="620" class="activation" />
-  <rect x="310" y="130" width="10" height="600" class="activation" />
-  <rect x="530" y="150" width="10" height="350" class="activation" />
-  <rect x="745" y="380" width="10" height="100" class="activation" />
-  <rect x="970" y="490" width="10" height="120" class="activation" />
+  <rect x="135" y="160" width="10" height="630" class="act-bar" />
+  <rect x="420" y="170" width="10" height="600" class="act-bar" />
+  <rect x="705" y="190" width="10" height="560" class="act-bar" />
+  <rect x="995" y="520" width="10" height="180" class="act-bar" />
 
-  <!-- Messages -->
-  <!-- 1. Browse & Add item -->
-  <line x1="115" y1="140" x2="310" y2="140" class="sync-msg" />
-  <text x="210" y="133" class="msg-text" text-anchor="middle">1: selectItem(itemId, qty)</text>
+  <!-- 1. Enter PIN -->
+  <line x1="145" y1="180" x2="420" y2="180" class="sync-arrow" />
+  <text x="280" y="173" class="msg-label" text-anchor="middle">1: enterAdminPin("admin123")</text>
 
-  <!-- 2. Forward to CartController -->
-  <line x1="320" y1="155" x2="530" y2="155" class="sync-msg" />
-  <text x="425" y="148" class="msg-text" text-anchor="middle">2: addItem(itemId, qty)</text>
+  <line x1="430" y1="205" x2="705" y2="205" class="sync-arrow" />
+  <text x="565" y="198" class="msg-label" text-anchor="middle">2: verifyCredentials(pin)</text>
 
-  <!-- 3. Self call: calculateTotals -->
-  <path d="M 540 180 L 575 180 L 575 205 L 540 205" fill="none" stroke="#1e3a8a" stroke-width="1.5" marker-end="url(#arrowBlue)" />
-  <text x="585" y="196" class="msg-text">3: computeCartTotals()</text>
+  <!-- 3. Load Telemetry -->
+  <line x1="715" y1="230" x2="715" y2="255" class="sync-arrow" />
+  <text x="725" y="245" class="msg-label">3: loadTelemetryData(sales, orders, tables)</text>
 
-  <!-- 4. Update Cart Badge -->
-  <line x1="530" y1="230" x2="320" y2="230" class="reply-msg" />
-  <text x="425" y="222" class="msg-text" text-anchor="middle">4: return updatedCartView</text>
+  <line x1="705" y1="280" x2="430" y2="280" class="reply-arrow" />
+  <text x="565" y="273" class="msg-label" text-anchor="middle">4: return (telemetryPayload)</text>
 
-  <!-- 5. Customer clicks Checkout -->
-  <line x1="115" y1="265" x2="310" y2="265" class="sync-msg" />
-  <text x="210" y="258" class="msg-text" text-anchor="middle">5: openCheckoutModal()</text>
+  <line x1="420" y1="310" x2="145" y2="310" class="reply-arrow" />
+  <text x="280" y="303" class="msg-label" text-anchor="middle">5: renderKPIsAndOrdersBoard()</text>
 
-  <!-- 6. Display Checkout Dialog -->
-  <line x1="310" y1="290" x2="115" y2="290" class="reply-msg" />
-  <text x="210" y="283" class="msg-text" text-anchor="middle">6: renderCheckoutForm()</text>
+  <!-- 6. Change Order Status -->
+  <line x1="145" y1="355" x2="420" y2="355" class="sync-arrow" stroke="#b45309" stroke-width="2" />
+  <text x="280" y="348" class="msg-label" text-anchor="middle" fill="#b45309">6: selectOrderUpdate(id, newStatus: "In Kitchen")</text>
 
-  <!-- 7. Submit order details & payment -->
-  <line x1="115" y1="335" x2="310" y2="335" class="sync-msg" />
-  <text x="210" y="328" class="msg-text" text-anchor="middle">7: submitOrder(customerInfo, paymentMethod: "COD")</text>
+  <line x1="430" y1="380" x2="705" y2="380" class="sync-arrow" />
+  <text x="565" y="373" class="msg-label" text-anchor="middle">7: mutateOrderStatus(id, "In Kitchen")</text>
 
-  <!-- 8. Validate & Prepare -->
-  <line x1="320" y1="360" x2="530" y2="360" class="sync-msg" />
-  <text x="425" y="353" class="msg-text" text-anchor="middle">8: processCheckout(cart, info, isCOD: true)</text>
+  <line x1="705" y1="410" x2="430" y2="410" class="reply-arrow" />
+  <text x="565" y="403" class="msg-label" text-anchor="middle">8: statusUpdated(broadcastStorageEvent)</text>
 
-  <!-- 9. Process Payment with Gateway -->
-  <line x1="540" y1="390" x2="745" y2="390" class="sync-msg" />
-  <text x="640" y="383" class="msg-text" text-anchor="middle">9: verifyCODAvailability(customerAddress, total)</text>
+  <line x1="420" y1="440" x2="145" y2="440" class="reply-arrow" />
+  <text x="280" y="433" class="msg-label" text-anchor="middle">9: showToast("Order #WL-8492 updated to In Kitchen")</text>
 
-  <!-- Alt Block: Payment Success / Failure -->
-  <rect x="510" y="415" width="480" height="200" class="alt-box" />
-  <rect x="510" y="415" width="120" height="20" class="alt-header" />
-  <text x="518" y="429" class="alt-text">[COD Approved]</text>
+  <!-- 10. Click Export to Excel -->
+  <line x1="145" y1="500" x2="420" y2="500" class="sync-arrow" stroke="#059669" stroke-width="2.2" />
+  <text x="280" y="493" class="msg-label" text-anchor="middle" fill="#047857">10: clickExportOrdersExcelBtn()</text>
 
-  <!-- 10. Payment confirmed -->
-  <line x1="745" y1="460" x2="540" y2="460" class="reply-msg" />
-  <text x="640" y="453" class="msg-text" text-anchor="middle">10: codAccepted(flag: "Pay on Handover")</text>
+  <line x1="430" y1="525" x2="705" y2="525" class="sync-arrow" />
+  <text x="565" y="518" class="msg-label" text-anchor="middle">11: getOrdersDataset()</text>
 
-  <!-- 11. Save Order to Database / LocalStorage -->
-  <line x1="540" y1="500" x2="970" y2="500" class="sync-msg" />
-  <text x="755" y="493" class="msg-text" text-anchor="middle">11: persistOrder(newOrder: Order)</text>
+  <line x1="715" y1="550" x2="995" y2="550" class="sync-arrow" stroke="#059669" stroke-width="2" />
+  <text x="855" y="543" class="msg-label" text-anchor="middle" fill="#047857">12: generateCSV(orders, headers, UTF8_BOM)</text>
 
-  <!-- 12. Confirm save -->
-  <line x1="970" y1="535" x2="540" y2="535" class="reply-msg" />
-  <text x="755" y="528" class="msg-text" text-anchor="middle">12: orderSavedSuccess(orderId: "#WL-8492")</text>
+  <!-- Self-call format -->
+  <path d="M 1005 570 L 1045 570 L 1045 595 L 1005 595" fill="none" stroke="#059669" stroke-width="1.6" />
+  <text x="1055" y="587" class="msg-label" fill="#047857">13: serializeOrderRecords()</text>
 
-  <!-- 13. Forward to UI -->
-  <line x1="530" y1="570" x2="320" y2="570" class="reply-msg" />
-  <text x="425" y="563" class="msg-text" text-anchor="middle">13: return orderConfirmation(orderId)</text>
+  <line x1="995" y1="625" x2="715" y2="625" class="reply-arrow" />
+  <text x="855" y="618" class="msg-label" text-anchor="middle">14: return blob(text/csv)</text>
 
-  <!-- 14. Display Receipt & Tracking Modal -->
-  <line x1="310" y1="610" x2="115" y2="610" class="reply-msg" />
-  <text x="210" y="603" class="msg-text" text-anchor="middle">14: showOrderReceiptAndLiveTracker()</text>
+  <line x1="705" y1="660" x2="430" y2="660" class="reply-arrow" />
+  <text x="565" y="653" class="msg-label" text-anchor="middle">15: triggerBrowserDownload("Wonder_Land_Orders_Report.csv")</text>
 
-  <!-- 15. Track status query -->
-  <line x1="115" y1="670" x2="310" y2="670" class="sync-msg" />
-  <text x="210" y="663" class="msg-text" text-anchor="middle">15: pollOrderStatus(orderId)</text>
-
-  <!-- 16. Current Stepper Status -->
-  <line x1="310" y1="710" x2="115" y2="710" class="reply-msg" />
-  <text x="210" y="703" class="msg-text" text-anchor="middle">16: renderStepperState("Pending / In Kitchen")</text>
+  <line x1="420" y1="700" x2="145" y2="700" class="reply-arrow" stroke="#059669" stroke-width="2" />
+  <text x="280" y="693" class="msg-label" text-anchor="middle" fill="#047857">16: showToast("Excel report exported successfully")</text>
 </svg>`;
 
-saveSvg('03_sequence_order_food.svg', seqOrderSvg);
+saveSvg('05_sequence_admin_management.svg', seqAdminExcelSvg);
 
-// ---------------------------------------------------------------------------
-// 4. SEQUENCE DIAGRAM: TABLE RESERVATION
-// ---------------------------------------------------------------------------
-const seqReserveSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 680" width="1000" height="680">
+// ===========================================================================
+// 5. VISUAL UML: ACTIVITY DIAGRAM (END-TO-END WORKFLOW)
+// ===========================================================================
+const actEndToEndSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900">
   <defs>
     <style>
-      .bg { fill: #f8fafc; }
-      .lifeline { stroke: #94a3b8; stroke-width: 1.5; stroke-dasharray: 4,4; }
-      .actor-box { fill: #1e293b; rx: 6; }
-      .actor-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: bold; fill: #ffffff; text-anchor: middle; dominant-baseline: central; }
-      .activation { fill: #fdf4ff; stroke: #c026d3; stroke-width: 1.5; }
-      .sync-msg { stroke: #86198f; stroke-width: 1.6; marker-end: url(#arrowPurple); }
-      .reply-msg { stroke: #059669; stroke-width: 1.5; stroke-dasharray: 5,4; marker-end: url(#arrowGreen); }
-      .msg-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: 600; fill: #0f172a; }
+      .canvas-bg { fill: #f8fafc; }
+      .header-bg { fill: #0a1128; }
+      .header-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #ffffff; }
+      .header-tag { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #e4b95b; letter-spacing: 1.5px; }
+      .lane-hdr { fill: #0f172a; stroke: #e4b95b; stroke-width: 1; }
+      .lane-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #ffffff; text-anchor: middle; dominant-baseline: central; }
+      .lane-border { stroke: #cbd5e1; stroke-width: 1.5; stroke-dasharray: 4,4; }
+      .start-circle { fill: #0a1128; }
+      .act-box { fill: #ffffff; stroke: #0f172a; stroke-width: 1.8; rx: 16; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.06)); }
+      .act-box-gold { fill: #fffdf5; stroke: #b45309; stroke-width: 2; rx: 16; }
+      .act-box-green { fill: #f0fdf4; stroke: #059669; stroke-width: 2; rx: 16; }
+      .act-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: 700; fill: #0f172a; text-anchor: middle; dominant-baseline: central; }
+      .dec-diamond { fill: #fffbeb; stroke: #d97706; stroke-width: 2; }
+      .fork-join { fill: #0a1128; rx: 4; }
+      .flow-arrow { stroke: #1e293b; stroke-width: 1.8; marker-end: url(#arrowFlow); }
+      .flow-label { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #b45309; }
+      .end-outer { fill: none; stroke: #0a1128; stroke-width: 2.2; }
+      .end-inner { fill: #0a1128; }
     </style>
-    <marker id="arrowPurple" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M 0 1 L 10 5 L 0 9 z" fill="#86198f" />
-    </marker>
-    <marker id="arrowGreen" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M 0 1 L 10 5 L 0 9 z" fill="#059669" />
+    <marker id="arrowFlow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#1e293b" />
     </marker>
   </defs>
 
-  <rect width="100%" height="100%" class="bg" />
+  <rect width="100%" height="100%" class="canvas-bg" />
 
-  <text x="500" y="32" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="bold" fill="#0f172a" text-anchor="middle">Sequence Diagram: Dining Table Reservation Workflow</text>
+  <!-- Top Executive Banner -->
+  <rect x="0" y="0" width="1200" height="70" class="header-bg" />
+  <rect x="0" y="68" width="1200" height="3" fill="#e4b95b" />
+  <text x="35" y="30" class="header-tag">WONDER LAND RESTAURANT SYSTEM • BUSINESS PROCESS MODEL</text>
+  <text x="35" y="55" class="header-title">Visual UML: Activity Diagram (End-to-End Workflow with Swimlanes)</text>
 
-  <!-- Lifeline Headers -->
-  <rect x="60" y="60" width="130" height="40" class="actor-box" fill="#0284c7" />
-  <text x="125" y="80" class="actor-title">:Customer</text>
-  <line x1="125" y1="100" x2="125" y2="640" class="lifeline" />
+  <!-- 4 Swimlane Headers -->
+  <!-- Lane 1: Customer -->
+  <rect x="40" y="95" width="270" height="42" class="lane-hdr" />
+  <text x="175" y="116" class="lane-title">👤 Customer / Guest</text>
+  <line x1="310" y1="95" x2="310" y2="860" class="lane-border" />
 
-  <rect x="290" y="60" width="150" height="40" class="actor-box" fill="#475569" />
-  <text x="365" y="80" class="actor-title">:ReservationModal</text>
-  <line x1="365" y1="100" x2="365" y2="640" class="lifeline" />
+  <!-- Lane 2: WebGUI -->
+  <rect x="310" y="95" width="290" height="42" class="lane-hdr" fill="#1c2541" />
+  <text x="455" y="116" class="lane-title">💻 Web Application (GUI)</text>
+  <line x1="600" y1="95" x2="600" y2="860" class="lane-border" />
 
-  <rect x="540" y="60" width="160" height="40" class="actor-box" fill="#a21caf" />
-  <text x="620" y="80" class="actor-title">:ReservationController</text>
-  <line x1="620" y1="100" x2="620" y2="640" class="lifeline" />
+  <!-- Lane 3: Payment Engine -->
+  <rect x="600" y="95" width="290" height="42" class="lane-hdr" fill="#b45309" />
+  <text x="745" y="116" class="lane-title">💳 Payment Engine (COD / Card)</text>
+  <line x1="890" y1="95" x2="890" y2="860" class="lane-border" />
 
-  <rect x="790" y="60" width="160" height="40" class="actor-box" fill="#7c3aed" />
-  <text x="870" y="80" class="actor-title">:RestaurantDataStore</text>
-  <line x1="870" y1="100" x2="870" y2="640" class="lifeline" />
+  <!-- Lane 4: Kitchen & Courier -->
+  <rect x="890" y="95" width="270" height="42" class="lane-hdr" fill="#065f46" />
+  <text x="1025" y="116" class="lane-title">👨‍🍳 Kitchen &amp; Courier Dispatch</text>
 
-  <!-- Activations -->
-  <rect x="120" y="120" width="10" height="500" class="activation" />
-  <rect x="360" y="130" width="10" height="480" class="activation" />
-  <rect x="615" y="240" width="10" height="300" class="activation" />
-  <rect x="865" y="310" width="10" height="180" class="activation" />
-
-  <!-- Messages -->
-  <!-- 1. Open modal -->
-  <line x1="130" y1="140" x2="360" y2="140" class="sync-msg" />
-  <text x="245" y="133" class="msg-text" text-anchor="middle">1: click "Book a Table"</text>
-
-  <!-- 2. Show form -->
-  <line x1="360" y1="180" x2="130" y2="180" class="reply-msg" />
-  <text x="245" y="173" class="msg-text" text-anchor="middle">2: displayBookingForm(zones, slots)</text>
-
-  <!-- 3. Fill details -->
-  <line x1="130" y1="230" x2="360" y2="230" class="sync-msg" />
-  <text x="245" y="223" class="msg-text" text-anchor="middle">3: submitReservation(date, time, guests, zone)</text>
-
-  <!-- 4. Controller validate -->
-  <line x1="370" y1="250" x2="615" y2="250" class="sync-msg" />
-  <text x="490" y="243" class="msg-text" text-anchor="middle">4: checkTableCapacity(date, time, guests)</text>
-
-  <!-- 5. Query capacity -->
-  <line x1="625" y1="290" x2="865" y2="290" class="sync-msg" />
-  <text x="745" y="283" class="msg-text" text-anchor="middle">5: getReservationsByDate(date)</text>
-
-  <line x1="865" y1="330" x2="625" y2="330" class="reply-msg" />
-  <text x="745" y="323" class="msg-text" text-anchor="middle">6: return existingBookings</text>
-
-  <!-- 7. Save booking -->
-  <line x1="625" y1="380" x2="865" y2="380" class="sync-msg" />
-  <text x="745" y="373" class="msg-text" text-anchor="middle">7: saveReservation(newRecord: Status="Confirmed")</text>
-
-  <line x1="865" y1="420" x2="625" y2="420" class="reply-msg" />
-  <text x="745" y="413" class="msg-text" text-anchor="middle">8: bookingSaved(resId: "#RES-309")</text>
-
-  <!-- 9. Return to UI -->
-  <line x1="615" y1="470" x2="370" y2="470" class="reply-msg" />
-  <text x="490" y="463" class="msg-text" text-anchor="middle">9: reservationSuccess(resId)</text>
-
-  <!-- 10. Display confirmation -->
-  <line x1="360" y1="520" x2="130" y2="520" class="reply-msg" />
-  <text x="245" y="513" class="msg-text" text-anchor="middle">10: showSuccessToastAndDetails()</text>
-</svg>`;
-
-saveSvg('04_sequence_table_reservation.svg', seqReserveSvg);
-
-// ---------------------------------------------------------------------------
-// 5. SEQUENCE DIAGRAM: ADMIN MANAGEMENT
-// ---------------------------------------------------------------------------
-const seqAdminSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 680" width="1000" height="680">
-  <defs>
-    <style>
-      .bg { fill: #f8fafc; }
-      .lifeline { stroke: #94a3b8; stroke-width: 1.5; stroke-dasharray: 4,4; }
-      .actor-box { fill: #1e293b; rx: 6; }
-      .actor-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: bold; fill: #ffffff; text-anchor: middle; dominant-baseline: central; }
-      .activation { fill: #ffedd5; stroke: #ea580c; stroke-width: 1.5; }
-      .sync-msg { stroke: #c2410c; stroke-width: 1.6; marker-end: url(#arrowOrange); }
-      .reply-msg { stroke: #059669; stroke-width: 1.5; stroke-dasharray: 5,4; marker-end: url(#arrowGreen); }
-      .msg-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: 600; fill: #0f172a; }
-    </style>
-    <marker id="arrowOrange" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M 0 1 L 10 5 L 0 9 z" fill="#ea580c" />
-    </marker>
-    <marker id="arrowGreen" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M 0 1 L 10 5 L 0 9 z" fill="#059669" />
-    </marker>
-  </defs>
-
-  <rect width="100%" height="100%" class="bg" />
-
-  <text x="500" y="32" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="bold" fill="#0f172a" text-anchor="middle">Sequence Diagram: Admin Management &amp; Excel Export</text>
-
-  <!-- Lifeline Headers -->
-  <rect x="60" y="60" width="130" height="40" class="actor-box" fill="#b45309" />
-  <text x="125" y="80" class="actor-title">:Admin / Manager</text>
-  <line x1="125" y1="100" x2="125" y2="650" class="lifeline" />
-
-  <rect x="290" y="60" width="150" height="40" class="actor-box" fill="#475569" />
-  <text x="365" y="80" class="actor-title">:AdminDashboardGUI</text>
-  <line x1="365" y1="100" x2="365" y2="650" class="lifeline" />
-
-  <rect x="540" y="60" width="160" height="40" class="actor-box" fill="#ea580c" />
-  <text x="620" y="80" class="actor-title">:AdminService</text>
-  <line x1="620" y1="100" x2="620" y2="650" class="lifeline" />
-
-  <rect x="790" y="60" width="160" height="40" class="actor-box" fill="#15803d" />
-  <text x="870" y="80" class="actor-title">:ExcelExportEngine</text>
-  <line x1="870" y1="100" x2="870" y2="650" class="lifeline" />
-
-  <!-- Activations -->
-  <rect x="120" y="120" width="10" height="510" class="activation" />
-  <rect x="360" y="130" width="10" height="490" class="activation" />
-  <rect x="615" y="160" width="10" height="450" class="activation" />
-  <rect x="865" y="470" width="10" height="130" class="activation" />
-
-  <!-- 1. Login with PIN -->
-  <line x1="130" y1="140" x2="360" y2="140" class="sync-msg" />
-  <text x="245" y="133" class="msg-text" text-anchor="middle">1: enterAdminPin("admin123")</text>
-
-  <line x1="370" y1="165" x2="615" y2="165" class="sync-msg" />
-  <text x="490" y="158" class="msg-text" text-anchor="middle">2: verifyCredentials(pin)</text>
-
-  <!-- 3. Fetch Dashboard Telemetry -->
-  <line x1="625" y1="190" x2="625" y2="215" class="sync-msg" />
-  <text x="635" y="205" class="msg-text">3: loadTelemetryData()</text>
-
-  <line x1="615" y1="240" x2="370" y2="240" class="reply-msg" />
-  <text x="490" y="233" class="msg-text" text-anchor="middle">4: return (orders, revenue, menu)</text>
-
-  <line x1="360" y1="265" x2="130" y2="265" class="reply-msg" />
-  <text x="245" y="258" class="msg-text" text-anchor="middle">5: renderKPIsAndOrdersTable()</text>
-
-  <!-- 6. Admin selects Order and changes status -->
-  <line x1="130" y1="310" x2="360" y2="310" class="sync-msg" />
-  <text x="245" y="303" class="msg-text" text-anchor="middle">6: selectOrderUpdate(id, newStatus: "Cooking")</text>
-
-  <line x1="370" y1="335" x2="615" y2="335" class="sync-msg" />
-  <text x="490" y="328" class="msg-text" text-anchor="middle">7: mutateOrderStatus(id, "Cooking")</text>
-
-  <line x1="615" y1="365" x2="370" y2="365" class="reply-msg" />
-  <text x="490" y="358" class="msg-text" text-anchor="middle">8: statusUpdated(broadcastStorageEvent)</text>
-
-  <line x1="360" y1="390" x2="130" y2="390" class="reply-msg" />
-  <text x="245" y="383" class="msg-text" text-anchor="middle">9: showToast("Order status updated to Cooking")</text>
-
-  <!-- 10. Admin clicks Export to Excel -->
-  <line x1="130" y1="445" x2="360" y2="445" class="sync-msg" />
-  <text x="245" y="438" class="msg-text" text-anchor="middle">10: clickExportOrdersExcelBtn()</text>
-
-  <line x1="370" y1="470" x2="615" y2="470" class="sync-msg" />
-  <text x="490" y="463" class="msg-text" text-anchor="middle">11: getOrdersDataset()</text>
-
-  <line x1="625" y1="495" x2="865" y2="495" class="sync-msg" />
-  <text x="745" y="488" class="msg-text" text-anchor="middle">12: formatCSVPayload(orders, UTF8_BOM)</text>
-
-  <line x1="865" y1="530" x2="625" y2="530" class="reply-msg" />
-  <text x="745" y="523" class="msg-text" text-anchor="middle">13: return generatedBlob(type: "text/csv")</text>
-
-  <line x1="615" y1="560" x2="370" y2="560" class="reply-msg" />
-  <text x="490" y="553" class="msg-text" text-anchor="middle">14: triggerBrowserDownload("Wonder_Land_Orders_Report.csv")</text>
-
-  <line x1="360" y1="595" x2="130" y2="595" class="reply-msg" />
-  <text x="245" y="588" class="msg-text" text-anchor="middle">15: showToast("Excel spreadsheet downloaded successfully")</text>
-</svg>`;
-
-saveSvg('05_sequence_admin_management.svg', seqAdminSvg);
-
-// ---------------------------------------------------------------------------
-// 6. ACTIVITY DIAGRAM: ORDER FOOD & CHECKOUT
-// ---------------------------------------------------------------------------
-const actOrderSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 900" width="1100" height="900">
-  <defs>
-    <style>
-      .bg { fill: #f8fafc; }
-      .swimlane-line { stroke: #94a3b8; stroke-width: 1.5; stroke-dasharray: 5,4; }
-      .swimlane-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; font-weight: bold; fill: #1e3a8a; text-anchor: middle; }
-      .swimlane-header { fill: #e2e8f0; }
-      .start-node { fill: #0f172a; }
-      .end-outer { fill: none; stroke: #0f172a; stroke-width: 2; }
-      .end-inner { fill: #0f172a; }
-      .action-rect { fill: #ffffff; stroke: #2563eb; stroke-width: 1.8; rx: 16; }
-      .action-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: 600; fill: #0f172a; text-anchor: middle; dominant-baseline: central; }
-      .decision-diamond { fill: #fef3c7; stroke: #d97706; stroke-width: 1.8; }
-      .fork-bar { fill: #0f172a; }
-      .flow-arrow { stroke: #334155; stroke-width: 1.6; marker-end: url(#actArrow); }
-      .guard-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #b45309; }
-    </style>
-    <marker id="actArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M 0 1 L 10 5 L 0 9 z" fill="#334155" />
-    </marker>
-  </defs>
-
-  <rect width="100%" height="100%" class="bg" />
-
-  <text x="550" y="32" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="bold" fill="#0f172a" text-anchor="middle">Activity Diagram: End-to-End Workflow (Customer Order to Kitchen Fulfillment)</text>
-
-  <!-- Swimlane Header Backgrounds -->
-  <rect x="40" y="55" width="250" height="35" class="swimlane-header" />
-  <rect x="290" y="55" width="270" height="35" class="swimlane-header" fill="#cbd5e1" />
-  <rect x="560" y="55" width="270" height="35" class="swimlane-header" />
-  <rect x="830" y="55" width="230" height="35" class="swimlane-header" fill="#cbd5e1" />
-
-  <!-- Swimlane Titles -->
-  <text x="165" y="78" class="swimlane-title">Customer</text>
-  <text x="425" y="78" class="swimlane-title">Web Application (GUI)</text>
-  <text x="695" y="78" class="swimlane-title">Payment Engine</text>
-  <text x="945" y="78" class="swimlane-title">Kitchen / Dispatch</text>
-
-  <!-- Swimlane Separator Lines -->
-  <line x1="290" y1="55" x2="290" y2="870" class="swimlane-line" />
-  <line x1="560" y1="55" x2="560" y2="870" class="swimlane-line" />
-  <line x1="830" y1="55" x2="830" y2="870" class="swimlane-line" />
-
-  <!-- Start Node -->
-  <circle cx="165" cy="120" r="12" class="start-node" />
-  <line x1="165" y1="132" x2="165" y2="165" class="flow-arrow" />
+  <!-- START NODE in Customer Lane -->
+  <circle cx="175" cy="170" r="14" class="start-circle" />
+  <line x1="175" y1="184" x2="175" y2="215" class="flow-arrow" />
 
   <!-- Action: Browse Menu -->
-  <rect x="90" y="165" width="150" height="40" class="action-rect" />
-  <text x="165" y="185" class="action-text">Browse &amp; Filter Menu</text>
-  <line x1="165" y1="205" x2="165" y2="245" class="flow-arrow" />
+  <rect x="95" y="215" width="160" height="42" class="act-box" />
+  <text x="175" y="236" class="act-text">Browse &amp; Filter Menu</text>
 
-  <!-- Action: Add Items to Cart -->
-  <rect x="90" y="245" width="150" height="40" class="action-rect" />
-  <text x="165" y="265" class="action-text">Add Items to Cart</text>
-  <line x1="240" y1="265" x2="350" y2="265" class="flow-arrow" />
+  <line x1="175" y1="257" x2="175" y2="295" class="flow-arrow" />
 
-  <!-- Action: Compute Totals -->
-  <rect x="350" y="245" width="160" height="40" class="action-rect" stroke="#059669" />
-  <text x="430" y="265" class="action-text" fill="#065f46">Calculate Subtotal &amp; Tax</text>
-  <line x1="430" y1="285" x2="430" y2="325" class="flow-arrow" />
+  <!-- Action: Add to Cart -->
+  <rect x="95" y="295" width="160" height="42" class="act-box" />
+  <text x="175" y="316" class="act-text">Add Dishes to Cart</text>
 
-  <!-- Action: Click Checkout -->
-  <rect x="90" y="325" width="150" height="40" class="action-rect" />
-  <text x="165" y="345" class="action-text">Proceed to Checkout</text>
-  <line x1="430" y1="325" x2="240" y2="345" class="flow-arrow" />
-  <line x1="165" y1="365" x2="165" y2="405" class="flow-arrow" />
+  <line x1="255" y1="316" x2="380" y2="316" class="flow-arrow" />
 
-  <!-- Action: Enter Details & Pick Payment -->
-  <rect x="80" y="405" width="170" height="45" class="action-rect" />
-  <text x="165" y="420" class="action-text">Enter Contact Info &amp;</text>
-  <text x="165" y="436" class="action-text">Select Payment Method</text>
-  <line x1="250" y1="427" x2="350" y2="427" class="flow-arrow" />
+  <!-- Action in WebGUI: Compute Totals -->
+  <rect x="380" y="295" width="170" height="42" class="act-box" />
+  <text x="465" y="316" class="act-text">Compute Subtotal + VAT</text>
 
-  <!-- Action: Validate Form Inputs -->
-  <rect x="350" y="407" width="160" height="40" class="action-rect" stroke="#059669" />
-  <text x="430" y="427" class="action-text" fill="#065f46">Validate Delivery Form</text>
-  <line x1="430" y1="447" x2="430" y2="480" class="flow-arrow" />
+  <line x1="465" y1="337" x2="465" y2="375" class="flow-arrow" />
 
-  <!-- Decision: Form Valid? -->
-  <polygon points="430,480 460,500 430,520 400,500" class="decision-diamond" />
-  <text x="445" y="490" class="guard-text">[Valid]</text>
-  <line x1="400" y1="500" x2="250" y2="500" class="flow-arrow" />
-  <text x="310" y="490" class="guard-text">[Invalid]</text>
-  <!-- Return to enter details if invalid -->
-  <line x1="250" y1="500" x2="200" y2="450" class="flow-arrow" />
+  <!-- Action in WebGUI: Render Checkout -->
+  <rect x="380" y="375" width="170" height="42" class="act-box" />
+  <text x="465" y="396" class="act-text">Display Checkout Modal</text>
 
-  <line x1="460" y1="500" x2="610" y2="500" class="flow-arrow" />
+  <line x1="380" y1="396" x2="255" y2="396" class="flow-arrow" />
 
-  <!-- Decision: Payment Type -->
-  <polygon points="640,480 670,500 640,520 610,500" class="decision-diamond" />
-  <!-- Cash vs Online -->
-  <line x1="640" y1="480" x2="640" y2="430" class="flow-arrow" />
-  <text x="645" y="460" class="guard-text">[Cash on Delivery]</text>
+  <!-- Action: Select COD -->
+  <rect x="95" y="375" width="160" height="42" class="act-box-gold" />
+  <text x="175" y="396" class="act-text" fill="#b45309">Select COD &amp; Address</text>
 
-  <line x1="670" y1="500" x2="720" y2="500" class="flow-arrow" />
-  <text x="670" y="490" class="guard-text">[Card / Wallet]</text>
+  <line x1="175" y1="417" x2="175" y2="465" class="flow-arrow" />
 
-  <!-- Action: Process Online Gateway -->
-  <rect x="720" y="480" width="100" height="40" class="action-rect" stroke="#16a34a" />
-  <text x="770" y="500" class="action-text" font-size="11">Verify &amp; Charge</text>
-  <line x1="770" y1="520" x2="770" y2="560" class="flow-arrow" />
+  <!-- Action: Click Place Order -->
+  <rect x="95" y="465" width="160" height="42" class="act-box" />
+  <text x="175" y="486" class="act-text">Click "Place Order Now"</text>
 
-  <!-- Decision: Payment Success? -->
-  <polygon points="770,560 795,580 770,600 745,580" class="decision-diamond" />
-  <line x1="745" y1="580" x2="510" y2="580" class="flow-arrow" />
-  <text x="600" y="570" class="guard-text">[Success or Cash]</text>
+  <line x1="255" y1="486" x2="685" y2="486" class="flow-arrow" />
 
-  <!-- Connect Cash path -->
-  <line x1="640" y1="430" x2="510" y2="430" class="flow-arrow" />
-  <line x1="510" y1="430" x2="510" y2="580" />
+  <!-- Decision Diamond in Payment Engine -->
+  <polygon points="745,466 795,486 745,506 695,486" class="dec-diamond" />
+  <text x="745" y="486" font-family="'Segoe UI', Arial, sans-serif" font-size="10" font-weight="bold" fill="#b45309" text-anchor="middle">Payment?</text>
 
-  <!-- Action: Persist Order & Generate ID -->
-  <rect x="350" y="610" width="160" height="45" class="action-rect" stroke="#7c3aed" />
-  <text x="430" y="625" class="action-text">Save Order in Store</text>
-  <text x="430" y="641" class="action-text">&amp; Generate #Order-ID</text>
-  <line x1="430" y1="580" x2="430" y2="610" class="flow-arrow" />
-  <line x1="430" y1="655" x2="430" y2="685" class="flow-arrow" />
+  <!-- Branch: [Cash on Delivery] -->
+  <line x1="745" y1="506" x2="745" y2="550" class="flow-arrow" />
+  <text x="755" y="530" class="flow-label">[Cash on Delivery]</text>
 
-  <!-- Fork Bar: Notify Customer & Kitchen in parallel -->
-  <rect x="250" y="685" width="700" height="8" class="fork-bar" />
+  <rect x="660" y="550" width="170" height="42" class="act-box-gold" />
+  <text x="745" y="571" class="act-text" fill="#b45309">Flag "Pay on Handover"</text>
 
-  <!-- Thread 1 to Customer -->
-  <line x1="350" y1="693" x2="165" y2="730" class="flow-arrow" />
-  <rect x="80" y="730" width="170" height="45" class="action-rect" />
-  <text x="165" y="745" class="action-text">Show Receipt &amp;</text>
-  <text x="165" y="761" class="action-text">Track Live Status Stepper</text>
+  <line x1="745" y1="592" x2="745" y2="630" class="flow-arrow" />
 
-  <!-- Thread 2 to Kitchen -->
-  <line x1="880" y1="693" x2="945" y2="730" class="flow-arrow" />
-  <rect x="860" y="730" width="170" height="45" class="action-rect" stroke="#b45309" />
-  <text x="945" y="745" class="action-text">Receive Ticket in Kitchen</text>
-  <text x="945" y="761" class="action-text">&amp; Start Food Preparation</text>
+  <!-- FORK BAR -->
+  <rect x="420" y="630" width="650" height="8" class="fork-join" />
 
-  <!-- Join Bar -->
-  <rect x="250" y="810" width="700" height="8" class="fork-bar" />
-  <line x1="165" y1="775" x2="350" y2="810" class="flow-arrow" />
-  <line x1="945" y1="775" x2="880" y2="810" class="flow-arrow" />
+  <!-- Thread A: Customer Live Tracker -->
+  <line x1="465" y1="638" x2="465" y2="680" class="flow-arrow" />
+  <rect x="380" y="680" width="170" height="42" class="act-box-green" />
+  <text x="465" y="701" class="act-text" fill="#047857">Init 5-Stage Stepper</text>
 
-  <!-- Final End Node -->
-  <line x1="600" y1="818" x2="600" y2="845" class="flow-arrow" />
-  <circle cx="600" cy="855" r="14" class="end-outer" />
-  <circle cx="600" cy="855" r="9" class="end-inner" />
+  <!-- Thread B: Kitchen Ticket Dispatch -->
+  <line x1="1025" y1="638" x2="1025" y2="680" class="flow-arrow" />
+  <rect x="935" y="680" width="180" height="42" class="act-box" />
+  <text x="1025" y="701" class="act-text">Chef Cooks Dishes</text>
+
+  <line x1="1025" y1="722" x2="1025" y2="755" class="flow-arrow" />
+
+  <!-- Action: Handover & Collect Cash -->
+  <rect x="935" y="755" width="180" height="42" class="act-box-gold" />
+  <text x="1025" y="776" class="act-text" fill="#b45309">Deliver &amp; Collect Cash</text>
+
+  <line x1="1025" y1="797" x2="1025" y2="825" class="flow-arrow" />
+
+  <!-- JOIN BAR -->
+  <rect x="420" y="825" width="650" height="8" class="fork-join" />
+
+  <!-- Flow to Final State -->
+  <line x1="745" y1="833" x2="745" y2="865" class="flow-arrow" />
+
+  <!-- Final Node -->
+  <circle cx="745" cy="880" r="16" class="end-outer" />
+  <circle cx="745" cy="880" r="10" class="end-inner" />
 </svg>`;
 
-saveSvg('06_activity_order_processing.svg', actOrderSvg);
+saveSvg('06_activity_order_processing.svg', actEndToEndSvg);
 
-// ---------------------------------------------------------------------------
-// 7. ACTIVITY DIAGRAM: TABLE RESERVATION
-// ---------------------------------------------------------------------------
-const actReserveSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" width="900" height="700">
+// ===========================================================================
+// 6. VISUAL UML: STATE MACHINE DIAGRAM (ORDER LIFECYCLE)
+// ===========================================================================
+const stateOrderLifecycleSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" width="1200" height="600">
   <defs>
     <style>
-      .bg { fill: #f8fafc; }
-      .swimlane-line { stroke: #94a3b8; stroke-width: 1.5; stroke-dasharray: 5,4; }
-      .swimlane-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; font-weight: bold; fill: #1e3a8a; text-anchor: middle; }
-      .swimlane-header { fill: #e2e8f0; }
-      .start-node { fill: #0f172a; }
-      .end-outer { fill: none; stroke: #0f172a; stroke-width: 2; }
-      .end-inner { fill: #0f172a; }
-      .action-rect { fill: #ffffff; stroke: #c026d3; stroke-width: 1.8; rx: 16; }
-      .action-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: 600; fill: #0f172a; text-anchor: middle; dominant-baseline: central; }
-      .decision-diamond { fill: #fef3c7; stroke: #d97706; stroke-width: 1.8; }
-      .flow-arrow { stroke: #334155; stroke-width: 1.6; marker-end: url(#actArrow2); }
-      .guard-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #b45309; }
+      .canvas-bg { fill: #f8fafc; }
+      .header-bg { fill: #0a1128; }
+      .header-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #ffffff; }
+      .header-tag { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #e4b95b; letter-spacing: 1.5px; }
+      .state-card { fill: #ffffff; stroke: #0f172a; stroke-width: 1.8; rx: 10; filter: drop-shadow(0 3px 8px rgba(0,0,0,0.06)); }
+      .state-hdr { fill: #0f172a; rx: 8; }
+      .state-hdr-gold { fill: #b45309; rx: 8; }
+      .state-hdr-green { fill: #065f46; rx: 8; }
+      .state-hdr-rose { fill: #be123c; rx: 8; }
+      .state-name { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: bold; fill: #ffffff; text-anchor: middle; dominant-baseline: central; }
+      .state-body { font-family: 'Consolas', 'Courier New', monospace; font-size: 10.5px; fill: #334155; }
+      .trans-line { stroke: #0f172a; stroke-width: 1.8; marker-end: url(#arrowTrans); }
+      .trans-cancel { stroke: #e11d48; stroke-width: 1.8; stroke-dasharray: 4,4; marker-end: url(#arrowCancel); }
+      .trans-label { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: 700; fill: #0f172a; text-anchor: middle; }
+      .guard-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 10.5px; font-weight: bold; fill: #e11d48; }
+      .start-circle { fill: #0a1128; }
+      .end-outer { fill: none; stroke: #0a1128; stroke-width: 2.2; }
+      .end-inner { fill: #0a1128; }
     </style>
-    <marker id="actArrow2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M 0 1 L 10 5 L 0 9 z" fill="#334155" />
+    <marker id="arrowTrans" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#0f172a" />
+    </marker>
+    <marker id="arrowCancel" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#e11d48" />
     </marker>
   </defs>
 
-  <rect width="100%" height="100%" class="bg" />
+  <rect width="100%" height="100%" class="canvas-bg" />
 
-  <text x="450" y="32" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="bold" fill="#0f172a" text-anchor="middle">Activity Diagram: Table Reservation Workflow</text>
+  <!-- Top Executive Banner -->
+  <rect x="0" y="0" width="1200" height="70" class="header-bg" />
+  <rect x="0" y="68" width="1200" height="3" fill="#e4b95b" />
+  <text x="35" y="30" class="header-tag">WONDER LAND RESTAURANT SYSTEM • BEHAVIORAL STATE MODEL</text>
+  <text x="35" y="55" class="header-title">Visual UML: State Machine Diagram (Order Lifecycle &amp; Cancellation Guards)</text>
 
-  <!-- Swimlane Headers -->
-  <rect x="40" y="55" width="280" height="35" class="swimlane-header" />
-  <rect x="320" y="55" width="300" height="35" class="swimlane-header" fill="#cbd5e1" />
-  <rect x="620" y="55" width="240" height="35" class="swimlane-header" />
+  <!-- START NODE -->
+  <circle cx="50" cy="220" r="14" class="start-circle" />
+  <line x1="64" y1="220" x2="110" y2="220" class="trans-line" />
+  <text x="87" y="210" class="trans-label">checkout()</text>
 
-  <text x="180" y="78" class="swimlane-title">Guest / Customer</text>
-  <text x="470" y="78" class="swimlane-title">Reservation System</text>
-  <text x="740" y="78" class="swimlane-title">Restaurant Host / Staff</text>
+  <!-- State 1: PENDING -->
+  <g transform="translate(110, 160)">
+    <rect width="170" height="115" class="state-card" />
+    <rect width="170" height="32" class="state-hdr" />
+    <text x="85" y="16" class="state-name">1. PENDING</text>
+    <text x="12" y="52" class="state-body">entry / saveToStore()</text>
+    <text x="12" y="72" class="state-body">do / notifyKitchen()</text>
+    <text x="12" y="92" class="state-body">exit / assignKOT()</text>
+  </g>
 
-  <line x1="320" y1="55" x2="320" y2="670" class="swimlane-line" />
-  <line x1="620" y1="55" x2="620" y2="670" class="swimlane-line" />
+  <!-- Trans 1 -> 2 -->
+  <line x1="280" y1="220" x2="350" y2="220" class="trans-line" />
+  <text x="315" y="210" class="trans-label">acceptTicket()</text>
 
-  <!-- Start -->
-  <circle cx="180" cy="115" r="12" class="start-node" />
-  <line x1="180" y1="127" x2="180" y2="155" class="flow-arrow" />
+  <!-- State 2: CONFIRMED -->
+  <g transform="translate(350, 160)">
+    <rect width="170" height="115" class="state-card" />
+    <rect width="170" height="32" class="state-hdr-gold" />
+    <text x="85" y="16" class="state-name">2. CONFIRMED</text>
+    <text x="12" y="52" class="state-body">entry / prepIngredients()</text>
+    <text x="12" y="72" class="state-body">do / queueInCooklist()</text>
+    <text x="12" y="92" class="state-body">exit / alertChef()</text>
+  </g>
 
-  <!-- Action: Open Booking Modal -->
-  <rect x="100" y="155" width="160" height="40" class="action-rect" />
-  <text x="180" y="175" class="action-text">Click "Book a Table"</text>
-  <line x1="180" y1="195" x2="180" y2="230" class="flow-arrow" />
+  <!-- Trans 2 -> 3 -->
+  <line x1="520" y1="220" x2="590" y2="220" class="trans-line" stroke-width="2" />
+  <text x="555" y="210" class="trans-label">startCooking()</text>
 
-  <!-- Action: Enter Reservation Criteria -->
-  <rect x="90" y="230" width="180" height="45" class="action-rect" />
-  <text x="180" y="245" class="action-text">Select Date, Time,</text>
-  <text x="180" y="261" class="action-text">Guests &amp; Seating Zone</text>
-  <line x1="270" y1="252" x2="380" y2="252" class="flow-arrow" />
+  <!-- State 3: IN KITCHEN (Lockout Guard) -->
+  <g transform="translate(590, 160)">
+    <rect width="180" height="115" class="state-card" stroke="#b45309" stroke-width="2.2" />
+    <rect width="180" height="32" class="state-hdr-gold" />
+    <text x="90" y="16" class="state-name">3. IN KITCHEN</text>
+    <text x="12" y="52" class="state-body">entry / disableCancel()</text>
+    <text x="12" y="72" class="state-body">do / cookAndPlate()</text>
+    <text x="12" y="92" class="state-body">exit / boxForDelivery()</text>
+  </g>
 
-  <!-- Action: Check Table Availability -->
-  <rect x="380" y="232" width="180" height="40" class="action-rect" stroke="#059669" />
-  <text x="470" y="252" class="action-text" fill="#065f46">Check Slot Availability</text>
-  <line x1="470" y1="272" x2="470" y2="310" class="flow-arrow" />
+  <!-- Trans 3 -> 4 -->
+  <line x1="770" y1="220" x2="840" y2="220" class="trans-line" />
+  <text x="805" y="210" class="trans-label">dispatchCourier()</text>
 
-  <!-- Decision: Slot Available? -->
-  <polygon points="470,310 500,330 470,350 440,330" class="decision-diamond" />
-  <!-- No: Suggest other slot -->
-  <line x1="440" y1="330" x2="270" y2="330" class="flow-arrow" />
-  <text x="330" y="320" class="guard-text">[Fully Booked]</text>
-  <line x1="180" y1="330" x2="180" y2="275" class="flow-arrow" />
+  <!-- State 4: OUT FOR DELIVERY -->
+  <g transform="translate(840, 160)">
+    <rect width="170" height="115" class="state-card" />
+    <rect width="170" height="32" class="state-hdr" />
+    <text x="85" y="16" class="state-name">4. OUT FOR DELIVERY</text>
+    <text x="12" y="52" class="state-body">entry / assignCourier()</text>
+    <text x="12" y="72" class="state-body">do / transitToClient()</text>
+    <text x="12" y="92" class="state-body">exit / handoverMeal()</text>
+  </g>
 
-  <!-- Yes -->
-  <line x1="470" y1="350" x2="470" y2="390" class="flow-arrow" />
-  <text x="480" y="375" class="guard-text">[Available]</text>
+  <!-- Trans 4 -> 5 -->
+  <line x1="1010" y1="220" x2="1055" y2="220" class="trans-line" />
+  <text x="1032" y="210" class="trans-label">handover()</text>
 
-  <!-- Action: Record Reservation & Generate ID -->
-  <rect x="380" y="390" width="180" height="45" class="action-rect" stroke="#7c3aed" />
-  <text x="470" y="405" class="action-text">Record in DataStore</text>
-  <text x="470" y="421" class="action-text">&amp; Generate Res-ID</text>
-  <line x1="380" y1="412" x2="270" y2="412" class="flow-arrow" />
-  <line x1="560" y1="412" x2="660" y2="412" class="flow-arrow" />
-
-  <!-- Action: Show Confirmation Toast to Guest -->
-  <rect x="90" y="390" width="180" height="45" class="action-rect" />
-  <text x="180" y="405" class="action-text">Display Confirmation</text>
-  <text x="180" y="421" class="action-text">Toast &amp; Save Details</text>
-
-  <!-- Action: Host Notified in Dashboard -->
-  <rect x="660" y="390" width="170" height="45" class="action-rect" stroke="#b45309" />
-  <text x="745" y="405" class="action-text">Table Blocked in</text>
-  <text x="745" y="421" class="action-text">Admin Host Schedule</text>
-  <line x1="745" y1="435" x2="745" y2="480" class="flow-arrow" />
-
-  <!-- Action: Host Greets & Seats Guest -->
-  <rect x="660" y="480" width="170" height="45" class="action-rect" stroke="#b45309" />
-  <text x="745" y="495" class="action-text">Guest Arrives: Verify</text>
-  <text x="745" y="511" class="action-text">ID &amp; Mark as "Seated"</text>
-  <line x1="745" y1="525" x2="745" y2="570" class="flow-arrow" />
-
-  <!-- Action: Complete Dining -->
-  <rect x="660" y="570" width="170" height="40" class="action-rect" stroke="#059669" />
-  <text x="745" y="590" class="action-text" fill="#065f46">Mark Table "Completed"</text>
-  <line x1="745" y1="610" x2="745" y2="640" class="flow-arrow" />
+  <!-- State 5: DELIVERED (Terminal) -->
+  <g transform="translate(1055, 160)">
+    <rect width="130" height="115" class="state-card" stroke="#065f46" stroke-width="2" />
+    <rect width="130" height="32" class="state-hdr-green" />
+    <text x="65" y="16" class="state-name">5. DELIVERED</text>
+    <text x="10" y="52" class="state-body">entry / collectCOD()</text>
+    <text x="10" y="72" class="state-body">do / promptReview()</text>
+    <text x="10" y="92" class="state-body">exit / closeOrder()</text>
+  </g>
 
   <!-- End Node -->
-  <circle cx="745" cy="650" r="14" class="end-outer" />
-  <circle cx="745" cy="650" r="9" class="end-inner" />
+  <line x1="1120" y1="275" x2="1120" y2="330" class="trans-line" />
+  <circle cx="1120" cy="345" r="14" class="end-outer" />
+  <circle cx="1120" cy="345" r="9" class="end-inner" />
+
+  <!-- Cancellation Branch State -->
+  <g transform="translate(230, 420)">
+    <rect width="180" height="90" class="state-card" stroke="#be123c" stroke-width="2" />
+    <rect width="180" height="30" class="state-hdr-rose" />
+    <text x="90" y="15" class="state-name">CANCELLED</text>
+    <text x="12" y="50" class="state-body">entry / releaseHold()</text>
+    <text x="12" y="70" class="state-body">do / notifyCustomer()</text>
+  </g>
+
+  <!-- Cancellation Transitions from Pending & Confirmed -->
+  <path d="M 195 275 L 195 465 L 230 465" fill="none" class="trans-cancel" />
+  <text x="120" y="380" class="guard-text">cancel() [isPending]</text>
+
+  <path d="M 435 275 L 435 465 L 410 465" fill="none" class="trans-cancel" />
+  <text x="445" y="380" class="guard-text">cancel() [isConfirmed]</text>
+
+  <!-- End node for Cancelled -->
+  <line x1="320" y1="510" x2="320" y2="550" class="trans-line" stroke="#be123c" />
+  <circle cx="320" cy="565" r="14" class="end-outer" stroke="#be123c" />
+  <circle cx="320" cy="565" r="9" class="end-inner" fill="#be123c" />
 </svg>`;
 
-saveSvg('07_activity_table_reservation.svg', actReserveSvg);
+saveSvg('08_state_order_lifecycle.svg', stateOrderLifecycleSvg);
 
-// ---------------------------------------------------------------------------
-// 8. STATE MACHINE DIAGRAM: ORDER LIFECYCLE
-// ---------------------------------------------------------------------------
-const stateOrderSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 550" width="1100" height="550">
+// ===========================================================================
+// 7. VISUAL UML: COMPONENT ARCHITECTURE DIAGRAM
+// ===========================================================================
+const compArchSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
   <defs>
     <style>
-      .bg { fill: #f8fafc; }
-      .state-box { fill: #ffffff; stroke: #1e3a8a; stroke-width: 2; rx: 14; }
-      .state-header { fill: #1e40af; rx: 12; }
-      .state-name { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: bold; fill: #ffffff; text-anchor: middle; }
-      .state-body-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; fill: #334155; }
-      .trans-line { stroke: #0284c7; stroke-width: 1.8; marker-end: url(#stateArrow); }
-      .trans-cancel { stroke: #e11d48; stroke-width: 1.8; stroke-dasharray: 5,4; marker-end: url(#stateCancelArrow); }
-      .trans-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: 600; fill: #0f172a; }
-      .start-node { fill: #0f172a; }
-      .end-outer { fill: none; stroke: #0f172a; stroke-width: 2; }
-      .end-inner { fill: #0f172a; }
+      .canvas-bg { fill: #f8fafc; }
+      .header-bg { fill: #0a1128; }
+      .header-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #ffffff; }
+      .header-tag { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #e4b95b; letter-spacing: 1.5px; }
+      .subsystem-box { fill: #ffffff; stroke: #e4b95b; stroke-width: 1.6; stroke-dasharray: 6,4; rx: 12; }
+      .subsystem-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: bold; fill: #0a1128; }
+      .comp-card { fill: #ffffff; stroke: #0f172a; stroke-width: 1.8; rx: 6; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.06)); }
+      .comp-tab { fill: #e4b95b; stroke: #0f172a; stroke-width: 1.2; rx: 2; }
+      .comp-header { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: bold; fill: #0f172a; }
+      .comp-stereo { font-family: 'Segoe UI', Arial, sans-serif; font-size: 10px; font-style: italic; fill: #b45309; }
+      .comp-desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; fill: #64748b; }
+      .dep-arrow { stroke: #1e293b; stroke-width: 1.6; stroke-dasharray: 4,4; marker-end: url(#arrowComp); }
     </style>
-    <marker id="stateArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M 0 1 L 10 5 L 0 9 z" fill="#0284c7" />
-    </marker>
-    <marker id="stateCancelArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M 0 1 L 10 5 L 0 9 z" fill="#e11d48" />
+    <marker id="arrowComp" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#1e293b" />
     </marker>
   </defs>
 
-  <rect width="100%" height="100%" class="bg" />
+  <rect width="100%" height="100%" class="canvas-bg" />
 
-  <text x="550" y="35" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="bold" fill="#0f172a" text-anchor="middle">State Machine Diagram: Food Order Lifecycle</text>
+  <!-- Top Executive Banner -->
+  <rect x="0" y="0" width="1200" height="70" class="header-bg" />
+  <rect x="0" y="68" width="1200" height="3" fill="#e4b95b" />
+  <text x="35" y="30" class="header-tag">WONDER LAND RESTAURANT SYSTEM • STRUCTURAL SUBSYSTEMS</text>
+  <text x="35" y="55" class="header-title">Visual UML: Component Architecture Diagram (3-Tier Modular Subsystems)</text>
 
-  <!-- Start -->
-  <circle cx="50" cy="180" r="14" class="start-node" />
-  <line x1="64" y1="180" x2="110" y2="180" class="trans-line" />
-  <text x="85" y="170" class="trans-text" text-anchor="middle">checkout()</text>
+  <!-- TIER 1: Presentation Tier -->
+  <rect x="40" y="95" width="1120" height="180" class="subsystem-box" />
+  <text x="60" y="122" class="subsystem-title">&lt;&lt;Subsystem&gt;&gt; Presentation Components (Client Web GUI)</text>
 
-  <!-- State 1: Pending / Created -->
-  <g transform="translate(110, 135)">
-    <rect width="150" height="90" class="state-box" />
-    <rect width="150" height="28" class="state-header" fill="#0284c7" />
-    <text x="75" y="19" class="state-name">Pending (Created)</text>
-    <text x="10" y="48" class="state-body-text">entry / saveToStore()</text>
-    <text x="10" y="66" class="state-body-text">do / notifyStaff()</text>
-    <text x="10" y="84" class="state-body-text">exit / logTimestamp()</text>
+  <!-- Comp 1: Customer Portal -->
+  <g transform="translate(60, 140)">
+    <rect width="320" height="110" class="comp-card" />
+    <rect x="-10" y="18" width="20" height="14" class="comp-tab" />
+    <rect x="-10" y="54" width="20" height="14" class="comp-tab" />
+    <text x="25" y="35" class="comp-stereo">&lt;&lt;component&gt;&gt;</text>
+    <text x="25" y="56" class="comp-header">CustomerPortalGUI</text>
+    <text x="25" y="78" class="comp-desc">Dynamic Menu, Cart Drawer, Checkout,</text>
+    <text x="25" y="96" class="comp-desc">and 5-Stage Live Order Stepper Modal</text>
   </g>
 
-  <!-- Transition 1 -> 2 -->
-  <line x1="260" y1="180" x2="330" y2="180" class="trans-line" />
-  <text x="295" y="168" class="trans-text" text-anchor="middle">confirmOrder()</text>
-
-  <!-- State 2: Confirmed -->
-  <g transform="translate(330, 135)">
-    <rect width="150" height="90" class="state-box" />
-    <rect width="150" height="28" class="state-header" fill="#0284c7" />
-    <text x="75" y="19" class="state-name">Confirmed</text>
-    <text x="10" y="48" class="state-body-text">entry / assignTicket()</text>
-    <text x="10" y="66" class="state-body-text">do / queueInKitchen()</text>
-    <text x="10" y="84" class="state-body-text">exit / printKOT()</text>
-  </g>
-
-  <!-- Transition 2 -> 3 -->
-  <line x1="480" y1="180" x2="550" y2="180" class="trans-line" />
-  <text x="515" y="168" class="trans-text" text-anchor="middle">startCooking()</text>
-
-  <!-- State 3: In Kitchen / Preparing -->
-  <g transform="translate(550, 135)">
-    <rect width="160" height="90" class="state-box" />
-    <rect width="160" height="28" class="state-header" fill="#d97706" />
-    <text x="80" y="19" class="state-name">In Kitchen (Cooking)</text>
-    <text x="10" y="48" class="state-body-text">entry / chefStartsPrep()</text>
-    <text x="10" y="66" class="state-body-text">do / assembleIngredients()</text>
-    <text x="10" y="84" class="state-body-text">exit / packAndSeal()</text>
-  </g>
-
-  <!-- Transition 3 -> 4 -->
-  <line x1="710" y1="180" x2="780" y2="180" class="trans-line" />
-  <text x="745" y="168" class="trans-text" text-anchor="middle">dispatchOrder()</text>
-
-  <!-- State 4: Out for Delivery -->
-  <g transform="translate(780, 135)">
-    <rect width="160" height="90" class="state-box" />
-    <rect width="160" height="28" class="state-header" fill="#7c3aed" />
-    <text x="80" y="19" class="state-name">Out for Delivery</text>
-    <text x="10" y="48" class="state-body-text">entry / handToDriver()</text>
-    <text x="10" y="66" class="state-body-text">do / transitToCustomer()</text>
-    <text x="10" y="84" class="state-body-text">exit / collectPayment()</text>
-  </g>
-
-  <!-- Transition 4 -> 5 -->
-  <line x1="860" y1="225" x2="860" y2="340" class="trans-line" />
-  <text x="870" y="285" class="trans-text">handoverConfirmed()</text>
-
-  <!-- State 5: Delivered / Completed -->
-  <g transform="translate(780, 340)">
-    <rect width="160" height="90" class="state-box" />
-    <rect width="160" height="28" class="state-header" fill="#059669" />
-    <text x="80" y="19" class="state-name">Delivered (Done)</text>
-    <text x="10" y="48" class="state-body-text">entry / closeOrder()</text>
-    <text x="10" y="66" class="state-body-text">do / requestReview()</text>
-    <text x="10" y="84" class="state-body-text">exit / archiveOrder()</text>
-  </g>
-
-  <!-- End 1 -->
-  <line x1="780" y1="385" x2="710" y2="385" class="trans-line" />
-  <circle cx="690" cy="385" r="14" class="end-outer" />
-  <circle cx="690" cy="385" r="9" class="end-inner" />
-
-  <!-- Cancellation State -->
-  <g transform="translate(220, 360)">
-    <rect width="160" height="80" class="state-box" stroke="#e11d48" />
-    <rect width="160" height="28" class="state-header" fill="#e11d48" />
-    <text x="80" y="19" class="state-name">Cancelled</text>
-    <text x="10" y="48" class="state-body-text">entry / logReason()</text>
-    <text x="10" y="66" class="state-body-text">exit / issueRefundIfPaid()</text>
-  </g>
-
-  <!-- Cancel transitions from Pending and Confirmed -->
-  <path d="M 180 225 L 180 400 L 220 400" fill="none" class="trans-cancel" />
-  <text x="120" y="320" class="trans-text" fill="#e11d48">cancel()</text>
-
-  <path d="M 405 225 L 405 390 L 380 390" fill="none" class="trans-cancel" />
-  <text x="415" y="300" class="trans-text" fill="#e11d48">cancel() [Within 5m]</text>
-
-  <!-- End 2 (From Cancelled) -->
-  <line x1="300" y1="440" x2="300" y2="490" class="trans-line" stroke="#e11d48" />
-  <circle cx="300" cy="505" r="14" class="end-outer" />
-  <circle cx="300" cy="505" r="9" class="end-inner" />
-</svg>`;
-
-saveSvg('08_state_order_lifecycle.svg', stateOrderSvg);
-
-// ---------------------------------------------------------------------------
-// 9. STATE MACHINE DIAGRAM: TABLE RESERVATION LIFECYCLE
-// ---------------------------------------------------------------------------
-const stateReserveSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 950 480" width="950" height="480">
-  <defs>
-    <style>
-      .bg { fill: #f8fafc; }
-      .state-box { fill: #ffffff; stroke: #701a75; stroke-width: 2; rx: 14; }
-      .state-header { fill: #a21caf; rx: 12; }
-      .state-name { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: bold; fill: #ffffff; text-anchor: middle; }
-      .state-body-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; fill: #334155; }
-      .trans-line { stroke: #a21caf; stroke-width: 1.8; marker-end: url(#statePurpArrow); }
-      .trans-cancel { stroke: #e11d48; stroke-width: 1.8; stroke-dasharray: 5,4; marker-end: url(#stateCancelArrow2); }
-      .trans-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: 600; fill: #0f172a; }
-      .start-node { fill: #0f172a; }
-      .end-outer { fill: none; stroke: #0f172a; stroke-width: 2; }
-      .end-inner { fill: #0f172a; }
-    </style>
-    <marker id="statePurpArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M 0 1 L 10 5 L 0 9 z" fill="#a21caf" />
-    </marker>
-    <marker id="stateCancelArrow2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M 0 1 L 10 5 L 0 9 z" fill="#e11d48" />
-    </marker>
-  </defs>
-
-  <rect width="100%" height="100%" class="bg" />
-
-  <text x="475" y="35" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="bold" fill="#0f172a" text-anchor="middle">State Machine Diagram: Table Reservation Lifecycle</text>
-
-  <!-- Start -->
-  <circle cx="50" cy="150" r="14" class="start-node" />
-  <line x1="64" y1="150" x2="120" y2="150" class="trans-line" />
-  <text x="90" y="140" class="trans-text" text-anchor="middle">request()</text>
-
-  <!-- State 1: Requested -->
-  <g transform="translate(120, 110)">
-    <rect width="150" height="80" class="state-box" />
-    <rect width="150" height="28" class="state-header" />
-    <text x="75" y="19" class="state-name">Requested</text>
-    <text x="10" y="48" class="state-body-text">entry / checkAvailability()</text>
-    <text x="10" y="66" class="state-body-text">exit / holdTable()</text>
-  </g>
-
-  <line x1="270" y1="150" x2="350" y2="150" class="trans-line" />
-  <text x="310" y="140" class="trans-text" text-anchor="middle">autoConfirm()</text>
-
-  <!-- State 2: Confirmed -->
-  <g transform="translate(350, 110)">
-    <rect width="150" height="80" class="state-box" />
-    <rect width="150" height="28" class="state-header" fill="#0284c7" />
-    <text x="75" y="19" class="state-name">Confirmed</text>
-    <text x="10" y="48" class="state-body-text">entry / sendSMSAlert()</text>
-    <text x="10" y="66" class="state-body-text">do / reserveSeatingZone()</text>
-  </g>
-
-  <line x1="500" y1="150" x2="580" y2="150" class="trans-line" />
-  <text x="540" y="140" class="trans-text" text-anchor="middle">guestArrives()</text>
-
-  <!-- State 3: Seated / Occupied -->
-  <g transform="translate(580, 110)">
-    <rect width="150" height="80" class="state-box" />
-    <rect width="150" height="28" class="state-header" fill="#d97706" />
-    <text x="75" y="19" class="state-name">Seated (Active)</text>
-    <text x="10" y="48" class="state-body-text">entry / openTableTab()</text>
-    <text x="10" y="66" class="state-body-text">do / serveMeal()</text>
-  </g>
-
-  <line x1="730" y1="150" x2="800" y2="150" class="trans-line" />
-  <text x="765" y="140" class="trans-text" text-anchor="middle">billSettled()</text>
-
-  <!-- State 4: Completed -->
-  <g transform="translate(800, 110)">
-    <rect width="120" height="80" class="state-box" />
-    <rect width="120" height="28" class="state-header" fill="#059669" />
-    <text x="60" y="19" class="state-name">Completed</text>
-    <text x="10" y="48" class="state-body-text">entry / clearTable()</text>
-    <text x="10" y="66" class="state-body-text">exit / freeSlot()</text>
-  </g>
-
-  <line x1="860" y1="190" x2="860" y2="250" class="trans-line" />
-  <circle cx="860" cy="265" r="14" class="end-outer" />
-  <circle cx="860" cy="265" r="9" class="end-inner" />
-
-  <!-- Cancellation -->
-  <g transform="translate(230, 300)">
-    <rect width="150" height="70" class="state-box" stroke="#e11d48" />
-    <rect width="150" height="26" class="state-header" fill="#e11d48" />
-    <text x="75" y="18" class="state-name">Cancelled</text>
-    <text x="10" y="46" class="state-body-text">entry / releaseHold()</text>
-  </g>
-
-  <path d="M 195 190 L 195 335 L 230 335" fill="none" class="trans-cancel" />
-  <text x="140" y="270" class="trans-text" fill="#e11d48">cancel()</text>
-
-  <path d="M 425 190 L 425 335 L 380 335" fill="none" class="trans-cancel" />
-  <text x="435" y="270" class="trans-text" fill="#e11d48">cancelBooking()</text>
-
-  <line x1="305" y1="370" x2="305" y2="420" class="trans-line" stroke="#e11d48" />
-  <circle cx="305" cy="435" r="14" class="end-outer" />
-  <circle cx="305" cy="435" r="9" class="end-inner" />
-</svg>`;
-
-saveSvg('09_state_reservation_lifecycle.svg', stateReserveSvg);
-
-// ---------------------------------------------------------------------------
-// 10. COMPONENT DIAGRAM
-// ---------------------------------------------------------------------------
-const componentSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 700" width="1100" height="700">
-  <defs>
-    <style>
-      .bg { fill: #f8fafc; }
-      .comp-box { fill: #ffffff; stroke: #334155; stroke-width: 1.8; rx: 4; }
-      .comp-header { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: bold; fill: #0f172a; }
-      .comp-stereotype { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-style: italic; fill: #64748b; }
-      .comp-icon { fill: #ffffff; stroke: #334155; stroke-width: 1.2; }
-      .comp-tab { fill: #ffffff; stroke: #334155; stroke-width: 1.2; }
-      .interface-circle { fill: #ffffff; stroke: #0284c7; stroke-width: 1.8; }
-      .interface-socket { fill: none; stroke: #0284c7; stroke-width: 1.8; }
-      .dep-arrow { stroke: #64748b; stroke-width: 1.5; stroke-dasharray: 4,4; marker-end: url(#compArrow); }
-      .subsystem-boundary { fill: none; stroke: #94a3b8; stroke-width: 1.5; stroke-dasharray: 6,4; rx: 10; }
-    </style>
-    <marker id="compArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M 0 1 L 10 5 L 0 9 z" fill="#64748b" />
-    </marker>
-  </defs>
-
-  <rect width="100%" height="100%" class="bg" />
-
-  <text x="550" y="32" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="bold" fill="#0f172a" text-anchor="middle">Component Diagram: Wonder Land Restaurant System Architecture</text>
-
-  <!-- Component Helper Macro -->
-  <!-- Layer 1: Presentation Tier -->
-  <rect x="50" y="60" width="1000" height="150" class="subsystem-boundary" />
-  <text x="70" y="85" font-family="'Segoe UI', Arial, sans-serif" font-size="14" font-weight="bold" fill="#1e3a8a">&lt;&lt;Subsystem&gt;&gt; Presentation Components (Client Web GUI)</text>
-
-  <!-- Comp 1: Customer Portal UI -->
-  <g transform="translate(80, 100)">
-    <rect width="260" height="85" class="comp-box" />
-    <rect x="-10" y="15" width="20" height="12" class="comp-tab" />
-    <rect x="-10" y="45" width="20" height="12" class="comp-tab" />
-    <text x="25" y="35" class="comp-stereotype">&lt;&lt;component&gt;&gt;</text>
-    <text x="25" y="55" class="comp-header">Customer Portal GUI</text>
-    <text x="25" y="72" font-family="'Segoe UI', Arial, sans-serif" font-size="11" fill="#64748b">Menu, Cart Drawer, Checkout, Tracker</text>
-  </g>
-
-  <!-- Comp 2: Admin Dashboard UI -->
-  <g transform="translate(420, 100)">
-    <rect width="270" height="85" class="comp-box" />
-    <rect x="-10" y="15" width="20" height="12" class="comp-tab" />
-    <rect x="-10" y="45" width="20" height="12" class="comp-tab" />
-    <text x="25" y="35" class="comp-stereotype">&lt;&lt;component&gt;&gt;</text>
-    <text x="25" y="55" class="comp-header">Admin Management GUI</text>
-    <text x="25" y="72" font-family="'Segoe UI', Arial, sans-serif" font-size="11" fill="#64748b">Menu CRUD, Orders Board, Analytics</text>
+  <!-- Comp 2: Admin Dashboard -->
+  <g transform="translate(440, 140)">
+    <rect width="320" height="110" class="comp-card" />
+    <rect x="-10" y="18" width="20" height="14" class="comp-tab" />
+    <rect x="-10" y="54" width="20" height="14" class="comp-tab" />
+    <text x="25" y="35" class="comp-stereo">&lt;&lt;component&gt;&gt;</text>
+    <text x="25" y="56" class="comp-header">AdminManagementGUI</text>
+    <text x="25" y="78" class="comp-desc">Security PIN Gate, Live KPI Metrics Board,</text>
+    <text x="25" y="96" class="comp-desc">Order Dispatch Table, Menu Catalog CRUD</text>
   </g>
 
   <!-- Comp 3: Table Booking UI -->
-  <g transform="translate(760, 100)">
-    <rect width="250" height="85" class="comp-box" />
-    <rect x="-10" y="15" width="20" height="12" class="comp-tab" />
-    <rect x="-10" y="45" width="20" height="12" class="comp-tab" />
-    <text x="25" y="35" class="comp-stereotype">&lt;&lt;component&gt;&gt;</text>
-    <text x="25" y="55" class="comp-header">Reservation Modal UI</text>
-    <text x="25" y="72" font-family="'Segoe UI', Arial, sans-serif" font-size="11" fill="#64748b">Slot Picker, Guest Count, Zone</text>
+  <g transform="translate(820, 140)">
+    <rect width="320" height="110" class="comp-card" />
+    <rect x="-10" y="18" width="20" height="14" class="comp-tab" />
+    <rect x="-10" y="54" width="20" height="14" class="comp-tab" />
+    <text x="25" y="35" class="comp-stereo">&lt;&lt;component&gt;&gt;</text>
+    <text x="25" y="56" class="comp-header">ReservationModalUI</text>
+    <text x="25" y="78" class="comp-desc">Time-slot Booking, Party Size Picker,</text>
+    <text x="25" y="96" class="comp-desc">Seating Zone (Seaside, Terrace, VIP)</text>
   </g>
 
-  <!-- Layer 2: Business Logic / Application Core Services -->
-  <rect x="50" y="260" width="1000" height="230" class="subsystem-boundary" />
-  <text x="70" y="285" font-family="'Segoe UI', Arial, sans-serif" font-size="14" font-weight="bold" fill="#1e3a8a">&lt;&lt;Subsystem&gt;&gt; Business Logic &amp; Controller Services</text>
+  <!-- TIER 2: Business Logic Tier -->
+  <rect x="40" y="315" width="1120" height="260" class="subsystem-box" />
+  <text x="60" y="342" class="subsystem-title">&lt;&lt;Subsystem&gt;&gt; Application Logic &amp; Business Services Layer</text>
 
-  <!-- Comp 4: Cart & Order Engine -->
-  <g transform="translate(80, 310)">
-    <rect width="260" height="90" class="comp-box" />
-    <rect x="-10" y="15" width="20" height="12" class="comp-tab" />
-    <rect x="-10" y="45" width="20" height="12" class="comp-tab" />
-    <text x="25" y="35" class="comp-stereotype">&lt;&lt;component&gt;&gt;</text>
-    <text x="25" y="55" class="comp-header">Order Processing Engine</text>
-    <text x="25" y="72" font-family="'Segoe UI', Arial, sans-serif" font-size="11" fill="#64748b">Tax calculation, State Transitions</text>
+  <!-- Comp 4: Order Processing Engine -->
+  <g transform="translate(60, 360)">
+    <rect width="320" height="95" class="comp-card" />
+    <rect x="-10" y="16" width="20" height="14" class="comp-tab" />
+    <rect x="-10" y="48" width="20" height="14" class="comp-tab" />
+    <text x="25" y="32" class="comp-stereo">&lt;&lt;component&gt;&gt;</text>
+    <text x="25" y="52" class="comp-header">OrderProcessingEngine</text>
+    <text x="25" y="72" class="comp-desc">Tax calculation, COD verification,</text>
+    <text x="25" y="88" class="comp-desc">State machine lifecycle progression</text>
   </g>
 
   <!-- Comp 5: Menu Catalog Service -->
-  <g transform="translate(420, 310)">
-    <rect width="270" height="90" class="comp-box" />
-    <rect x="-10" y="15" width="20" height="12" class="comp-tab" />
-    <rect x="-10" y="45" width="20" height="12" class="comp-tab" />
-    <text x="25" y="35" class="comp-stereotype">&lt;&lt;component&gt;&gt;</text>
-    <text x="25" y="55" class="comp-header">Catalog &amp; Category Service</text>
-    <text x="25" y="72" font-family="'Segoe UI', Arial, sans-serif" font-size="11" fill="#64748b">Filter, Search, Price Update, CRUD</text>
+  <g transform="translate(440, 360)">
+    <rect width="320" height="95" class="comp-card" />
+    <rect x="-10" y="16" width="20" height="14" class="comp-tab" />
+    <rect x="-10" y="48" width="20" height="14" class="comp-tab" />
+    <text x="25" y="32" class="comp-stereo">&lt;&lt;component&gt;&gt;</text>
+    <text x="25" y="52" class="comp-header">MenuCatalogService</text>
+    <text x="25" y="72" class="comp-desc">Category filtering, keyword live search,</text>
+    <text x="25" y="88" class="comp-desc">Dish availability mutation &amp; persistence</text>
   </g>
 
-  <!-- Comp 6: Reservation Service -->
-  <g transform="translate(760, 310)">
-    <rect width="250" height="90" class="comp-box" />
-    <rect x="-10" y="15" width="20" height="12" class="comp-tab" />
-    <rect x="-10" y="45" width="20" height="12" class="comp-tab" />
-    <text x="25" y="35" class="comp-stereotype">&lt;&lt;component&gt;&gt;</text>
-    <text x="25" y="55" class="comp-header">Table Allocation Service</text>
-    <text x="25" y="72" font-family="'Segoe UI', Arial, sans-serif" font-size="11" fill="#64748b">Capacity check, Confirmation</text>
+  <!-- Comp 6: Excel Exporter -->
+  <g transform="translate(820, 360)">
+    <rect width="320" height="95" class="comp-card" stroke="#059669" />
+    <rect x="-10" y="16" width="20" height="14" class="comp-tab" fill="#059669" />
+    <rect x="-10" y="48" width="20" height="14" class="comp-tab" fill="#059669" />
+    <text x="25" y="32" class="comp-stereo" fill="#047857">&lt;&lt;component&gt;&gt;</text>
+    <text x="25" y="52" class="comp-header" fill="#047857">ExcelExportTelemetryEngine</text>
+    <text x="25" y="72" class="comp-desc">Orders dataset serialization, CSV</text>
+    <text x="25" y="88" class="comp-desc">UTF-8 BOM generator, Browser download</text>
   </g>
 
-  <!-- Comp 7: Payment Engine Component -->
-  <g transform="translate(250, 420)">
-    <rect width="260" height="55" class="comp-box" />
-    <text x="20" y="25" class="comp-stereotype">&lt;&lt;component&gt;&gt;</text>
-    <text x="20" y="42" class="comp-header">Payment Strategy Gateway</text>
+  <!-- Comp 7: Table Allocation -->
+  <g transform="translate(250, 475)">
+    <rect width="320" height="85" class="comp-card" />
+    <text x="25" y="30" class="comp-stereo">&lt;&lt;component&gt;&gt;</text>
+    <text x="25" y="50" class="comp-header">TableAllocationService</text>
+    <text x="25" y="70" class="comp-desc">Slot capacity validation &amp; booking lock</text>
   </g>
 
-  <!-- Comp 8: Analytics Engine -->
-  <g transform="translate(580, 420)">
-    <rect width="280" height="55" class="comp-box" />
-    <text x="20" y="25" class="comp-stereotype">&lt;&lt;component&gt;&gt;</text>
-    <text x="20" y="42" class="comp-header">Excel Exporter &amp; Telemetry Engine</text>
+  <!-- Comp 8: Payment Gateway Strategy -->
+  <g transform="translate(630, 475)">
+    <rect width="320" height="85" class="comp-card" />
+    <text x="25" y="30" class="comp-stereo">&lt;&lt;component&gt;&gt;</text>
+    <text x="25" y="50" class="comp-header">PaymentStrategyGateway</text>
+    <text x="25" y="70" class="comp-desc">Polymorphic COD, Card &amp; Wallet strategy</text>
   </g>
 
-  <!-- Layer 3: Persistence Tier -->
-  <rect x="50" y="520" width="1000" height="150" class="subsystem-boundary" />
-  <text x="70" y="545" font-family="'Segoe UI', Arial, sans-serif" font-size="14" font-weight="bold" fill="#1e3a8a">&lt;&lt;Subsystem&gt;&gt; Persistence &amp; Storage Tier</text>
+  <!-- TIER 3: Persistence Tier -->
+  <rect x="40" y="615" width="1120" height="160" class="subsystem-box" />
+  <text x="60" y="642" class="subsystem-title">&lt;&lt;Subsystem&gt;&gt; Persistence &amp; Client Storage Layer</text>
 
-  <g transform="translate(200, 565)">
-    <rect width="320" height="80" class="comp-box" />
-    <rect x="-10" y="15" width="20" height="12" class="comp-tab" />
-    <rect x="-10" y="45" width="20" height="12" class="comp-tab" />
-    <text x="25" y="35" class="comp-stereotype">&lt;&lt;component&gt;&gt;</text>
-    <text x="25" y="55" class="comp-header">LocalStorage Persistent Adapter</text>
-    <text x="25" y="70" font-family="'Segoe UI', Arial, sans-serif" font-size="11" fill="#64748b">JSON Serialization, Cross-tab Sync</text>
+  <!-- Comp 9: LocalStorage Adapter -->
+  <g transform="translate(250, 660)">
+    <rect width="380" height="95" class="comp-card" />
+    <rect x="-10" y="16" width="20" height="14" class="comp-tab" />
+    <rect x="-10" y="48" width="20" height="14" class="comp-tab" />
+    <text x="25" y="32" class="comp-stereo">&lt;&lt;component&gt;&gt;</text>
+    <text x="25" y="52" class="comp-header">LocalStoragePersistenceAdapter</text>
+    <text x="25" y="72" class="comp-desc">Key: WONDERLAND_SYSTEM_DB_V1</text>
+    <text x="25" y="88" class="comp-desc">JSON Serialization &amp; Multi-tab Storage Events</text>
   </g>
 
-  <g transform="translate(620, 565)">
-    <rect width="280" height="80" class="comp-box" />
-    <rect x="-10" y="15" width="20" height="12" class="comp-tab" />
-    <rect x="-10" y="45" width="20" height="12" class="comp-tab" />
-    <text x="25" y="35" class="comp-stereotype">&lt;&lt;component&gt;&gt;</text>
-    <text x="25" y="55" class="comp-header">Mock Demo Seeder</text>
-    <text x="25" y="70" font-family="'Segoe UI', Arial, sans-serif" font-size="11" fill="#64748b">Initial menu dishes &amp; sample orders</text>
+  <!-- Comp 10: Mock Demo Seeder -->
+  <g transform="translate(680, 660)">
+    <rect width="340" height="95" class="comp-card" />
+    <rect x="-10" y="16" width="20" height="14" class="comp-tab" />
+    <rect x="-10" y="48" width="20" height="14" class="comp-tab" />
+    <text x="25" y="32" class="comp-stereo">&lt;&lt;component&gt;&gt;</text>
+    <text x="25" y="52" class="comp-header">MockDemoSeeder</text>
+    <text x="25" y="72" class="comp-desc">Initial dishes catalog &amp; sample orders</text>
+    <text x="25" y="88" class="comp-desc">Instant reset button for academic demo</text>
   </g>
 
-  <!-- Wiring Lines -->
-  <line x1="210" y1="185" x2="210" y2="310" class="dep-arrow" />
-  <line x1="550" y1="185" x2="550" y2="310" class="dep-arrow" />
-  <line x1="880" y1="185" x2="880" y2="310" class="dep-arrow" />
-  <line x1="210" y1="400" x2="330" y2="420" class="dep-arrow" />
-  <line x1="550" y1="400" x2="650" y2="420" class="dep-arrow" />
-  <line x1="210" y1="400" x2="360" y2="565" class="dep-arrow" />
-  <line x1="550" y1="400" x2="360" y2="565" class="dep-arrow" />
-  <line x1="880" y1="400" x2="360" y2="565" class="dep-arrow" />
+  <!-- Dependency Lines -->
+  <line x1="220" y1="250" x2="220" y2="360" class="dep-arrow" />
+  <line x1="600" y1="250" x2="600" y2="360" class="dep-arrow" />
+  <line x1="600" y1="250" x2="980" y2="360" class="dep-arrow" />
+  <line x1="980" y1="250" x2="410" y2="475" class="dep-arrow" />
+  <line x1="220" y1="455" x2="440" y2="660" class="dep-arrow" />
+  <line x1="600" y1="455" x2="440" y2="660" class="dep-arrow" />
 </svg>`;
 
-saveSvg('10_component_diagram.svg', componentSvg);
+saveSvg('10_component_diagram.svg', compArchSvg);
 
-// ---------------------------------------------------------------------------
-// 11. DEPLOYMENT DIAGRAM
-// ---------------------------------------------------------------------------
-const deploySvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 680" width="1000" height="680">
+// ===========================================================================
+// 8. VISUAL UML: DEPLOYMENT DIAGRAM (HARDWARE & TOPOLOGY)
+// ===========================================================================
+const deploySvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="1200" height="700">
   <defs>
     <style>
-      .bg { fill: #f8fafc; }
-      .node-3d { fill: #ffffff; stroke: #1e293b; stroke-width: 1.8; }
-      .node-side { fill: #cbd5e1; stroke: #1e293b; stroke-width: 1.8; }
-      .node-top { fill: #e2e8f0; stroke: #1e293b; stroke-width: 1.8; }
-      .node-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; font-weight: bold; fill: #0f172a; text-anchor: middle; }
-      .node-stereo { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-style: italic; fill: #475569; text-anchor: middle; }
-      .artifact-box { fill: #f1f5f9; stroke: #0284c7; stroke-width: 1.4; rx: 4; }
-      .artifact-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: 600; fill: #0369a1; text-anchor: middle; dominant-baseline: central; }
-      .comm-path { stroke: #0f172a; stroke-width: 2; }
-      .comm-label { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: bold; fill: #1e3a8a; text-anchor: middle; }
+      .canvas-bg { fill: #f8fafc; }
+      .header-bg { fill: #0a1128; }
+      .header-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #ffffff; }
+      .header-tag { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #e4b95b; letter-spacing: 1.5px; }
+      .node-card { fill: #ffffff; stroke: #0f172a; stroke-width: 2; rx: 10; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.06)); }
+      .node-hdr { fill: #0a1128; rx: 8; }
+      .node-hdr-gold { fill: #b45309; rx: 8; }
+      .node-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: bold; fill: #ffffff; text-anchor: middle; dominant-baseline: central; }
+      .art-box { fill: #fffdf5; stroke: #e4b95b; stroke-width: 1.5; rx: 6; }
+      .art-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; font-weight: bold; fill: #0f172a; }
+      .art-desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 10px; fill: #64748b; }
+      .net-line { stroke: #0f172a; stroke-width: 2.2; }
+      .net-label { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #b45309; text-anchor: middle; }
     </style>
   </defs>
 
-  <rect width="100%" height="100%" class="bg" />
+  <rect width="100%" height="100%" class="canvas-bg" />
 
-  <text x="500" y="32" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="bold" fill="#0f172a" text-anchor="middle">Deployment Diagram: Physical / Execution Node Architecture</text>
+  <!-- Top Executive Banner -->
+  <rect x="0" y="0" width="1200" height="70" class="header-bg" />
+  <rect x="0" y="68" width="1200" height="3" fill="#e4b95b" />
+  <text x="35" y="30" class="header-tag">WONDER LAND RESTAURANT SYSTEM • PHYSICAL &amp; CLOUD ARCHITECTURE</text>
+  <text x="35" y="55" class="header-title">Visual UML: Deployment Diagram (Hardware Nodes, Web Runtimes &amp; Network)</text>
 
-  <!-- NODE 1: Client Machine / Mobile Device -->
-  <g transform="translate(80, 100)">
-    <!-- 3D Box for Client Node -->
-    <polygon points="0,20 20,0 340,0 320,20" class="node-top" />
-    <polygon points="320,20 340,0 340,460 320,480" class="node-side" />
-    <rect x="0" y="20" width="320" height="460" class="node-3d" />
+  <!-- Node 1: Client Workstation / Mobile Device -->
+  <g transform="translate(60, 120)">
+    <rect width="480" height="500" class="node-card" />
+    <rect width="480" height="42" class="node-hdr" />
+    <text x="240" y="21" class="node-title">&lt;&lt;device&gt;&gt; Client User Device (PC / Smartphone)</text>
 
-    <text x="160" y="48" class="node-stereo">&lt;&lt;device&gt;&gt;</text>
-    <text x="160" y="68" class="node-title">Client Workstation / Smartphone</text>
+    <!-- Execution Environment -->
+    <g transform="translate(30, 60)">
+      <rect width="420" height="400" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5" rx="8" />
+      <text x="20" y="25" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="bold" fill="#0a1128">&lt;&lt;executionEnvironment&gt;&gt; Web Browser (Chrome, Edge, Safari)</text>
 
-    <!-- Execution Environment inside Client -->
-    <rect x="20" y="90" width="280" height="370" fill="#f8fafc" stroke="#64748b" stroke-width="1.2" stroke-dasharray="4,4" rx: 6 />
-    <text x="160" y="112" class="node-stereo">&lt;&lt;execution environment&gt;&gt;</text>
-    <text x="160" y="128" font-family="'Segoe UI', Arial, sans-serif" font-size="13" font-weight="bold" fill="#1e293b" text-anchor="middle">Modern Web Browser (Chrome/Edge/Safari)</text>
+      <!-- Artifact 1: Customer Portal -->
+      <g transform="translate(20, 45)">
+        <rect width="380" height="65" class="art-box" />
+        <text x="15" y="25" class="art-title">&lt;&lt;artifact&gt;&gt; index.html (Customer Portal)</text>
+        <text x="15" y="45" class="art-desc">Responsive DOM UI, style.css, fontawesome CDN, app.js</text>
+      </g>
 
-    <!-- Artifacts -->
-    <g transform="translate(40, 145)">
-      <rect width="240" height="40" class="artifact-box" />
-      <text x="120" y="20" class="artifact-title">&lt;&lt;artifact&gt;&gt; index.html (Customer GUI)</text>
-    </g>
-    <g transform="translate(40, 195)">
-      <rect width="240" height="40" class="artifact-box" />
-      <text x="120" y="20" class="artifact-title">&lt;&lt;artifact&gt;&gt; admin.html (Admin Portal)</text>
-    </g>
-    <g transform="translate(40, 245)">
-      <rect width="240" height="40" class="artifact-box" />
-      <text x="120" y="20" class="artifact-title">&lt;&lt;artifact&gt;&gt; style.css &amp; admin.css (Styles)</text>
-    </g>
-    <g transform="translate(40, 295)">
-      <rect width="240" height="40" class="artifact-box" />
-      <text x="120" y="20" class="artifact-title">&lt;&lt;artifact&gt;&gt; app.js (Full Business Engine)</text>
-    </g>
-    <g transform="translate(40, 345)">
-      <rect width="240" height="50" class="artifact-box" fill="#eff6ff" stroke="#2563eb" />
-      <text x="120" y="18" class="artifact-title">&lt;&lt;database / storage&gt;&gt;</text>
-      <text x="120" y="34" class="artifact-title" font-weight="normal">HTML5 LocalStorage (Key: "WL_DATA")</text>
-    </g>
-    <g transform="translate(40, 405)">
-      <rect width="240" height="35" class="artifact-box" />
-      <text x="120" y="17" class="artifact-title">&lt;&lt;media assets&gt;&gt; /img/* (Food &amp; Gallery)</text>
+      <!-- Artifact 2: Admin Portal -->
+      <g transform="translate(20, 125)">
+        <rect width="380" height="65" class="art-box" />
+        <text x="15" y="25" class="art-title">&lt;&lt;artifact&gt;&gt; admin.html (Back-Office Hub)</text>
+        <text x="15" y="45" class="art-desc">Admin dashboard, admin.css, admin.js, Excel CSV Exporter</text>
+      </g>
+
+      <!-- Artifact 3: JS Engine -->
+      <g transform="translate(20, 205)">
+        <rect width="380" height="65" class="art-box" />
+        <text x="15" y="25" class="art-title">&lt;&lt;runtime&gt;&gt; V8 JavaScript Engine</text>
+        <text x="15" y="45" class="art-desc">ES6+ Execution, Event loop, State Machine Stepper Engine</text>
+      </g>
+
+      <!-- Artifact 4: LocalStorage Database -->
+      <g transform="translate(20, 285)">
+        <rect width="380" height="85" class="art-box" stroke="#059669" fill="#f0fdf4" />
+        <text x="15" y="25" class="art-title" fill="#047857">&lt;&lt;database&gt;&gt; HTML5 LocalStorage Storage Engine</text>
+        <text x="15" y="45" class="art-desc">Key: WONDERLAND_SYSTEM_DB_V1 (Persistent JSON Store)</text>
+        <text x="15" y="65" class="art-desc">Cross-tab Storage Event Listener for Real-Time Sync</text>
+      </g>
     </g>
   </g>
 
-  <!-- Communication Link -->
-  <line x1="420" y1="320" x2="580" y2="320" class="comm-path" />
-  <text x="500" y="305" class="comm-label">HTTP / HTTPS</text>
-  <text x="500" y="340" font-family="'Segoe UI', Arial, sans-serif" font-size="11" fill="#64748b" text-anchor="middle">Port 80 / 443 / LiveServer</text>
+  <!-- Network Connection -->
+  <line x1="540" y1="360" x2="680" y2="360" class="net-line" />
+  <rect x="560" y="335" width="100" height="25" fill="#ffffff" stroke="#b45309" rx="4" />
+  <text x="610" y="352" class="net-label">&lt;&lt;HTTPS : 443&gt;&gt;</text>
 
-  <!-- NODE 2: Web Server / Host -->
-  <g transform="translate(580, 100)">
-    <!-- 3D Box for Server Node -->
-    <polygon points="0,20 20,0 340,0 320,20" class="node-top" />
-    <polygon points="320,20 340,0 340,460 320,480" class="node-side" />
-    <rect x="0" y="20" width="320" height="460" class="node-3d" />
+  <!-- Node 2: GitHub Pages Web Server -->
+  <g transform="translate(680, 120)">
+    <rect width="460" height="500" class="node-card" />
+    <rect width="460" height="42" class="node-hdr-gold" />
+    <text x="230" y="21" class="node-title">&lt;&lt;server&gt;&gt; GitHub Pages Static Cloud Host</text>
 
-    <text x="160" y="48" class="node-stereo">&lt;&lt;device&gt;&gt;</text>
-    <text x="160" y="68" class="node-title">Web Server / Cloud Host</text>
+    <!-- Web Server Software -->
+    <g transform="translate(30, 60)">
+      <rect width="400" height="400" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5" rx="8" />
+      <text x="20" y="25" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="bold" fill="#0a1128">&lt;&lt;webServer&gt;&gt; Fastly Edge CDN &amp; NGINX Web Server</text>
 
-    <!-- Execution Environment inside Server -->
-    <rect x="20" y="90" width="280" height="370" fill="#f8fafc" stroke="#64748b" stroke-width="1.2" stroke-dasharray="4,4" rx: 6 />
-    <text x="160" y="112" class="node-stereo">&lt;&lt;execution environment&gt;&gt;</text>
-    <text x="160" y="128" font-family="'Segoe UI', Arial, sans-serif" font-size="13" font-weight="bold" fill="#1e293b" text-anchor="middle">Static Web Host / Node.js Server</text>
+      <!-- Repo Distribution -->
+      <g transform="translate(20, 50)">
+        <rect width="360" height="85" class="art-box" />
+        <text x="15" y="25" class="art-title">&lt;&lt;distribution&gt;&gt; radwasengr.github.io</text>
+        <text x="15" y="45" class="art-desc">Domain: /wonder-land-restaurant/</text>
+        <text x="15" y="65" class="art-desc">Direct static file delivery (Cache-Busted v=2.6.0)</text>
+      </g>
 
-    <!-- Artifacts on Server -->
-    <g transform="translate(40, 150)">
-      <rect width="240" height="50" class="artifact-box" fill="#f0fdf4" stroke="#16a34a" />
-      <text x="120" y="20" class="artifact-title">&lt;&lt;service&gt;&gt;</text>
-      <text x="120" y="36" class="artifact-title" fill="#15803d">Static File Serving Engine</text>
-    </g>
-    <g transform="translate(40, 220)">
-      <rect width="240" height="50" class="artifact-box" fill="#f0fdf4" stroke="#16a34a" />
-      <text x="120" y="20" class="artifact-title">&lt;&lt;service&gt;&gt;</text>
-      <text x="120" y="36" class="artifact-title" fill="#15803d">SSL / TLS Termination (HTTPS)</text>
-    </g>
-    <g transform="translate(40, 290)">
-      <rect width="240" height="50" class="artifact-box" fill="#f0fdf4" stroke="#16a34a" />
-      <text x="120" y="20" class="artifact-title">&lt;&lt;service&gt;&gt;</text>
-      <text x="120" y="36" class="artifact-title" fill="#15803d">CDN Asset Caching (FontAwesome / Fonts)</text>
-    </g>
-    <g transform="translate(40, 360)">
-      <rect width="240" height="60" class="artifact-box" fill="#fff7ed" stroke="#ea580c" />
-      <text x="120" y="20" class="artifact-title">&lt;&lt;future deployment&gt;&gt;</text>
-      <text x="120" y="36" class="artifact-title" fill="#c2410c">RESTful API Backend</text>
-      <text x="120" y="50" font-family="'Segoe UI', Arial, sans-serif" font-size="10" fill="#9a3412" text-anchor="middle">(Node.js Express / MongoDB)</text>
+      <!-- Asset Files -->
+      <g transform="translate(20, 155)">
+        <rect width="360" height="100" class="art-box" />
+        <text x="15" y="25" class="art-title">&lt;&lt;fileSystem&gt;&gt; Static Web Assets</text>
+        <text x="15" y="45" class="art-desc">• HTML5 Documents (index.html, admin.html)</text>
+        <text x="15" y="65" class="art-desc">• Stylesheets (style.css, admin.css)</text>
+        <text x="15" y="85" class="art-desc">• Vector SVGs &amp; Culinary Photography</text>
+      </g>
+
+      <!-- .nojekyll Flag -->
+      <g transform="translate(20, 275)">
+        <rect width="360" height="65" class="art-box" stroke="#059669" fill="#f0fdf4" />
+        <text x="15" y="25" class="art-title" fill="#047857">&lt;&lt;config&gt;&gt; .nojekyll File</text>
+        <text x="15" y="45" class="art-desc">Bypasses Jekyll processing for instant deployment</text>
+      </g>
     </g>
   </g>
 </svg>`;
 
 saveSvg('11_deployment_diagram.svg', deploySvg);
 
-// ---------------------------------------------------------------------------
-// 12. PACKAGE DIAGRAM
-// ---------------------------------------------------------------------------
-const packageSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="1000" height="700">
+// ===========================================================================
+// 9. VISUAL UML: ENTITY-RELATIONSHIP DIAGRAM (ERD)
+// ===========================================================================
+const erdDatabaseSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 860" width="1200" height="860">
   <defs>
     <style>
-      .bg { fill: #f8fafc; }
-      .pkg-tab { fill: #cbd5e1; stroke: #334155; stroke-width: 1.6; }
-      .pkg-body { fill: #ffffff; stroke: #334155; stroke-width: 1.6; rx: 4; }
-      .pkg-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #0f172a; }
-      .pkg-tab-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: 600; fill: #334155; }
-      .class-pill { fill: #f1f5f9; stroke: #64748b; stroke-width: 1; rx: 4; }
-      .class-pill-text { font-family: 'Consolas', monospace; font-size: 11px; fill: #1e293b; text-anchor: middle; dominant-baseline: central; }
-      .import-line { stroke: #0284c7; stroke-width: 1.6; stroke-dasharray: 5,4; marker-end: url(#pkgArrow); }
-      .import-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #0284c7; }
-    </style>
-    <marker id="pkgArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M 0 1 L 10 5 L 0 9 z" fill="#0284c7" />
-    </marker>
-  </defs>
-
-  <rect width="100%" height="100%" class="bg" />
-
-  <text x="500" y="32" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="bold" fill="#0f172a" text-anchor="middle">Package Diagram: Architectural Layering &amp; Dependencies</text>
-
-  <!-- Package 1: Presentation Layer -->
-  <g transform="translate(60, 60)">
-    <path d="M 0 0 L 140 0 L 155 18 L 0 18 Z" class="pkg-tab" />
-    <text x="10" y="13" class="pkg-tab-title">Presentation</text>
-    <rect x="0" y="18" width="400" height="160" class="pkg-body" />
-    <text x="15" y="42" class="pkg-title">com.wonderland.presentation</text>
-
-    <g transform="translate(20, 55)"><rect width="160" height="26" class="class-pill" /><text x="80" y="13" class="class-pill-text">CustomerPortalView</text></g>
-    <g transform="translate(200, 55)"><rect width="180" height="26" class="class-pill" /><text x="90" y="13" class="class-pill-text">CartDrawerComponent</text></g>
-    <g transform="translate(20, 90)"><rect width="160" height="26" class="class-pill" /><text x="80" y="13" class="class-pill-text">AdminDashboardView</text></g>
-    <g transform="translate(200, 90)"><rect width="180" height="26" class="class-pill" /><text x="90" y="13" class="class-pill-text">OrderTrackerComponent</text></g>
-    <g transform="translate(20, 125)"><rect width="160" height="26" class="class-pill" /><text x="80" y="13" class="class-pill-text">ReservationModalView</text></g>
-    <g transform="translate(200, 125)"><rect width="180" height="26" class="class-pill" /><text x="90" y="13" class="class-pill-text">MenuFilterComponent</text></g>
-  </g>
-
-  <!-- Package 2: Business Logic / Controllers -->
-  <g transform="translate(60, 290)">
-    <path d="M 0 0 L 150 0 L 165 18 L 0 18 Z" class="pkg-tab" fill="#bae6fd" />
-    <text x="10" y="13" class="pkg-tab-title">Business Logic</text>
-    <rect x="0" y="18" width="400" height="160" class="pkg-body" stroke="#0284c7" />
-    <text x="15" y="42" class="pkg-title" fill="#0369a1">com.wonderland.business</text>
-
-    <g transform="translate(20, 55)"><rect width="160" height="26" class="class-pill" /><text x="80" y="13" class="class-pill-text">OrderManager</text></g>
-    <g transform="translate(200, 55)"><rect width="180" height="26" class="class-pill" /><text x="90" y="13" class="class-pill-text">CartService</text></g>
-    <g transform="translate(20, 90)"><rect width="160" height="26" class="class-pill" /><text x="80" y="13" class="class-pill-text">ReservationManager</text></g>
-    <g transform="translate(200, 90)"><rect width="180" height="26" class="class-pill" /><text x="90" y="13" class="class-pill-text">MenuCatalogService</text></g>
-    <g transform="translate(20, 125)"><rect width="160" height="26" class="class-pill" /><text x="80" y="13" class="class-pill-text">PaymentStrategyService</text></g>
-    <g transform="translate(200, 125)"><rect width="180" height="26" class="class-pill" /><text x="90" y="13" class="class-pill-text">AnalyticsCalculator</text></g>
-  </g>
-
-  <!-- Presentation imports Business Logic -->
-  <line x1="260" y1="238" x2="260" y2="290" class="import-line" />
-  <text x="270" y="268" class="import-text">&lt;&lt;import&gt;&gt;</text>
-
-  <!-- Package 3: Domain Models -->
-  <g transform="translate(540, 170)">
-    <path d="M 0 0 L 140 0 L 155 18 L 0 18 Z" class="pkg-tab" fill="#bbf7d0" />
-    <text x="10" y="13" class="pkg-tab-title">Domain Models</text>
-    <rect x="0" y="18" width="400" height="170" class="pkg-body" stroke="#16a34a" />
-    <text x="15" y="42" class="pkg-title" fill="#15803d">com.wonderland.model</text>
-
-    <g transform="translate(20, 55)"><rect width="160" height="26" class="class-pill" /><text x="80" y="13" class="class-pill-text">Order &amp; OrderItem</text></g>
-    <g transform="translate(200, 55)"><rect width="180" height="26" class="class-pill" /><text x="90" y="13" class="class-pill-text">MenuItem &amp; Category</text></g>
-    <g transform="translate(20, 90)"><rect width="160" height="26" class="class-pill" /><text x="80" y="13" class="class-pill-text">TableReservation</text></g>
-    <g transform="translate(200, 90)"><rect width="180" height="26" class="class-pill" /><text x="90" y="13" class="class-pill-text">Payment (Hierarchy)</text></g>
-    <g transform="translate(20, 125)"><rect width="160" height="26" class="class-pill" /><text x="80" y="13" class="class-pill-text">Customer &amp; Admin</text></g>
-    <g transform="translate(200, 125)"><rect width="180" height="26" class="class-pill" /><text x="90" y="13" class="class-pill-text">Review</text></g>
-  </g>
-
-  <!-- Business Logic imports Models -->
-  <line x1="460" y1="330" x2="540" y2="280" class="import-line" />
-  <text x="500" y="300" class="import-text">&lt;&lt;import&gt;&gt;</text>
-
-  <!-- Presentation imports Models -->
-  <line x1="460" y1="150" x2="540" y2="190" class="import-line" />
-  <text x="500" y="165" class="import-text">&lt;&lt;import&gt;&gt;</text>
-
-  <!-- Package 4: Data Access / Storage Layer -->
-  <g transform="translate(60, 510)">
-    <path d="M 0 0 L 140 0 L 155 18 L 0 18 Z" class="pkg-tab" fill="#fed7aa" />
-    <text x="10" y="13" class="pkg-tab-title">Data Access</text>
-    <rect x="0" y="18" width="400" height="150" class="pkg-body" stroke="#ea580c" />
-    <text x="15" y="42" class="pkg-title" fill="#c2410c">com.wonderland.data</text>
-
-    <g transform="translate(20, 55)"><rect width="170" height="26" class="class-pill" /><text x="85" y="13" class="class-pill-text">RestaurantDataStore</text></g>
-    <g transform="translate(210, 55)"><rect width="170" height="26" class="class-pill" /><text x="85" y="13" class="class-pill-text">LocalStorageAdapter</text></g>
-    <g transform="translate(20, 95)"><rect width="170" height="26" class="class-pill" /><text x="85" y="13" class="class-pill-text">SeedDataLoader</text></g>
-    <g transform="translate(210, 95)"><rect width="170" height="26" class="class-pill" /><text x="85" y="13" class="class-pill-text">StorageEventNotifier</text></g>
-  </g>
-
-  <!-- Business Logic imports Data Access -->
-  <line x1="260" y1="468" x2="260" y2="510" class="import-line" />
-  <text x="270" y="490" class="import-text">&lt;&lt;import&gt;&gt;</text>
-
-  <!-- Data Access imports Models -->
-  <line x1="460" y1="560" x2="680" y2="358" class="import-line" />
-  <text x="590" y="480" class="import-text">&lt;&lt;import&gt;&gt;</text>
-</svg>`;
-
-saveSvg('12_package_diagram.svg', packageSvg);
-
-// ---------------------------------------------------------------------------
-// 13. COMMUNICATION (COLLABORATION) DIAGRAM
-// ---------------------------------------------------------------------------
-const commSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 680" width="1000" height="680">
-  <defs>
-    <style>
-      .bg { fill: #f8fafc; }
-      .obj-box { fill: #ffffff; stroke: #1e293b; stroke-width: 1.8; rx: 6; }
-      .obj-header { fill: #1e3a8a; rx: 4; }
-      .obj-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: bold; fill: #ffffff; text-anchor: middle; dominant-baseline: central; }
-      .comm-link { stroke: #334155; stroke-width: 1.8; }
-      .msg-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #0369a1; }
-      .arrow-msg { fill: #0369a1; }
+      .canvas-bg { fill: #f8fafc; }
+      .header-bg { fill: #0a1128; }
+      .header-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #ffffff; }
+      .header-tag { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #e4b95b; letter-spacing: 1.5px; }
+      .entity-box { fill: #ffffff; stroke: #0f172a; stroke-width: 1.8; rx: 8; filter: drop-shadow(0 3px 10px rgba(0,0,0,0.06)); }
+      .entity-hdr { fill: #0a1128; }
+      .entity-hdr-gold { fill: #b45309; }
+      .entity-hdr-green { fill: #065f46; }
+      .entity-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: bold; fill: #ffffff; text-anchor: middle; dominant-baseline: central; }
+      .col-text { font-family: 'Consolas', 'Courier New', monospace; font-size: 11px; fill: #0f172a; }
+      .pk-pill { fill: #e4b95b; font-weight: bold; }
+      .fk-pill { fill: #2563eb; font-weight: bold; }
+      .type-text { fill: #64748b; font-size: 10px; }
+      .comp-line { stroke: #e2e8f0; stroke-width: 1; }
+      .rel-line { stroke: #1e293b; stroke-width: 1.8; }
+      .card-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #b45309; }
     </style>
   </defs>
 
-  <rect width="100%" height="100%" class="bg" />
+  <rect width="100%" height="100%" class="canvas-bg" />
 
-  <text x="500" y="32" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="bold" fill="#0f172a" text-anchor="middle">Communication Diagram: Order Processing Collaboration</text>
+  <!-- Top Executive Banner -->
+  <rect x="0" y="0" width="1200" height="70" class="header-bg" />
+  <rect x="0" y="68" width="1200" height="3" fill="#e4b95b" />
+  <text x="35" y="30" class="header-tag">WONDER LAND RESTAURANT SYSTEM • RELATIONAL DATA ARCHITECTURE</text>
+  <text x="35" y="55" class="header-title">Visual UML: Entity-Relationship Diagram (ERD Relational Schema)</text>
 
-  <!-- Objects -->
-  <!-- 1. Customer Actor Object -->
-  <g transform="translate(60, 280)">
-    <rect width="160" height="60" class="obj-box" />
-    <rect width="160" height="24" class="obj-header" fill="#0284c7" />
-    <text x="80" y="12" class="obj-text">:Customer</text>
+  <!-- Table 1: CUSTOMERS -->
+  <g transform="translate(50, 110)">
+    <rect width="250" height="210" class="entity-box" />
+    <path d="M 0 0 L 250 0 L 250 34 L 0 34 Z" class="entity-hdr" rx="8" />
+    <text x="125" y="17" class="entity-title">CUSTOMERS</text>
+    <text x="12" y="52" class="col-text"><tspan class="pk-pill">PK</tspan> customer_id <tspan class="type-text">VARCHAR(36)</tspan></text>
+    <line x1="0" y1="62" x2="250" y2="62" class="comp-line" />
+    <text x="12" y="80" class="col-text">   full_name <tspan class="type-text">VARCHAR(100)</tspan></text>
+    <text x="12" y="98" class="col-text">   email <tspan class="type-text">VARCHAR(120)</tspan></text>
+    <text x="12" y="116" class="col-text">   phone <tspan class="type-text">VARCHAR(20)</tspan></text>
+    <text x="12" y="134" class="col-text">   street_address <tspan class="type-text">TEXT</tspan></text>
+    <text x="12" y="152" class="col-text">   city <tspan class="type-text">VARCHAR(50)</tspan></text>
+    <text x="12" y="170" class="col-text">   created_at <tspan class="type-text">TIMESTAMP</tspan></text>
   </g>
 
-  <!-- 2. CartController -->
-  <g transform="translate(360, 100)">
-    <rect width="180" height="60" class="obj-box" />
-    <rect width="180" height="24" class="obj-header" fill="#2563eb" />
-    <text x="90" y="12" class="obj-text">:CartController</text>
+  <!-- Table 2: ORDERS -->
+  <g transform="translate(420, 110)">
+    <rect width="260" height="240" class="entity-box" />
+    <path d="M 0 0 L 260 0 L 260 34 L 0 34 Z" class="entity-hdr-gold" rx="8" />
+    <text x="130" y="17" class="entity-title">ORDERS</text>
+    <text x="12" y="52" class="col-text"><tspan class="pk-pill">PK</tspan> order_id <tspan class="type-text">VARCHAR(36)</tspan></text>
+    <line x1="0" y1="62" x2="260" y2="62" class="comp-line" />
+    <text x="12" y="80" class="col-text"><tspan class="fk-pill">FK</tspan> customer_id <tspan class="type-text">VARCHAR(36)</tspan></text>
+    <text x="12" y="98" class="col-text">   subtotal <tspan class="type-text">DECIMAL(10,2)</tspan></text>
+    <text x="12" y="116" class="col-text">   tax_amount <tspan class="type-text">DECIMAL(10,2)</tspan></text>
+    <text x="12" y="134" class="col-text">   delivery_fee <tspan class="type-text">DECIMAL(10,2)</tspan></text>
+    <text x="12" y="152" class="col-text">   total_amount <tspan class="type-text">DECIMAL(10,2)</tspan></text>
+    <text x="12" y="170" class="col-text">   order_status <tspan class="type-text">VARCHAR(30)</tspan></text>
+    <text x="12" y="188" class="col-text">   payment_method <tspan class="type-text">VARCHAR(30)</tspan></text>
+    <text x="12" y="206" class="col-text">   created_at <tspan class="type-text">TIMESTAMP</tspan></text>
   </g>
 
-  <!-- 3. OrderManager -->
-  <g transform="translate(360, 460)">
-    <rect width="180" height="60" class="obj-box" />
-    <rect width="180" height="24" class="obj-header" fill="#15803d" />
-    <text x="90" y="12" class="obj-text">:OrderManager</text>
+  <!-- Relationship CUSTOMERS (1) ──── (N) ORDERS -->
+  <line x1="300" y1="180" x2="420" y2="180" class="rel-line" />
+  <text x="315" y="172" class="card-text">1</text>
+  <text x="400" y="172" class="card-text">0..*</text>
+
+  <!-- Table 3: ORDER_ITEMS -->
+  <g transform="translate(800, 110)">
+    <rect width="260" height="210" class="entity-box" />
+    <path d="M 0 0 L 260 0 L 260 34 L 0 34 Z" class="entity-hdr" rx="8" />
+    <text x="130" y="17" class="entity-title">ORDER_ITEMS</text>
+    <text x="12" y="52" class="col-text"><tspan class="pk-pill">PK</tspan> item_id <tspan class="type-text">VARCHAR(36)</tspan></text>
+    <line x1="0" y1="62" x2="260" y2="62" class="comp-line" />
+    <text x="12" y="80" class="col-text"><tspan class="fk-pill">FK</tspan> order_id <tspan class="type-text">VARCHAR(36)</tspan></text>
+    <text x="12" y="98" class="col-text"><tspan class="fk-pill">FK</tspan> dish_id <tspan class="type-text">VARCHAR(36)</tspan></text>
+    <text x="12" y="116" class="col-text">   dish_title <tspan class="type-text">VARCHAR(100)</tspan></text>
+    <text x="12" y="134" class="col-text">   unit_price <tspan class="type-text">DECIMAL(10,2)</tspan></text>
+    <text x="12" y="152" class="col-text">   quantity <tspan class="type-text">INT</tspan></text>
+    <text x="12" y="170" class="col-text">   line_total <tspan class="type-text">DECIMAL(10,2)</tspan></text>
   </g>
 
-  <!-- 4. PaymentStrategy -->
-  <g transform="translate(720, 100)">
-    <rect width="190" height="60" class="obj-box" />
-    <rect width="190" height="24" class="obj-header" fill="#059669" />
-    <text x="95" y="12" class="obj-text">:PaymentGateway</text>
+  <!-- Relationship ORDERS (1) ──── (N) ORDER_ITEMS -->
+  <line x1="680" y1="180" x2="800" y2="180" class="rel-line" />
+  <text x="695" y="172" class="card-text">1</text>
+  <text x="780" y="172" class="card-text">1..*</text>
+
+  <!-- Table 4: MENU_ITEMS -->
+  <g transform="translate(800, 420)">
+    <rect width="260" height="210" class="entity-box" />
+    <path d="M 0 0 L 260 0 L 260 34 L 0 34 Z" class="entity-hdr-green" rx="8" />
+    <text x="130" y="17" class="entity-title">MENU_ITEMS</text>
+    <text x="12" y="52" class="col-text"><tspan class="pk-pill">PK</tspan> dish_id <tspan class="type-text">VARCHAR(36)</tspan></text>
+    <line x1="0" y1="62" x2="260" y2="62" class="comp-line" />
+    <text x="12" y="80" class="col-text"><tspan class="fk-pill">FK</tspan> category_id <tspan class="type-text">VARCHAR(36)</tspan></text>
+    <text x="12" y="98" class="col-text">   title <tspan class="type-text">VARCHAR(100)</tspan></text>
+    <text x="12" y="116" class="col-text">   description <tspan class="type-text">TEXT</tspan></text>
+    <text x="12" y="134" class="col-text">   price <tspan class="type-text">DECIMAL(10,2)</tspan></text>
+    <text x="12" y="152" class="col-text">   image_url <tspan class="type-text">VARCHAR(255)</tspan></text>
+    <text x="12" y="170" class="col-text">   is_available <tspan class="type-text">BOOLEAN</tspan></text>
   </g>
 
-  <!-- 5. RestaurantDataStore -->
-  <g transform="translate(720, 460)">
-    <rect width="200" height="60" class="obj-box" />
-    <rect width="200" height="24" class="obj-header" fill="#7c3aed" />
-    <text x="100" y="12" class="obj-text">:RestaurantDataStore</text>
+  <!-- Relationship ORDER_ITEMS (N) ──── (1) MENU_ITEMS -->
+  <line x1="930" y1="320" x2="930" y2="420" class="rel-line" />
+  <text x="940" y="340" class="card-text">0..*</text>
+  <text x="940" y="405" class="card-text">1</text>
+
+  <!-- Table 5: CATEGORIES -->
+  <g transform="translate(800, 700)">
+    <rect width="260" height="120" class="entity-box" />
+    <path d="M 0 0 L 260 0 L 260 34 L 0 34 Z" class="entity-hdr" rx="8" />
+    <text x="130" y="17" class="entity-title">CATEGORIES</text>
+    <text x="12" y="52" class="col-text"><tspan class="pk-pill">PK</tspan> category_id <tspan class="type-text">VARCHAR(36)</tspan></text>
+    <line x1="0" y1="62" x2="260" y2="62" class="comp-line" />
+    <text x="12" y="80" class="col-text">   name <tspan class="type-text">VARCHAR(50)</tspan></text>
+    <text x="12" y="98" class="col-text">   display_order <tspan class="type-text">INT</tspan></text>
   </g>
 
-  <!-- Links -->
-  <!-- Link 1: Customer <-> CartController -->
-  <line x1="180" y1="280" x2="380" y2="160" class="comm-link" />
-  <text x="190" y="200" class="msg-text">1: addItem(id, qty) ➔</text>
-  <text x="210" y="215" class="msg-text">2: viewCart() ➔</text>
+  <!-- Relationship CATEGORIES (1) ──── (N) MENU_ITEMS -->
+  <line x1="930" y1="630" x2="930" y2="700" class="rel-line" />
+  <text x="940" y="650" class="card-text">1..*</text>
+  <text x="940" y="685" class="card-text">1</text>
 
-  <!-- Link 2: Customer <-> OrderManager -->
-  <line x1="180" y1="340" x2="380" y2="460" class="comm-link" />
-  <text x="180" y="400" class="msg-text">3: submitOrder(info, payMethod) ➔</text>
-  <text x="200" y="420" class="msg-text">7: return orderConfirmation(id) ⬅</text>
+  <!-- Table 6: PAYMENTS -->
+  <g transform="translate(420, 420)">
+    <rect width="260" height="180" class="entity-box" />
+    <path d="M 0 0 L 260 0 L 260 34 L 0 34 Z" class="entity-hdr-gold" rx="8" />
+    <text x="130" y="17" class="entity-title">PAYMENTS</text>
+    <text x="12" y="52" class="col-text"><tspan class="pk-pill">PK</tspan> payment_id <tspan class="type-text">VARCHAR(36)</tspan></text>
+    <line x1="0" y1="62" x2="260" y2="62" class="comp-line" />
+    <text x="12" y="80" class="col-text"><tspan class="fk-pill">FK</tspan> order_id <tspan class="type-text">VARCHAR(36)</tspan></text>
+    <text x="12" y="98" class="col-text">   method <tspan class="type-text">VARCHAR(30)</tspan> (COD/Card)</text>
+    <text x="12" y="116" class="col-text">   amount <tspan class="type-text">DECIMAL(10,2)</tspan></text>
+    <text x="12" y="134" class="col-text">   status <tspan class="type-text">VARCHAR(30)</tspan></text>
+    <text x="12" y="152" class="col-text">   collected_at <tspan class="type-text">TIMESTAMP</tspan></text>
+  </g>
 
-  <!-- Link 3: OrderManager <-> CartController -->
-  <line x1="450" y1="460" x2="450" y2="160" class="comm-link" />
-  <text x="460" y="300" class="msg-text">4: fetchCartItems() ➔</text>
-  <text x="460" y="320" class="msg-text">8: clearCart() ➔</text>
+  <!-- Relationship ORDERS (1) ──── (1) PAYMENTS -->
+  <line x1="550" y1="350" x2="550" y2="420" class="rel-line" />
+  <text x="560" y="370" class="card-text">1</text>
+  <text x="560" y="405" class="card-text">1</text>
 
-  <!-- Link 4: OrderManager <-> PaymentGateway -->
-  <line x1="520" y1="460" x2="740" y2="160" class="comm-link" />
-  <text x="640" y="300" class="msg-text">5: processPayment(amount, details) ➔</text>
+  <!-- Table 7: TABLE_RESERVATIONS -->
+  <g transform="translate(50, 420)">
+    <rect width="250" height="210" class="entity-box" />
+    <path d="M 0 0 L 250 0 L 250 34 L 0 34 Z" class="entity-hdr" rx="8" />
+    <text x="125" y="17" class="entity-title">TABLE_RESERVATIONS</text>
+    <text x="12" y="52" class="col-text"><tspan class="pk-pill">PK</tspan> reservation_id <tspan class="type-text">VARCHAR(36)</tspan></text>
+    <line x1="0" y1="62" x2="250" y2="62" class="comp-line" />
+    <text x="12" y="80" class="col-text"><tspan class="fk-pill">FK</tspan> customer_id <tspan class="type-text">VARCHAR(36)</tspan></text>
+    <text x="12" y="98" class="col-text">   guest_name <tspan class="type-text">VARCHAR(100)</tspan></text>
+    <text x="12" y="116" class="col-text">   booking_date <tspan class="type-text">DATE</tspan></text>
+    <text x="12" y="134" class="col-text">   time_slot <tspan class="type-text">VARCHAR(20)</tspan></text>
+    <text x="12" y="152" class="col-text">   party_size <tspan class="type-text">INT</tspan></text>
+    <text x="12" y="170" class="col-text">   seating_zone <tspan class="type-text">VARCHAR(50)</tspan></text>
+    <text x="12" y="188" class="col-text">   status <tspan class="type-text">VARCHAR(30)</tspan></text>
+  </g>
 
-  <!-- Link 5: OrderManager <-> RestaurantDataStore -->
-  <line x1="540" y1="490" x2="720" y2="490" class="comm-link" />
-  <text x="560" y="475" class="msg-text">6: persistOrder(newOrder) ➔</text>
+  <!-- Relationship CUSTOMERS (1) ──── (N) TABLE_RESERVATIONS -->
+  <line x1="175" y1="320" x2="175" y2="420" class="rel-line" />
+  <text x="185" y="340" class="card-text">1</text>
+  <text x="185" y="405" class="card-text">0..*</text>
 </svg>`;
 
-saveSvg('13_communication_diagram.svg', commSvg);
+saveSvg('14_entity_relationship_diagram.svg', erdDatabaseSvg);
 
-// ---------------------------------------------------------------------------
-// 14. ENTITY RELATIONSHIP DIAGRAM (ERD)
-// ---------------------------------------------------------------------------
-const erdSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
-  <defs>
-    <style>
-      .bg { fill: #f8fafc; }
-      .entity-box { fill: #ffffff; stroke: #334155; stroke-width: 1.8; rx: 4; }
-      .entity-header { fill: #1e3a8a; }
-      .entity-name { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #ffffff; text-anchor: middle; dominant-baseline: central; }
-      .field-text { font-family: 'Consolas', monospace; font-size: 11.5px; fill: #0f172a; }
-      .pk-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 10px; font-weight: bold; fill: #d97706; }
-      .fk-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 10px; font-weight: bold; fill: #2563eb; }
-      .erd-line { stroke: #475569; stroke-width: 1.8; }
-      .crow-foot { stroke: #475569; stroke-width: 1.8; fill: none; }
-      .cardinality { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #64748b; }
-    </style>
-  </defs>
-
-  <rect width="100%" height="100%" class="bg" />
-
-  <text x="600" y="32" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="bold" fill="#0f172a" text-anchor="middle">Entity Relationship Diagram (ERD): Database &amp; Storage Schema</text>
-
-  <!-- ENTITY 1: CUSTOMERS -->
-  <g transform="translate(50, 70)">
-    <rect width="220" height="180" class="entity-box" />
-    <rect width="220" height="28" class="entity-header" fill="#0369a1" />
-    <text x="110" y="14" class="entity-name">CUSTOMERS</text>
-    <text x="12" y="48" class="pk-text">PK</text><text x="36" y="48" class="field-text">customer_id (VARCHAR)</text>
-    <text x="36" y="68" class="field-text">full_name (VARCHAR)</text>
-    <text x="36" y="88" class="field-text">phone (VARCHAR)</text>
-    <text x="36" y="108" class="field-text">email (VARCHAR)</text>
-    <text x="36" y="128" class="field-text">address (TEXT)</text>
-    <text x="36" y="148" class="field-text">created_at (TIMESTAMP)</text>
-    <text x="36" y="168" class="field-text">loyalty_points (INT)</text>
-  </g>
-
-  <!-- ENTITY 2: ORDERS -->
-  <g transform="translate(370, 70)">
-    <rect width="230" height="210" class="entity-box" />
-    <rect width="230" height="28" class="entity-header" fill="#15803d" />
-    <text x="115" y="14" class="entity-name">ORDERS</text>
-    <text x="12" y="48" class="pk-text">PK</text><text x="36" y="48" class="field-text">order_id (VARCHAR)</text>
-    <text x="12" y="68" class="fk-text">FK</text><text x="36" y="68" class="field-text">customer_id (VARCHAR)</text>
-    <text x="36" y="88" class="field-text">order_date (TIMESTAMP)</text>
-    <text x="36" y="108" class="field-text">status (VARCHAR)</text>
-    <text x="36" y="128" class="field-text">subtotal (DECIMAL)</text>
-    <text x="36" y="148" class="field-text">tax (DECIMAL)</text>
-    <text x="36" y="168" class="field-text">delivery_fee (DECIMAL)</text>
-    <text x="36" y="188" class="field-text">total_amount (DECIMAL)</text>
-    <text x="36" y="204" class="field-text">special_notes (TEXT)</text>
-  </g>
-
-  <!-- Relation: Customers -> Orders (1 to N) -->
-  <line x1="270" y1="160" x2="370" y2="160" class="erd-line" />
-  <text x="280" y="152" class="cardinality">1</text>
-  <!-- Crow foot at Orders -->
-  <path d="M 370 160 L 355 150 M 370 160 L 355 170" class="crow-foot" />
-  <text x="345" y="152" class="cardinality">0..*</text>
-
-  <!-- ENTITY 3: ORDER_ITEMS -->
-  <g transform="translate(690, 70)">
-    <rect width="220" height="170" class="entity-box" />
-    <rect width="220" height="28" class="entity-header" fill="#15803d" />
-    <text x="110" y="14" class="entity-name">ORDER_ITEMS</text>
-    <text x="12" y="48" class="pk-text">PK</text><text x="36" y="48" class="field-text">order_item_id (VARCHAR)</text>
-    <text x="12" y="68" class="fk-text">FK</text><text x="36" y="68" class="field-text">order_id (VARCHAR)</text>
-    <text x="12" y="88" class="fk-text">FK</text><text x="36" y="88" class="field-text">menu_item_id (VARCHAR)</text>
-    <text x="36" y="108" class="field-text">quantity (INT)</text>
-    <text x="36" y="128" class="field-text">unit_price (DECIMAL)</text>
-    <text x="36" y="148" class="field-text">line_total (DECIMAL)</text>
-    <text x="36" y="164" class="field-text">notes (VARCHAR)</text>
-  </g>
-
-  <!-- Relation: Orders -> OrderItems (1 to N) -->
-  <line x1="600" y1="160" x2="690" y2="160" class="erd-line" />
-  <text x="610" y="152" class="cardinality">1</text>
-  <path d="M 690 160 L 675 150 M 690 160 L 675 170" class="crow-foot" />
-  <text x="665" y="152" class="cardinality">1..*</text>
-
-  <!-- ENTITY 4: MENU_ITEMS -->
-  <g transform="translate(980, 70)">
-    <rect width="200" height="190" class="entity-box" />
-    <rect width="200" height="28" class="entity-header" fill="#7c3aed" />
-    <text x="100" y="14" class="entity-name">MENU_ITEMS</text>
-    <text x="12" y="48" class="pk-text">PK</text><text x="36" y="48" class="field-text">item_id (VARCHAR)</text>
-    <text x="12" y="68" class="fk-text">FK</text><text x="36" y="68" class="field-text">category_id (VARCHAR)</text>
-    <text x="36" y="88" class="field-text">title (VARCHAR)</text>
-    <text x="36" y="108" class="field-text">price (DECIMAL)</text>
-    <text x="36" y="128" class="field-text">description (TEXT)</text>
-    <text x="36" y="148" class="field-text">image_url (VARCHAR)</text>
-    <text x="36" y="168" class="field-text">is_available (BOOLEAN)</text>
-    <text x="36" y="184" class="field-text">rating (DECIMAL)</text>
-  </g>
-
-  <!-- Relation: MenuItems -> OrderItems (1 to N) -->
-  <line x1="980" y1="160" x2="910" y2="160" class="erd-line" />
-  <text x="965" y="152" class="cardinality">1</text>
-  <path d="M 910 160 L 925 150 M 910 160 L 925 170" class="crow-foot" />
-  <text x="920" y="152" class="cardinality">0..*</text>
-
-  <!-- ENTITY 5: CATEGORIES -->
-  <g transform="translate(980, 360)">
-    <rect width="200" height="120" class="entity-box" />
-    <rect width="200" height="28" class="entity-header" fill="#6d28d9" />
-    <text x="100" y="14" class="entity-name">CATEGORIES</text>
-    <text x="12" y="48" class="pk-text">PK</text><text x="36" y="48" class="field-text">category_id (VARCHAR)</text>
-    <text x="36" y="68" class="field-text">name (VARCHAR)</text>
-    <text x="36" y="88" class="field-text">slug (VARCHAR)</text>
-    <text x="36" y="108" class="field-text">display_order (INT)</text>
-  </g>
-  <!-- Relation Categories -> MenuItems (1 to N) -->
-  <line x1="1080" y1="360" x2="1080" y2="260" class="erd-line" />
-  <text x="1090" y="340" class="cardinality">1</text>
-  <path d="M 1080 260 L 1070 275 M 1080 260 L 1090 275" class="crow-foot" />
-  <text x="1090" y="280" class="cardinality">1..*</text>
-
-  <!-- ENTITY 6: PAYMENTS -->
-  <g transform="translate(370, 360)">
-    <rect width="230" height="180" class="entity-box" />
-    <rect width="230" height="28" class="entity-header" fill="#047857" />
-    <text x="115" y="14" class="entity-name">PAYMENTS</text>
-    <text x="12" y="48" class="pk-text">PK</text><text x="36" y="48" class="field-text">payment_id (VARCHAR)</text>
-    <text x="12" y="68" class="fk-text">FK</text><text x="36" y="68" class="field-text">order_id (VARCHAR)</text>
-    <text x="36" y="88" class="field-text">method (VARCHAR)</text>
-    <text x="36" y="108" class="field-text">amount (DECIMAL)</text>
-    <text x="36" y="128" class="field-text">status (VARCHAR)</text>
-    <text x="36" y="148" class="field-text">transaction_ref (VARCHAR)</text>
-    <text x="36" y="168" class="field-text">paid_at (TIMESTAMP)</text>
-  </g>
-  <!-- Relation Orders -> Payments (1 to 1) -->
-  <line x1="485" y1="280" x2="485" y2="360" class="erd-line" />
-  <text x="495" y="295" class="cardinality">1</text>
-  <text x="495" y="345" class="cardinality">1</text>
-
-  <!-- ENTITY 7: TABLE_RESERVATIONS -->
-  <g transform="translate(50, 360)">
-    <rect width="230" height="190" class="entity-box" />
-    <rect width="230" height="28" class="entity-header" fill="#c026d3" />
-    <text x="115" y="14" class="entity-name">TABLE_RESERVATIONS</text>
-    <text x="12" y="48" class="pk-text">PK</text><text x="36" y="48" class="field-text">reservation_id (VARCHAR)</text>
-    <text x="12" y="68" class="fk-text">FK</text><text x="36" y="68" class="field-text">customer_id (VARCHAR)</text>
-    <text x="36" y="88" class="field-text">guest_name (VARCHAR)</text>
-    <text x="36" y="108" class="field-text">guest_phone (VARCHAR)</text>
-    <text x="36" y="128" class="field-text">reserve_date (DATE)</text>
-    <text x="36" y="148" class="field-text">time_slot (VARCHAR)</text>
-    <text x="36" y="168" class="field-text">party_size (INT)</text>
-    <text x="36" y="184" class="field-text">seating_zone (VARCHAR)</text>
-  </g>
-  <!-- Relation Customers -> Reservations (1 to N) -->
-  <line x1="160" y1="250" x2="160" y2="360" class="erd-line" />
-  <text x="170" y="270" class="cardinality">1</text>
-  <path d="M 160 360 L 150 345 M 160 360 L 170 345" class="crow-foot" />
-  <text x="170" y="340" class="cardinality">0..*</text>
-
-  <!-- ENTITY 8: REVIEWS -->
-  <g transform="translate(690, 360)">
-    <rect width="220" height="150" class="entity-box" />
-    <rect width="220" height="28" class="entity-header" fill="#e11d48" />
-    <text x="110" y="14" class="entity-name">REVIEWS</text>
-    <text x="12" y="48" class="pk-text">PK</text><text x="36" y="48" class="field-text">review_id (VARCHAR)</text>
-    <text x="12" y="68" class="fk-text">FK</text><text x="36" y="68" class="field-text">customer_id (VARCHAR)</text>
-    <text x="36" y="88" class="field-text">rating_stars (INT)</text>
-    <text x="36" y="108" class="field-text">comment (TEXT)</text>
-    <text x="36" y="128" class="field-text">created_at (TIMESTAMP)</text>
-    <text x="36" y="144" class="field-text">is_verified (BOOLEAN)</text>
-  </g>
-
-  <!-- ENTITY 9: ADMIN_USERS -->
-  <g transform="translate(50, 600)">
-    <rect width="230" height="140" class="entity-box" />
-    <rect width="230" height="28" class="entity-header" fill="#b45309" />
-    <text x="115" y="14" class="entity-name">ADMIN_USERS</text>
-    <text x="12" y="48" class="pk-text">PK</text><text x="36" y="48" class="field-text">admin_id (VARCHAR)</text>
-    <text x="36" y="68" class="field-text">username (VARCHAR)</text>
-    <text x="36" y="88" class="field-text">pin_hash (VARCHAR)</text>
-    <text x="36" y="108" class="field-text">role (VARCHAR)</text>
-    <text x="36" y="128" class="field-text">last_login (TIMESTAMP)</text>
-  </g>
-</svg>`;
-
-saveSvg('14_entity_relationship_diagram.svg', erdSvg);
-
-console.log("All 14 UML & Architecture diagrams generated successfully in vector SVG format!");
+console.log('All 10 requested UML diagrams generated in world-class gourmet theme!');

@@ -1,130 +1,137 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 800" width="1100" height="800">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 860" width="1200" height="860">
   <defs>
     <style>
-      .bg { fill: #f8fafc; }
-      .lifeline { stroke: #94a3b8; stroke-width: 1.5; stroke-dasharray: 4,4; }
-      .actor-box { fill: #1e293b; rx: 6; }
-      .actor-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: bold; fill: #ffffff; text-anchor: middle; dominant-baseline: central; }
-      .activation { fill: #dbeafe; stroke: #2563eb; stroke-width: 1.5; }
-      .sync-msg { stroke: #1e3a8a; stroke-width: 1.6; marker-end: url(#arrowBlue); }
-      .reply-msg { stroke: #059669; stroke-width: 1.5; stroke-dasharray: 5,4; marker-end: url(#arrowGreen); }
-      .msg-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: 600; fill: #0f172a; }
-      .alt-box { fill: none; stroke: #d97706; stroke-width: 1.5; stroke-dasharray: 4,4; rx: 4; }
-      .alt-header { fill: #fef3c7; stroke: #d97706; stroke-width: 1; }
-      .alt-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #92400e; }
+      .canvas-bg { fill: #f8fafc; }
+      .header-bg { fill: #0a1128; }
+      .header-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #ffffff; }
+      .header-tag { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #e4b95b; letter-spacing: 1.5px; }
+      .lifeline-header { rx: 8; fill: #0f172a; stroke: #e4b95b; stroke-width: 1.5; }
+      .lifeline-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: bold; fill: #ffffff; text-anchor: middle; dominant-baseline: central; }
+      .lifeline-dash { stroke: #94a3b8; stroke-width: 1.5; stroke-dasharray: 5,4; }
+      .act-bar { fill: #fdf6e2; stroke: #b45309; stroke-width: 1.6; }
+      .sync-arrow { stroke: #0a1128; stroke-width: 1.8; marker-end: url(#arrowDark); }
+      .reply-arrow { stroke: #059669; stroke-width: 1.6; stroke-dasharray: 5,4; marker-end: url(#arrowGreen); }
+      .msg-label { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: 700; fill: #0f172a; }
+      .alt-container { fill: #fffdf5; stroke: #d97706; stroke-width: 1.6; rx: 8; }
+      .alt-header-tag { fill: #d97706; rx: 6; }
+      .alt-tag-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #ffffff; text-anchor: middle; dominant-baseline: central; }
     </style>
-    <marker id="arrowBlue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M 0 1 L 10 5 L 0 9 z" fill="#1e3a8a" />
+    <marker id="arrowDark" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#0a1128" />
     </marker>
     <marker id="arrowGreen" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M 0 1 L 10 5 L 0 9 z" fill="#059669" />
     </marker>
+    <marker id="arrowGold" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#b45309" />
+    </marker>
   </defs>
 
-  <rect width="100%" height="100%" class="bg" />
+  <rect width="100%" height="100%" class="canvas-bg" />
 
-  <text x="550" y="32" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="bold" fill="#0f172a" text-anchor="middle">Sequence Diagram: Customer Checkout &amp; Cash on Delivery (COD) Order</text>
+  <!-- Top Executive Banner -->
+  <rect x="0" y="0" width="1200" height="70" class="header-bg" />
+  <rect x="0" y="68" width="1200" height="3" fill="#e4b95b" />
+  <text x="35" y="30" class="header-tag">WONDER LAND RESTAURANT SYSTEM • UML DYNAMIC INTERACTION MODEL</text>
+  <text x="35" y="55" class="header-title">Visual UML: Sequence Diagram (Checkout &amp; Cash on Delivery - COD Order)</text>
 
-  <!-- Lifeline Headers -->
-  <!-- 1. Customer -->
-  <rect x="50" y="60" width="120" height="40" class="actor-box" fill="#0284c7" />
-  <text x="110" y="80" class="actor-title">:Customer</text>
-  <line x1="110" y1="100" x2="110" y2="760" class="lifeline" />
+  <!-- Lifeline 1: Customer -->
+  <rect x="50" y="95" width="140" height="42" class="lifeline-header" />
+  <text x="120" y="116" class="lifeline-text">:Customer</text>
+  <line x1="120" y1="137" x2="120" y2="820" class="lifeline-dash" />
 
-  <!-- 2. UI / Boundary -->
-  <rect x="250" y="60" width="130" height="40" class="actor-box" fill="#475569" />
-  <text x="315" y="80" class="actor-title">:WebGUI (Client)</text>
-  <line x1="315" y1="100" x2="315" y2="760" class="lifeline" />
+  <!-- Lifeline 2: WebGUI -->
+  <rect x="290" y="95" width="160" height="42" class="lifeline-header" />
+  <text x="370" y="116" class="lifeline-text">:CustomerWebGUI</text>
+  <line x1="370" y1="137" x2="370" y2="820" class="lifeline-dash" />
 
-  <!-- 3. CartController -->
-  <rect x="470" y="60" width="130" height="40" class="actor-box" fill="#2563eb" />
-  <text x="535" y="80" class="actor-title">:CartController</text>
-  <line x1="535" y1="100" x2="535" y2="760" class="lifeline" />
+  <!-- Lifeline 3: CartController -->
+  <rect x="550" y="95" width="160" height="42" class="lifeline-header" />
+  <text x="630" y="116" class="lifeline-text">:CartController</text>
+  <line x1="630" y1="137" x2="630" y2="820" class="lifeline-dash" />
 
-  <!-- 4. PaymentGateway -->
-  <rect x="680" y="60" width="140" height="40" class="actor-box" fill="#059669" />
-  <text x="750" y="80" class="actor-title">:PaymentGateway</text>
-  <line x1="750" y1="100" x2="750" y2="760" class="lifeline" />
+  <!-- Lifeline 4: PaymentService -->
+  <rect x="790" y="95" width="160" height="42" class="lifeline-header" />
+  <text x="870" y="116" class="lifeline-text">:PaymentService</text>
+  <line x1="870" y1="137" x2="870" y2="820" class="lifeline-dash" />
 
-  <!-- 5. DataStore / Storage -->
-  <rect x="900" y="60" width="150" height="40" class="actor-box" fill="#7c3aed" />
-  <text x="975" y="80" class="actor-title">:RestaurantDataStore</text>
-  <line x1="975" y1="100" x2="975" y2="760" class="lifeline" />
+  <!-- Lifeline 5: RestaurantDataStore -->
+  <rect x="1010" y="95" width="160" height="42" class="lifeline-header" />
+  <text x="1090" y="116" class="lifeline-text">:RestaurantDataStore</text>
+  <line x1="1090" y1="137" x2="1090" y2="820" class="lifeline-dash" />
 
   <!-- Activations -->
-  <rect x="105" y="120" width="10" height="620" class="activation" />
-  <rect x="310" y="130" width="10" height="600" class="activation" />
-  <rect x="530" y="150" width="10" height="350" class="activation" />
-  <rect x="745" y="380" width="10" height="100" class="activation" />
-  <rect x="970" y="490" width="10" height="120" class="activation" />
+  <rect x="115" y="160" width="10" height="640" class="act-bar" />
+  <rect x="365" y="170" width="10" height="620" class="act-bar" />
+  <rect x="625" y="190" width="10" height="410" class="act-bar" />
+  <rect x="865" y="400" width="10" height="110" class="act-bar" />
+  <rect x="1085" y="520" width="10" height="130" class="act-bar" />
 
-  <!-- Messages -->
-  <!-- 1. Browse & Add item -->
-  <line x1="115" y1="140" x2="310" y2="140" class="sync-msg" />
-  <text x="210" y="133" class="msg-text" text-anchor="middle">1: selectItem(itemId, qty)</text>
+  <!-- Step 1: Add Item -->
+  <line x1="125" y1="180" x2="365" y2="180" class="sync-arrow" />
+  <text x="245" y="173" class="msg-label" text-anchor="middle">1: clickAddToCart(dishId, qty)</text>
 
-  <!-- 2. Forward to CartController -->
-  <line x1="320" y1="155" x2="530" y2="155" class="sync-msg" />
-  <text x="425" y="148" class="msg-text" text-anchor="middle">2: addItem(itemId, qty)</text>
+  <!-- Step 2: Forward to Cart -->
+  <line x1="375" y1="205" x2="625" y2="205" class="sync-arrow" />
+  <text x="500" y="198" class="msg-label" text-anchor="middle">2: addItemToCart(dishId, qty)</text>
 
-  <!-- 3. Self call: calculateTotals -->
-  <path d="M 540 180 L 575 180 L 575 205 L 540 205" fill="none" stroke="#1e3a8a" stroke-width="1.5" marker-end="url(#arrowBlue)" />
-  <text x="585" y="196" class="msg-text">3: computeCartTotals()</text>
+  <!-- Step 3: Self-Call Totals -->
+  <path d="M 635 225 L 675 225 L 675 250 L 635 250" fill="none" stroke="#b45309" stroke-width="1.6" marker-end="url(#arrowGold)" />
+  <text x="685" y="242" class="msg-label" fill="#b45309">3: computeTotals(subtotal + 14% VAT + $3 delivery)</text>
 
-  <!-- 4. Update Cart Badge -->
-  <line x1="530" y1="230" x2="320" y2="230" class="reply-msg" />
-  <text x="425" y="222" class="msg-text" text-anchor="middle">4: return updatedCartView</text>
+  <!-- Step 4: Return Cart Badge -->
+  <line x1="625" y1="275" x2="375" y2="275" class="reply-arrow" />
+  <text x="500" y="268" class="msg-label" text-anchor="middle">4: updateCartBadge(count, total)</text>
 
-  <!-- 5. Customer clicks Checkout -->
-  <line x1="115" y1="265" x2="310" y2="265" class="sync-msg" />
-  <text x="210" y="258" class="msg-text" text-anchor="middle">5: openCheckoutModal()</text>
+  <!-- Step 5: Customer opens checkout -->
+  <line x1="125" y1="310" x2="365" y2="310" class="sync-arrow" />
+  <text x="245" y="303" class="msg-label" text-anchor="middle">5: openCheckoutModal()</text>
 
-  <!-- 6. Display Checkout Dialog -->
-  <line x1="310" y1="290" x2="115" y2="290" class="reply-msg" />
-  <text x="210" y="283" class="msg-text" text-anchor="middle">6: renderCheckoutForm()</text>
+  <line x1="365" y1="335" x2="125" y2="335" class="reply-arrow" />
+  <text x="245" y="328" class="msg-label" text-anchor="middle">6: renderCheckoutForm(summary)</text>
 
-  <!-- 7. Submit order details & payment -->
-  <line x1="115" y1="335" x2="310" y2="335" class="sync-msg" />
-  <text x="210" y="328" class="msg-text" text-anchor="middle">7: submitOrder(customerInfo, paymentMethod: "COD")</text>
+  <!-- Step 7: Submit Order with COD -->
+  <line x1="125" y1="375" x2="365" y2="375" class="sync-arrow" stroke-width="2.2" stroke="#b45309" />
+  <text x="245" y="367" class="msg-label" text-anchor="middle" fill="#b45309">7: submitOrder(info, paymentMethod: "COD")</text>
 
-  <!-- 8. Validate & Prepare -->
-  <line x1="320" y1="360" x2="530" y2="360" class="sync-msg" />
-  <text x="425" y="353" class="msg-text" text-anchor="middle">8: processCheckout(cart, info, isCOD: true)</text>
+  <!-- Step 8: Forward to Controller -->
+  <line x1="375" y1="400" x2="625" y2="400" class="sync-arrow" />
+  <text x="500" y="393" class="msg-label" text-anchor="middle">8: processCheckout(cart, info, isCOD: true)</text>
 
-  <!-- 9. Process Payment with Gateway -->
-  <line x1="540" y1="390" x2="745" y2="390" class="sync-msg" />
-  <text x="640" y="383" class="msg-text" text-anchor="middle">9: verifyCODAvailability(customerAddress, total)</text>
+  <!-- Step 9: Verify COD Policy -->
+  <line x1="635" y1="425" x2="865" y2="425" class="sync-arrow" />
+  <text x="750" y="418" class="msg-label" text-anchor="middle">9: verifyCODAvailability(address, total)</text>
 
-  <!-- Alt Block: Payment Success / Failure -->
-  <rect x="510" y="415" width="480" height="200" class="alt-box" />
-  <rect x="510" y="415" width="120" height="20" class="alt-header" />
-  <text x="518" y="429" class="alt-text">[COD Approved]</text>
+  <!-- Alt Container: [COD Policy Approved] -->
+  <rect x="610" y="445" width="560" height="215" class="alt-container" />
+  <rect x="610" y="445" width="160" height="24" class="alt-header-tag" />
+  <text x="690" y="457" class="alt-tag-text">[Alt: COD Approved]</text>
 
-  <!-- 10. Payment confirmed -->
-  <line x1="745" y1="460" x2="540" y2="460" class="reply-msg" />
-  <text x="640" y="453" class="msg-text" text-anchor="middle">10: codAccepted(flag: "Pay on Handover")</text>
+  <!-- Step 10: COD Accepted -->
+  <line x1="865" y1="485" x2="635" y2="485" class="reply-arrow" />
+  <text x="750" y="478" class="msg-label" text-anchor="middle">10: codAccepted(flag: "Collect on Handover")</text>
 
-  <!-- 11. Save Order to Database / LocalStorage -->
-  <line x1="540" y1="500" x2="970" y2="500" class="sync-msg" />
-  <text x="755" y="493" class="msg-text" text-anchor="middle">11: persistOrder(newOrder: Order)</text>
+  <!-- Step 11: Persist in Store -->
+  <line x1="635" y1="525" x2="1085" y2="525" class="sync-arrow" stroke-width="2" stroke="#059669" />
+  <text x="860" y="518" class="msg-label" text-anchor="middle" fill="#047857">11: persistOrder(newOrder, status: "Pending")</text>
 
-  <!-- 12. Confirm save -->
-  <line x1="970" y1="535" x2="540" y2="535" class="reply-msg" />
-  <text x="755" y="528" class="msg-text" text-anchor="middle">12: orderSavedSuccess(orderId: "#WL-8492")</text>
+  <!-- Step 12: Confirm Save -->
+  <line x1="1085" y1="565" x2="635" y2="565" class="reply-arrow" />
+  <text x="860" y="558" class="msg-label" text-anchor="middle">12: orderCommitted(orderId: "#WL-8492")</text>
 
-  <!-- 13. Forward to UI -->
-  <line x1="530" y1="570" x2="320" y2="570" class="reply-msg" />
-  <text x="425" y="563" class="msg-text" text-anchor="middle">13: return orderConfirmation(orderId)</text>
+  <!-- Step 13: Forward Confirmation -->
+  <line x1="625" y1="605" x2="375" y2="605" class="reply-arrow" />
+  <text x="500" y="598" class="msg-label" text-anchor="middle">13: return confirmationReceipt(orderId)</text>
 
-  <!-- 14. Display Receipt & Tracking Modal -->
-  <line x1="310" y1="610" x2="115" y2="610" class="reply-msg" />
-  <text x="210" y="603" class="msg-text" text-anchor="middle">14: showOrderReceiptAndLiveTracker()</text>
+  <!-- Step 14: Show Receipt & Stepper -->
+  <line x1="365" y1="645" x2="125" y2="645" class="reply-arrow" />
+  <text x="245" y="638" class="msg-label" text-anchor="middle">14: displayOrderReceiptAndLiveTracker()</text>
 
-  <!-- 15. Track status query -->
-  <line x1="115" y1="670" x2="310" y2="670" class="sync-msg" />
-  <text x="210" y="663" class="msg-text" text-anchor="middle">15: pollOrderStatus(orderId)</text>
+  <!-- Step 15: Polling / Sync -->
+  <line x1="125" y1="700" x2="365" y2="700" class="sync-arrow" />
+  <text x="245" y="693" class="msg-label" text-anchor="middle">15: pollOrderStatus(orderId)</text>
 
-  <!-- 16. Current Stepper Status -->
-  <line x1="310" y1="710" x2="115" y2="710" class="reply-msg" />
-  <text x="210" y="703" class="msg-text" text-anchor="middle">16: renderStepperState("Pending / In Kitchen")</text>
+  <!-- Step 16: Render Stepper -->
+  <line x1="365" y1="740" x2="125" y2="740" class="reply-arrow" stroke="#b45309" stroke-width="2" />
+  <text x="245" y="733" class="msg-label" text-anchor="middle" fill="#b45309">16: renderStepperNode("Node 1: Pending")</text>
 </svg>

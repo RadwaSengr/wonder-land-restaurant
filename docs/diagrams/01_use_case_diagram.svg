@@ -1,165 +1,171 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 800" width="1100" height="800">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 860" width="1200" height="860">
   <defs>
     <style>
-      .bg { fill: #f8fafc; }
-      .system-box { fill: #ffffff; stroke: #3b82f6; stroke-width: 2.5; stroke-dasharray: 6,4; rx: 12; }
-      .system-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #1e3a8a; text-anchor: middle; }
-      .actor-head { fill: #fef08a; stroke: #1e293b; stroke-width: 2; }
-      .actor-body { stroke: #1e293b; stroke-width: 2; stroke-linecap: round; }
-      .actor-label { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #0f172a; text-anchor: middle; }
-      .usecase-ellipse { fill: #eff6ff; stroke: #2563eb; stroke-width: 1.8; rx: 85; ry: 26; }
-      .usecase-label { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: 600; fill: #1e40af; text-anchor: middle; dominant-baseline: central; }
-      .line { stroke: #475569; stroke-width: 1.5; }
-      .include-line { stroke: #059669; stroke-width: 1.5; stroke-dasharray: 5,4; marker-end: url(#arrowGreen); }
-      .extend-line { stroke: #d97706; stroke-width: 1.5; stroke-dasharray: 5,4; marker-end: url(#arrowOrange); }
-      .dep-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-style: italic; font-weight: 600; }
+      .canvas-bg { fill: #f8fafc; }
+      .header-bg { fill: #0a1128; }
+      .header-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #ffffff; }
+      .header-tag { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #e4b95b; letter-spacing: 1.5px; }
+      .sys-box { fill: #ffffff; stroke: #e4b95b; stroke-width: 2; rx: 12; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.05)); }
+      .sys-header { fill: #0f172a; }
+      .sys-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #e4b95b; letter-spacing: 1px; }
+      .actor-card { fill: #ffffff; stroke: #0a1128; stroke-width: 1.8; rx: 10; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.06)); }
+      .actor-badge { fill: #0a1128; }
+      .actor-badge-gold { fill: #b45309; }
+      .actor-badge-green { fill: #059669; }
+      .actor-name { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: bold; fill: #0f172a; text-anchor: middle; }
+      .actor-role { font-family: 'Segoe UI', Arial, sans-serif; font-size: 10px; font-weight: 600; fill: #64748b; text-anchor: middle; }
+      .uc-capsule { fill: #fffdf7; stroke: #d4af37; stroke-width: 1.8; rx: 22; ry: 22; filter: drop-shadow(0 2px 6px rgba(228,185,91,0.15)); }
+      .uc-label { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: 700; fill: #0f172a; text-anchor: middle; dominant-baseline: central; }
+      .assoc-line { stroke: #334155; stroke-width: 1.6; }
+      .inc-line { stroke: #059669; stroke-width: 1.6; stroke-dasharray: 5,4; marker-end: url(#arrowGreen); }
+      .ext-line { stroke: #d97706; stroke-width: 1.6; stroke-dasharray: 5,4; marker-end: url(#arrowAmber); }
+      .tag-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 10px; font-style: italic; font-weight: bold; }
     </style>
-    <marker id="arrowGreen" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M 0 1 L 10 5 L 0 9 z" fill="#059669" />
     </marker>
-    <marker id="arrowOrange" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <marker id="arrowAmber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M 0 1 L 10 5 L 0 9 z" fill="#d97706" />
     </marker>
   </defs>
 
-  <rect width="100%" height="100%" class="bg" />
+  <rect width="100%" height="100%" class="canvas-bg" />
 
-  <!-- Diagram Header -->
-  <text x="550" y="35" font-family="'Segoe UI', Arial, sans-serif" font-size="24" font-weight="bold" fill="#0f172a" text-anchor="middle">Use Case Diagram: Wonder Land Restaurant Management System</text>
-
-  <!-- System Boundary -->
-  <rect x="220" y="55" width="660" height="720" class="system-box" />
-  <text x="550" y="85" class="system-title">&lt;&lt;System&gt;&gt; Wonder Land Restaurant Platform</text>
+  <!-- Top Executive Banner -->
+  <rect x="0" y="0" width="1200" height="70" class="header-bg" />
+  <rect x="0" y="68" width="1200" height="3" fill="#e4b95b" />
+  <text x="35" y="30" class="header-tag">WONDER LAND RESTAURANT SYSTEM • UML BEHAVIORAL MODEL</text>
+  <text x="35" y="55" class="header-title">Visual UML: Use Case Diagram &amp; Operational Boundaries</text>
 
   <!-- Left Actor: Customer -->
-  <g transform="translate(100, 260)">
-    <circle cx="0" cy="0" r="16" class="actor-head" />
-    <line x1="0" y1="16" x2="0" y2="60" class="actor-body" />
-    <line x1="-24" y1="32" x2="24" y2="32" class="actor-body" />
-    <line x1="0" y1="60" x2="-20" y2="105" class="actor-body" />
-    <line x1="0" y1="60" x2="20" y2="105" class="actor-body" />
-    <text x="0" y="125" class="actor-label">Customer</text>
+  <g transform="translate(45, 300)">
+    <rect width="130" height="150" class="actor-card" />
+    <rect width="130" height="36" class="actor-badge" rx="8" />
+    <text x="65" y="23" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="bold" fill="#e4b95b" text-anchor="middle">PRIMARY ACTOR</text>
+    <circle cx="65" cy="72" r="18" fill="#e4b95b" stroke="#0a1128" stroke-width="2" />
+    <path d="M 52 110 C 52 94, 78 94, 78 110 Z" fill="#0a1128" />
+    <text x="65" y="128" class="actor-name">Customer</text>
+    <text x="65" y="142" class="actor-role">Online Guest</text>
   </g>
+
+  <!-- System Boundary Container -->
+  <rect x="210" y="95" width="760" height="735" class="sys-box" />
+  <path d="M 210 95 L 970 95 L 970 135 L 210 135 Z" class="sys-header" rx="10" />
+  <text x="590" y="120" class="sys-title" text-anchor="middle">&lt;&lt;System Boundary&gt;&gt; WONDER LAND INTEGRATED PLATFORM</text>
+
+  <!-- Customer Use Cases -->
+  <!-- UC01 -->
+  <g transform="translate(360, 180)">
+    <rect x="-105" y="-22" width="210" height="44" class="uc-capsule" />
+    <text x="0" y="0" class="uc-label">UC-01: Browse &amp; Search Menu</text>
+  </g>
+  <!-- UC02 (Extend) -->
+  <g transform="translate(680, 180)">
+    <rect x="-105" y="-22" width="210" height="44" class="uc-capsule" stroke="#d97706" />
+    <text x="0" y="0" class="uc-label" fill="#9a3412">UC-02: Filter by Category</text>
+  </g>
+
+  <!-- UC03 -->
+  <g transform="translate(360, 260)">
+    <rect x="-105" y="-22" width="210" height="44" class="uc-capsule" />
+    <text x="0" y="0" class="uc-label">UC-03: Manage Cart Items</text>
+  </g>
+
+  <!-- UC04 -->
+  <g transform="translate(360, 350)">
+    <rect x="-105" y="-22" width="210" height="44" class="uc-capsule" stroke="#b45309" stroke-width="2.2" />
+    <text x="0" y="0" class="uc-label" fill="#b45309">UC-04: Checkout Food Order</text>
+  </g>
+
+  <!-- UC05 (Include from Checkout) -->
+  <g transform="translate(680, 350)">
+    <rect x="-115" y="-24" width="230" height="48" class="uc-capsule" stroke="#059669" stroke-width="2.2" fill="#f0fdf4" />
+    <text x="0" y="-3" class="uc-label" fill="#047857">UC-05: Place Order (COD / Card)</text>
+    <text x="0" y="13" font-family="'Segoe UI', Arial, sans-serif" font-size="10" font-weight="600" fill="#059669" text-anchor="middle">&lt;&lt;Included Payment Subsystem&gt;&gt;</text>
+  </g>
+
+  <!-- UC06 -->
+  <g transform="translate(360, 440)">
+    <rect x="-105" y="-22" width="210" height="44" class="uc-capsule" />
+    <text x="0" y="0" class="uc-label">UC-06: Track Live Order (5-Stage)</text>
+  </g>
+
+  <!-- UC07 -->
+  <g transform="translate(360, 530)">
+    <rect x="-105" y="-22" width="210" height="44" class="uc-capsule" />
+    <text x="0" y="0" class="uc-label">UC-07: Reserve Dining Table</text>
+  </g>
+
+  <!-- UC08 -->
+  <g transform="translate(360, 620)">
+    <rect x="-105" y="-22" width="210" height="44" class="uc-capsule" />
+    <text x="0" y="0" class="uc-label">UC-08: Submit Guest Review</text>
+  </g>
+
+  <!-- Staff / Admin Use Cases -->
+  <!-- UC09 -->
+  <g transform="translate(800, 620)">
+    <rect x="-115" y="-22" width="230" height="44" class="uc-capsule" stroke="#0a1128" />
+    <text x="0" y="0" class="uc-label">UC-09: Authenticate Admin PIN</text>
+  </g>
+  <!-- UC10 -->
+  <g transform="translate(800, 700)">
+    <rect x="-115" y="-22" width="230" height="44" class="uc-capsule" stroke="#0a1128" />
+    <text x="0" y="0" class="uc-label">UC-10: Manage Menu Catalog CRUD</text>
+  </g>
+  <!-- UC11 -->
+  <g transform="translate(800, 490)">
+    <rect x="-115" y="-22" width="230" height="44" class="uc-capsule" stroke="#b45309" />
+    <text x="0" y="0" class="uc-label" fill="#b45309">UC-11: Kitchen Ticket Dispatch</text>
+  </g>
+  <!-- UC12 -->
+  <g transform="translate(800, 775)">
+    <rect x="-115" y="-22" width="230" height="44" class="uc-capsule" stroke="#059669" fill="#f0fdf4" />
+    <text x="0" y="0" class="uc-label" fill="#047857">UC-12: 1-Click Excel Export</text>
+  </g>
+
+  <!-- Customer Associations (Solid Lines) -->
+  <line x1="175" y1="340" x2="255" y2="180" class="assoc-line" />
+  <line x1="175" y1="360" x2="255" y2="260" class="assoc-line" />
+  <line x1="175" y1="375" x2="255" y2="350" class="assoc-line" stroke-width="2" stroke="#b45309" />
+  <line x1="175" y1="390" x2="255" y2="440" class="assoc-line" />
+  <line x1="175" y1="410" x2="255" y2="530" class="assoc-line" />
+  <line x1="175" y1="430" x2="255" y2="620" class="assoc-line" />
+
+  <!-- Include / Extend Relations -->
+  <!-- UC01 -> UC02 (Extend) -->
+  <line x1="465" y1="180" x2="570" y2="180" class="ext-line" />
+  <text x="518" y="172" class="tag-text" fill="#d97706" text-anchor="middle">&lt;&lt;extend&gt;&gt;</text>
+
+  <!-- UC04 -> UC05 (Include) -->
+  <line x1="465" y1="350" x2="560" y2="350" class="inc-line" stroke-width="2" />
+  <text x="512" y="342" class="tag-text" fill="#059669" text-anchor="middle">&lt;&lt;include&gt;&gt;</text>
 
   <!-- Right Actor: Admin / Manager -->
-  <g transform="translate(990, 220)">
-    <circle cx="0" cy="0" r="16" class="actor-head" fill="#fed7aa" />
-    <line x1="0" y1="16" x2="0" y2="60" class="actor-body" />
-    <line x1="-24" y1="32" x2="24" y2="32" class="actor-body" />
-    <line x1="0" y1="60" x2="-20" y2="105" class="actor-body" />
-    <line x1="0" y1="60" x2="20" y2="105" class="actor-body" />
-    <text x="0" y="125" class="actor-label">Restaurant Admin</text>
+  <g transform="translate(1015, 600)">
+    <rect width="145" height="150" class="actor-card" />
+    <rect width="145" height="36" class="actor-badge-gold" rx="8" />
+    <text x="72" y="23" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">ADMINISTRATOR</text>
+    <circle cx="72" cy="72" r="18" fill="#fed7aa" stroke="#b45309" stroke-width="2" />
+    <path d="M 59 110 C 59 94, 85 94, 85 110 Z" fill="#b45309" />
+    <text x="72" y="128" class="actor-name">Restaurant Admin</text>
+    <text x="72" y="142" class="actor-role">General Manager</text>
   </g>
 
-  <!-- Right Actor: Kitchen Staff / Chef -->
-  <g transform="translate(990, 520)">
-    <circle cx="0" cy="0" r="16" class="actor-head" fill="#bbf7d0" />
-    <line x1="0" y1="16" x2="0" y2="60" class="actor-body" />
-    <line x1="-24" y1="32" x2="24" y2="32" class="actor-body" />
-    <line x1="0" y1="60" x2="-20" y2="105" class="actor-body" />
-    <line x1="0" y1="60" x2="20" y2="105" class="actor-body" />
-    <text x="0" y="125" class="actor-label">Kitchen Staff / Chef</text>
+  <!-- Right Actor: Kitchen Chef -->
+  <g transform="translate(1015, 340)">
+    <rect width="145" height="150" class="actor-card" />
+    <rect width="145" height="36" class="actor-badge-green" rx="8" />
+    <text x="72" y="23" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">KITCHEN CHEF</text>
+    <circle cx="72" cy="72" r="18" fill="#bbf7d0" stroke="#059669" stroke-width="2" />
+    <path d="M 59 110 C 59 94, 85 94, 85 110 Z" fill="#059669" />
+    <text x="72" y="128" class="actor-name">Executive Chef</text>
+    <text x="72" y="142" class="actor-role">Food Prep &amp; KOT</text>
   </g>
 
-  <!-- Use Cases: Customer Side -->
-  <!-- UC1: Browse Menu & Search -->
-  <g transform="translate(370, 130)">
-    <ellipse cx="0" cy="0" class="usecase-ellipse" />
-    <text x="0" y="0" class="usecase-label">UC01: Browse &amp; Search Menu</text>
-  </g>
-  <!-- UC2: Filter Category -->
-  <g transform="translate(680, 130)">
-    <ellipse cx="0" cy="0" class="usecase-ellipse" />
-    <text x="0" y="0" class="usecase-label">UC02: Filter Menu by Category</text>
-  </g>
-  <!-- UC3: Manage Cart -->
-  <g transform="translate(370, 220)">
-    <ellipse cx="0" cy="0" class="usecase-ellipse" />
-    <text x="0" y="0" class="usecase-label">UC03: Manage Cart Items</text>
-  </g>
-  <!-- UC4: Checkout & Order -->
-  <g transform="translate(370, 310)">
-    <ellipse cx="0" cy="0" class="usecase-ellipse" />
-    <text x="0" y="0" class="usecase-label">UC04: Checkout &amp; Place Order</text>
-  </g>
-  <!-- UC5: Process Payment -->
-  <g transform="translate(680, 310)">
-    <ellipse cx="0" cy="0" class="usecase-ellipse" fill="#f0fdf4" stroke="#16a34a" />
-    <text x="0" y="0" class="usecase-label" fill="#15803d">UC05: Process Payment</text>
-  </g>
-  <!-- UC6: Track Order Status -->
-  <g transform="translate(370, 400)">
-    <ellipse cx="0" cy="0" class="usecase-ellipse" />
-    <text x="0" y="0" class="usecase-label">UC06: Track Live Order Status</text>
-  </g>
-  <!-- UC7: Book Table Reservation -->
-  <g transform="translate(370, 490)">
-    <ellipse cx="0" cy="0" class="usecase-ellipse" />
-    <text x="0" y="0" class="usecase-label">UC07: Reserve Dining Table</text>
-  </g>
-  <!-- UC8: Submit Review & Rating -->
-  <g transform="translate(370, 580)">
-    <ellipse cx="0" cy="0" class="usecase-ellipse" />
-    <text x="0" y="0" class="usecase-label">UC08: Submit Review &amp; Rating</text>
-  </g>
-
-  <!-- Use Cases: Admin & Kitchen Side -->
-  <!-- UC9: Admin Login / Auth -->
-  <g transform="translate(680, 220)">
-    <ellipse cx="0" cy="0" class="usecase-ellipse" fill="#fff7ed" stroke="#ea580c" />
-    <text x="0" y="0" class="usecase-label" fill="#c2410c">UC09: Authenticate / Login</text>
-  </g>
-  <!-- UC10: Manage Menu Catalog -->
-  <g transform="translate(680, 400)">
-    <ellipse cx="0" cy="0" class="usecase-ellipse" fill="#fff7ed" stroke="#ea580c" />
-    <text x="0" y="0" class="usecase-label" fill="#c2410c">UC10: Manage Menu (CRUD)</text>
-  </g>
-  <!-- UC11: Manage Orders -->
-  <g transform="translate(680, 490)">
-    <ellipse cx="0" cy="0" class="usecase-ellipse" fill="#fff7ed" stroke="#ea580c" />
-    <text x="0" y="0" class="usecase-label" fill="#c2410c">UC11: Manage &amp; Update Orders</text>
-  </g>
-  <!-- UC12: Manage Reservations -->
-  <g transform="translate(680, 580)">
-    <ellipse cx="0" cy="0" class="usecase-ellipse" fill="#fff7ed" stroke="#ea580c" />
-    <text x="0" y="0" class="usecase-label" fill="#c2410c">UC12: Manage Reservations</text>
-  </g>
-  <!-- UC13: View Analytics & Reports -->
-  <g transform="translate(680, 670)">
-    <ellipse cx="0" cy="0" class="usecase-ellipse" fill="#fff7ed" stroke="#ea580c" />
-    <text x="0" y="0" class="usecase-label" fill="#c2410c">UC13: View Sales Analytics</text>
-  </g>
-  <!-- UC14: Update Cooking Status -->
-  <g transform="translate(420, 670)">
-    <ellipse cx="0" cy="0" class="usecase-ellipse" fill="#f0fdf4" stroke="#16a34a" />
-    <text x="0" y="0" class="usecase-label" fill="#15803d">UC14: Update Kitchen Status</text>
-  </g>
-
-  <!-- Associations: Customer to UCs -->
-  <line x1="125" y1="280" x2="285" y2="135" class="line" />
-  <line x1="125" y1="290" x2="285" y2="220" class="line" />
-  <line x1="125" y1="300" x2="285" y2="310" class="line" />
-  <line x1="125" y1="315" x2="285" y2="400" class="line" />
-  <line x1="125" y1="330" x2="285" y2="490" class="line" />
-  <line x1="125" y1="345" x2="285" y2="580" class="line" />
-
-  <!-- Associations: Admin to UCs -->
-  <line x1="965" y1="240" x2="765" y2="220" class="line" />
-  <line x1="965" y1="250" x2="765" y2="400" class="line" />
-  <line x1="965" y1="260" x2="765" y2="490" class="line" />
-  <line x1="965" y1="270" x2="765" y2="580" class="line" />
-  <line x1="965" y1="280" x2="765" y2="670" class="line" />
-
-  <!-- Associations: Kitchen Staff to UCs -->
-  <line x1="965" y1="540" x2="765" y2="490" class="line" />
-  <line x1="965" y1="560" x2="505" y2="670" class="line" />
-
-  <!-- Relationships: Include / Extend -->
-  <!-- UC04 includes UC05 (Process Payment) -->
-  <line x1="455" y1="310" x2="595" y2="310" class="include-line" />
-  <text x="525" y="302" class="dep-text" fill="#059669" text-anchor="middle">&lt;&lt;include&gt;&gt;</text>
-
-  <!-- UC01 extends UC02 (Filter) -->
-  <line x1="595" y1="130" x2="455" y2="130" class="extend-line" />
-  <text x="525" y="122" class="dep-text" fill="#d97706" text-anchor="middle">&lt;&lt;extend&gt;&gt;</text>
+  <!-- Staff Associations -->
+  <line x1="1015" y1="415" x2="915" y2="490" class="assoc-line" />
+  <line x1="1015" y1="675" x2="915" y2="620" class="assoc-line" />
+  <line x1="1015" y1="685" x2="915" y2="700" class="assoc-line" />
+  <line x1="1015" y1="710" x2="915" y2="775" class="assoc-line" stroke="#059669" stroke-width="1.8" />
 </svg>

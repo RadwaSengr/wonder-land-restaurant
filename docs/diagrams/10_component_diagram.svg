@@ -1,138 +1,153 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 700" width="1100" height="700">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
   <defs>
     <style>
-      .bg { fill: #f8fafc; }
-      .comp-box { fill: #ffffff; stroke: #334155; stroke-width: 1.8; rx: 4; }
-      .comp-header { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: bold; fill: #0f172a; }
-      .comp-stereotype { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-style: italic; fill: #64748b; }
-      .comp-icon { fill: #ffffff; stroke: #334155; stroke-width: 1.2; }
-      .comp-tab { fill: #ffffff; stroke: #334155; stroke-width: 1.2; }
-      .interface-circle { fill: #ffffff; stroke: #0284c7; stroke-width: 1.8; }
-      .interface-socket { fill: none; stroke: #0284c7; stroke-width: 1.8; }
-      .dep-arrow { stroke: #64748b; stroke-width: 1.5; stroke-dasharray: 4,4; marker-end: url(#compArrow); }
-      .subsystem-boundary { fill: none; stroke: #94a3b8; stroke-width: 1.5; stroke-dasharray: 6,4; rx: 10; }
+      .canvas-bg { fill: #f8fafc; }
+      .header-bg { fill: #0a1128; }
+      .header-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #ffffff; }
+      .header-tag { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #e4b95b; letter-spacing: 1.5px; }
+      .subsystem-box { fill: #ffffff; stroke: #e4b95b; stroke-width: 1.6; stroke-dasharray: 6,4; rx: 12; }
+      .subsystem-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: bold; fill: #0a1128; }
+      .comp-card { fill: #ffffff; stroke: #0f172a; stroke-width: 1.8; rx: 6; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.06)); }
+      .comp-tab { fill: #e4b95b; stroke: #0f172a; stroke-width: 1.2; rx: 2; }
+      .comp-header { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: bold; fill: #0f172a; }
+      .comp-stereo { font-family: 'Segoe UI', Arial, sans-serif; font-size: 10px; font-style: italic; fill: #b45309; }
+      .comp-desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; fill: #64748b; }
+      .dep-arrow { stroke: #1e293b; stroke-width: 1.6; stroke-dasharray: 4,4; marker-end: url(#arrowComp); }
     </style>
-    <marker id="compArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M 0 1 L 10 5 L 0 9 z" fill="#64748b" />
+    <marker id="arrowComp" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#1e293b" />
     </marker>
   </defs>
 
-  <rect width="100%" height="100%" class="bg" />
+  <rect width="100%" height="100%" class="canvas-bg" />
 
-  <text x="550" y="32" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="bold" fill="#0f172a" text-anchor="middle">Component Diagram: Wonder Land Restaurant System Architecture</text>
+  <!-- Top Executive Banner -->
+  <rect x="0" y="0" width="1200" height="70" class="header-bg" />
+  <rect x="0" y="68" width="1200" height="3" fill="#e4b95b" />
+  <text x="35" y="30" class="header-tag">WONDER LAND RESTAURANT SYSTEM • STRUCTURAL SUBSYSTEMS</text>
+  <text x="35" y="55" class="header-title">Visual UML: Component Architecture Diagram (3-Tier Modular Subsystems)</text>
 
-  <!-- Component Helper Macro -->
-  <!-- Layer 1: Presentation Tier -->
-  <rect x="50" y="60" width="1000" height="150" class="subsystem-boundary" />
-  <text x="70" y="85" font-family="'Segoe UI', Arial, sans-serif" font-size="14" font-weight="bold" fill="#1e3a8a">&lt;&lt;Subsystem&gt;&gt; Presentation Components (Client Web GUI)</text>
+  <!-- TIER 1: Presentation Tier -->
+  <rect x="40" y="95" width="1120" height="180" class="subsystem-box" />
+  <text x="60" y="122" class="subsystem-title">&lt;&lt;Subsystem&gt;&gt; Presentation Components (Client Web GUI)</text>
 
-  <!-- Comp 1: Customer Portal UI -->
-  <g transform="translate(80, 100)">
-    <rect width="260" height="85" class="comp-box" />
-    <rect x="-10" y="15" width="20" height="12" class="comp-tab" />
-    <rect x="-10" y="45" width="20" height="12" class="comp-tab" />
-    <text x="25" y="35" class="comp-stereotype">&lt;&lt;component&gt;&gt;</text>
-    <text x="25" y="55" class="comp-header">Customer Portal GUI</text>
-    <text x="25" y="72" font-family="'Segoe UI', Arial, sans-serif" font-size="11" fill="#64748b">Menu, Cart Drawer, Checkout, Tracker</text>
+  <!-- Comp 1: Customer Portal -->
+  <g transform="translate(60, 140)">
+    <rect width="320" height="110" class="comp-card" />
+    <rect x="-10" y="18" width="20" height="14" class="comp-tab" />
+    <rect x="-10" y="54" width="20" height="14" class="comp-tab" />
+    <text x="25" y="35" class="comp-stereo">&lt;&lt;component&gt;&gt;</text>
+    <text x="25" y="56" class="comp-header">CustomerPortalGUI</text>
+    <text x="25" y="78" class="comp-desc">Dynamic Menu, Cart Drawer, Checkout,</text>
+    <text x="25" y="96" class="comp-desc">and 5-Stage Live Order Stepper Modal</text>
   </g>
 
-  <!-- Comp 2: Admin Dashboard UI -->
-  <g transform="translate(420, 100)">
-    <rect width="270" height="85" class="comp-box" />
-    <rect x="-10" y="15" width="20" height="12" class="comp-tab" />
-    <rect x="-10" y="45" width="20" height="12" class="comp-tab" />
-    <text x="25" y="35" class="comp-stereotype">&lt;&lt;component&gt;&gt;</text>
-    <text x="25" y="55" class="comp-header">Admin Management GUI</text>
-    <text x="25" y="72" font-family="'Segoe UI', Arial, sans-serif" font-size="11" fill="#64748b">Menu CRUD, Orders Board, Analytics</text>
+  <!-- Comp 2: Admin Dashboard -->
+  <g transform="translate(440, 140)">
+    <rect width="320" height="110" class="comp-card" />
+    <rect x="-10" y="18" width="20" height="14" class="comp-tab" />
+    <rect x="-10" y="54" width="20" height="14" class="comp-tab" />
+    <text x="25" y="35" class="comp-stereo">&lt;&lt;component&gt;&gt;</text>
+    <text x="25" y="56" class="comp-header">AdminManagementGUI</text>
+    <text x="25" y="78" class="comp-desc">Security PIN Gate, Live KPI Metrics Board,</text>
+    <text x="25" y="96" class="comp-desc">Order Dispatch Table, Menu Catalog CRUD</text>
   </g>
 
   <!-- Comp 3: Table Booking UI -->
-  <g transform="translate(760, 100)">
-    <rect width="250" height="85" class="comp-box" />
-    <rect x="-10" y="15" width="20" height="12" class="comp-tab" />
-    <rect x="-10" y="45" width="20" height="12" class="comp-tab" />
-    <text x="25" y="35" class="comp-stereotype">&lt;&lt;component&gt;&gt;</text>
-    <text x="25" y="55" class="comp-header">Reservation Modal UI</text>
-    <text x="25" y="72" font-family="'Segoe UI', Arial, sans-serif" font-size="11" fill="#64748b">Slot Picker, Guest Count, Zone</text>
+  <g transform="translate(820, 140)">
+    <rect width="320" height="110" class="comp-card" />
+    <rect x="-10" y="18" width="20" height="14" class="comp-tab" />
+    <rect x="-10" y="54" width="20" height="14" class="comp-tab" />
+    <text x="25" y="35" class="comp-stereo">&lt;&lt;component&gt;&gt;</text>
+    <text x="25" y="56" class="comp-header">ReservationModalUI</text>
+    <text x="25" y="78" class="comp-desc">Time-slot Booking, Party Size Picker,</text>
+    <text x="25" y="96" class="comp-desc">Seating Zone (Seaside, Terrace, VIP)</text>
   </g>
 
-  <!-- Layer 2: Business Logic / Application Core Services -->
-  <rect x="50" y="260" width="1000" height="230" class="subsystem-boundary" />
-  <text x="70" y="285" font-family="'Segoe UI', Arial, sans-serif" font-size="14" font-weight="bold" fill="#1e3a8a">&lt;&lt;Subsystem&gt;&gt; Business Logic &amp; Controller Services</text>
+  <!-- TIER 2: Business Logic Tier -->
+  <rect x="40" y="315" width="1120" height="260" class="subsystem-box" />
+  <text x="60" y="342" class="subsystem-title">&lt;&lt;Subsystem&gt;&gt; Application Logic &amp; Business Services Layer</text>
 
-  <!-- Comp 4: Cart & Order Engine -->
-  <g transform="translate(80, 310)">
-    <rect width="260" height="90" class="comp-box" />
-    <rect x="-10" y="15" width="20" height="12" class="comp-tab" />
-    <rect x="-10" y="45" width="20" height="12" class="comp-tab" />
-    <text x="25" y="35" class="comp-stereotype">&lt;&lt;component&gt;&gt;</text>
-    <text x="25" y="55" class="comp-header">Order Processing Engine</text>
-    <text x="25" y="72" font-family="'Segoe UI', Arial, sans-serif" font-size="11" fill="#64748b">Tax calculation, State Transitions</text>
+  <!-- Comp 4: Order Processing Engine -->
+  <g transform="translate(60, 360)">
+    <rect width="320" height="95" class="comp-card" />
+    <rect x="-10" y="16" width="20" height="14" class="comp-tab" />
+    <rect x="-10" y="48" width="20" height="14" class="comp-tab" />
+    <text x="25" y="32" class="comp-stereo">&lt;&lt;component&gt;&gt;</text>
+    <text x="25" y="52" class="comp-header">OrderProcessingEngine</text>
+    <text x="25" y="72" class="comp-desc">Tax calculation, COD verification,</text>
+    <text x="25" y="88" class="comp-desc">State machine lifecycle progression</text>
   </g>
 
   <!-- Comp 5: Menu Catalog Service -->
-  <g transform="translate(420, 310)">
-    <rect width="270" height="90" class="comp-box" />
-    <rect x="-10" y="15" width="20" height="12" class="comp-tab" />
-    <rect x="-10" y="45" width="20" height="12" class="comp-tab" />
-    <text x="25" y="35" class="comp-stereotype">&lt;&lt;component&gt;&gt;</text>
-    <text x="25" y="55" class="comp-header">Catalog &amp; Category Service</text>
-    <text x="25" y="72" font-family="'Segoe UI', Arial, sans-serif" font-size="11" fill="#64748b">Filter, Search, Price Update, CRUD</text>
+  <g transform="translate(440, 360)">
+    <rect width="320" height="95" class="comp-card" />
+    <rect x="-10" y="16" width="20" height="14" class="comp-tab" />
+    <rect x="-10" y="48" width="20" height="14" class="comp-tab" />
+    <text x="25" y="32" class="comp-stereo">&lt;&lt;component&gt;&gt;</text>
+    <text x="25" y="52" class="comp-header">MenuCatalogService</text>
+    <text x="25" y="72" class="comp-desc">Category filtering, keyword live search,</text>
+    <text x="25" y="88" class="comp-desc">Dish availability mutation &amp; persistence</text>
   </g>
 
-  <!-- Comp 6: Reservation Service -->
-  <g transform="translate(760, 310)">
-    <rect width="250" height="90" class="comp-box" />
-    <rect x="-10" y="15" width="20" height="12" class="comp-tab" />
-    <rect x="-10" y="45" width="20" height="12" class="comp-tab" />
-    <text x="25" y="35" class="comp-stereotype">&lt;&lt;component&gt;&gt;</text>
-    <text x="25" y="55" class="comp-header">Table Allocation Service</text>
-    <text x="25" y="72" font-family="'Segoe UI', Arial, sans-serif" font-size="11" fill="#64748b">Capacity check, Confirmation</text>
+  <!-- Comp 6: Excel Exporter -->
+  <g transform="translate(820, 360)">
+    <rect width="320" height="95" class="comp-card" stroke="#059669" />
+    <rect x="-10" y="16" width="20" height="14" class="comp-tab" fill="#059669" />
+    <rect x="-10" y="48" width="20" height="14" class="comp-tab" fill="#059669" />
+    <text x="25" y="32" class="comp-stereo" fill="#047857">&lt;&lt;component&gt;&gt;</text>
+    <text x="25" y="52" class="comp-header" fill="#047857">ExcelExportTelemetryEngine</text>
+    <text x="25" y="72" class="comp-desc">Orders dataset serialization, CSV</text>
+    <text x="25" y="88" class="comp-desc">UTF-8 BOM generator, Browser download</text>
   </g>
 
-  <!-- Comp 7: Payment Engine Component -->
-  <g transform="translate(250, 420)">
-    <rect width="260" height="55" class="comp-box" />
-    <text x="20" y="25" class="comp-stereotype">&lt;&lt;component&gt;&gt;</text>
-    <text x="20" y="42" class="comp-header">Payment Strategy Gateway</text>
+  <!-- Comp 7: Table Allocation -->
+  <g transform="translate(250, 475)">
+    <rect width="320" height="85" class="comp-card" />
+    <text x="25" y="30" class="comp-stereo">&lt;&lt;component&gt;&gt;</text>
+    <text x="25" y="50" class="comp-header">TableAllocationService</text>
+    <text x="25" y="70" class="comp-desc">Slot capacity validation &amp; booking lock</text>
   </g>
 
-  <!-- Comp 8: Analytics Engine -->
-  <g transform="translate(580, 420)">
-    <rect width="280" height="55" class="comp-box" />
-    <text x="20" y="25" class="comp-stereotype">&lt;&lt;component&gt;&gt;</text>
-    <text x="20" y="42" class="comp-header">Excel Exporter &amp; Telemetry Engine</text>
+  <!-- Comp 8: Payment Gateway Strategy -->
+  <g transform="translate(630, 475)">
+    <rect width="320" height="85" class="comp-card" />
+    <text x="25" y="30" class="comp-stereo">&lt;&lt;component&gt;&gt;</text>
+    <text x="25" y="50" class="comp-header">PaymentStrategyGateway</text>
+    <text x="25" y="70" class="comp-desc">Polymorphic COD, Card &amp; Wallet strategy</text>
   </g>
 
-  <!-- Layer 3: Persistence Tier -->
-  <rect x="50" y="520" width="1000" height="150" class="subsystem-boundary" />
-  <text x="70" y="545" font-family="'Segoe UI', Arial, sans-serif" font-size="14" font-weight="bold" fill="#1e3a8a">&lt;&lt;Subsystem&gt;&gt; Persistence &amp; Storage Tier</text>
+  <!-- TIER 3: Persistence Tier -->
+  <rect x="40" y="615" width="1120" height="160" class="subsystem-box" />
+  <text x="60" y="642" class="subsystem-title">&lt;&lt;Subsystem&gt;&gt; Persistence &amp; Client Storage Layer</text>
 
-  <g transform="translate(200, 565)">
-    <rect width="320" height="80" class="comp-box" />
-    <rect x="-10" y="15" width="20" height="12" class="comp-tab" />
-    <rect x="-10" y="45" width="20" height="12" class="comp-tab" />
-    <text x="25" y="35" class="comp-stereotype">&lt;&lt;component&gt;&gt;</text>
-    <text x="25" y="55" class="comp-header">LocalStorage Persistent Adapter</text>
-    <text x="25" y="70" font-family="'Segoe UI', Arial, sans-serif" font-size="11" fill="#64748b">JSON Serialization, Cross-tab Sync</text>
+  <!-- Comp 9: LocalStorage Adapter -->
+  <g transform="translate(250, 660)">
+    <rect width="380" height="95" class="comp-card" />
+    <rect x="-10" y="16" width="20" height="14" class="comp-tab" />
+    <rect x="-10" y="48" width="20" height="14" class="comp-tab" />
+    <text x="25" y="32" class="comp-stereo">&lt;&lt;component&gt;&gt;</text>
+    <text x="25" y="52" class="comp-header">LocalStoragePersistenceAdapter</text>
+    <text x="25" y="72" class="comp-desc">Key: WONDERLAND_SYSTEM_DB_V1</text>
+    <text x="25" y="88" class="comp-desc">JSON Serialization &amp; Multi-tab Storage Events</text>
   </g>
 
-  <g transform="translate(620, 565)">
-    <rect width="280" height="80" class="comp-box" />
-    <rect x="-10" y="15" width="20" height="12" class="comp-tab" />
-    <rect x="-10" y="45" width="20" height="12" class="comp-tab" />
-    <text x="25" y="35" class="comp-stereotype">&lt;&lt;component&gt;&gt;</text>
-    <text x="25" y="55" class="comp-header">Mock Demo Seeder</text>
-    <text x="25" y="70" font-family="'Segoe UI', Arial, sans-serif" font-size="11" fill="#64748b">Initial menu dishes &amp; sample orders</text>
+  <!-- Comp 10: Mock Demo Seeder -->
+  <g transform="translate(680, 660)">
+    <rect width="340" height="95" class="comp-card" />
+    <rect x="-10" y="16" width="20" height="14" class="comp-tab" />
+    <rect x="-10" y="48" width="20" height="14" class="comp-tab" />
+    <text x="25" y="32" class="comp-stereo">&lt;&lt;component&gt;&gt;</text>
+    <text x="25" y="52" class="comp-header">MockDemoSeeder</text>
+    <text x="25" y="72" class="comp-desc">Initial dishes catalog &amp; sample orders</text>
+    <text x="25" y="88" class="comp-desc">Instant reset button for academic demo</text>
   </g>
 
-  <!-- Wiring Lines -->
-  <line x1="210" y1="185" x2="210" y2="310" class="dep-arrow" />
-  <line x1="550" y1="185" x2="550" y2="310" class="dep-arrow" />
-  <line x1="880" y1="185" x2="880" y2="310" class="dep-arrow" />
-  <line x1="210" y1="400" x2="330" y2="420" class="dep-arrow" />
-  <line x1="550" y1="400" x2="650" y2="420" class="dep-arrow" />
-  <line x1="210" y1="400" x2="360" y2="565" class="dep-arrow" />
-  <line x1="550" y1="400" x2="360" y2="565" class="dep-arrow" />
-  <line x1="880" y1="400" x2="360" y2="565" class="dep-arrow" />
+  <!-- Dependency Lines -->
+  <line x1="220" y1="250" x2="220" y2="360" class="dep-arrow" />
+  <line x1="600" y1="250" x2="600" y2="360" class="dep-arrow" />
+  <line x1="600" y1="250" x2="980" y2="360" class="dep-arrow" />
+  <line x1="980" y1="250" x2="410" y2="475" class="dep-arrow" />
+  <line x1="220" y1="455" x2="440" y2="660" class="dep-arrow" />
+  <line x1="600" y1="455" x2="440" y2="660" class="dep-arrow" />
 </svg>

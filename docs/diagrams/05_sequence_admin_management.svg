@@ -1,96 +1,111 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 680" width="1000" height="680">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 860" width="1200" height="860">
   <defs>
     <style>
-      .bg { fill: #f8fafc; }
-      .lifeline { stroke: #94a3b8; stroke-width: 1.5; stroke-dasharray: 4,4; }
-      .actor-box { fill: #1e293b; rx: 6; }
-      .actor-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: bold; fill: #ffffff; text-anchor: middle; dominant-baseline: central; }
-      .activation { fill: #ffedd5; stroke: #ea580c; stroke-width: 1.5; }
-      .sync-msg { stroke: #c2410c; stroke-width: 1.6; marker-end: url(#arrowOrange); }
-      .reply-msg { stroke: #059669; stroke-width: 1.5; stroke-dasharray: 5,4; marker-end: url(#arrowGreen); }
-      .msg-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: 600; fill: #0f172a; }
+      .canvas-bg { fill: #f8fafc; }
+      .header-bg { fill: #0a1128; }
+      .header-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #ffffff; }
+      .header-tag { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #e4b95b; letter-spacing: 1.5px; }
+      .lifeline-header { rx: 8; fill: #0f172a; stroke: #e4b95b; stroke-width: 1.5; }
+      .lifeline-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: bold; fill: #ffffff; text-anchor: middle; dominant-baseline: central; }
+      .lifeline-dash { stroke: #94a3b8; stroke-width: 1.5; stroke-dasharray: 5,4; }
+      .act-bar { fill: #fdf6e2; stroke: #b45309; stroke-width: 1.6; }
+      .sync-arrow { stroke: #0a1128; stroke-width: 1.8; marker-end: url(#arrowDark); }
+      .reply-arrow { stroke: #059669; stroke-width: 1.6; stroke-dasharray: 5,4; marker-end: url(#arrowGreen); }
+      .msg-label { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: 700; fill: #0f172a; }
+      .excel-tag { fill: #065f46; stroke: #10b981; stroke-width: 1.5; rx: 6; }
     </style>
-    <marker id="arrowOrange" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M 0 1 L 10 5 L 0 9 z" fill="#ea580c" />
+    <marker id="arrowDark" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#0a1128" />
     </marker>
     <marker id="arrowGreen" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M 0 1 L 10 5 L 0 9 z" fill="#059669" />
     </marker>
   </defs>
 
-  <rect width="100%" height="100%" class="bg" />
+  <rect width="100%" height="100%" class="canvas-bg" />
 
-  <text x="500" y="32" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="bold" fill="#0f172a" text-anchor="middle">Sequence Diagram: Admin Management &amp; Excel Export</text>
+  <!-- Top Executive Banner -->
+  <rect x="0" y="0" width="1200" height="70" class="header-bg" />
+  <rect x="0" y="68" width="1200" height="3" fill="#e4b95b" />
+  <text x="35" y="30" class="header-tag">WONDER LAND RESTAURANT SYSTEM • BACK-OFFICE TELEMETRY</text>
+  <text x="35" y="55" class="header-title">Visual UML: Sequence Diagram (Admin Management &amp; Excel Export)</text>
 
-  <!-- Lifeline Headers -->
-  <rect x="60" y="60" width="130" height="40" class="actor-box" fill="#b45309" />
-  <text x="125" y="80" class="actor-title">:Admin / Manager</text>
-  <line x1="125" y1="100" x2="125" y2="650" class="lifeline" />
+  <!-- Lifeline 1: Admin / Manager -->
+  <rect x="60" y="95" width="160" height="42" class="lifeline-header" fill="#b45309" />
+  <text x="140" y="116" class="lifeline-text">:Admin / Manager</text>
+  <line x1="140" y1="137" x2="140" y2="820" class="lifeline-dash" />
 
-  <rect x="290" y="60" width="150" height="40" class="actor-box" fill="#475569" />
-  <text x="365" y="80" class="actor-title">:AdminDashboardGUI</text>
-  <line x1="365" y1="100" x2="365" y2="650" class="lifeline" />
+  <!-- Lifeline 2: AdminDashboardGUI -->
+  <rect x="340" y="95" width="170" height="42" class="lifeline-header" />
+  <text x="425" y="116" class="lifeline-text">:AdminDashboardGUI</text>
+  <line x1="425" y1="137" x2="425" y2="820" class="lifeline-dash" />
 
-  <rect x="540" y="60" width="160" height="40" class="actor-box" fill="#ea580c" />
-  <text x="620" y="80" class="actor-title">:AdminService</text>
-  <line x1="620" y1="100" x2="620" y2="650" class="lifeline" />
+  <!-- Lifeline 3: AdminService -->
+  <rect x="630" y="95" width="160" height="42" class="lifeline-header" />
+  <text x="710" y="116" class="lifeline-text">:AdminService</text>
+  <line x1="710" y1="137" x2="710" y2="820" class="lifeline-dash" />
 
-  <rect x="790" y="60" width="160" height="40" class="actor-box" fill="#15803d" />
-  <text x="870" y="80" class="actor-title">:ExcelExportEngine</text>
-  <line x1="870" y1="100" x2="870" y2="650" class="lifeline" />
+  <!-- Lifeline 4: ExcelExportEngine -->
+  <rect x="910" y="95" width="180" height="42" class="lifeline-header" fill="#065f46" stroke="#10b981" />
+  <text x="1000" y="116" class="lifeline-text">:ExcelExportEngine</text>
+  <line x1="1000" y1="137" x2="1000" y2="820" class="lifeline-dash" />
 
   <!-- Activations -->
-  <rect x="120" y="120" width="10" height="510" class="activation" />
-  <rect x="360" y="130" width="10" height="490" class="activation" />
-  <rect x="615" y="160" width="10" height="450" class="activation" />
-  <rect x="865" y="470" width="10" height="130" class="activation" />
+  <rect x="135" y="160" width="10" height="630" class="act-bar" />
+  <rect x="420" y="170" width="10" height="600" class="act-bar" />
+  <rect x="705" y="190" width="10" height="560" class="act-bar" />
+  <rect x="995" y="520" width="10" height="180" class="act-bar" />
 
-  <!-- 1. Login with PIN -->
-  <line x1="130" y1="140" x2="360" y2="140" class="sync-msg" />
-  <text x="245" y="133" class="msg-text" text-anchor="middle">1: enterAdminPin("admin123")</text>
+  <!-- 1. Enter PIN -->
+  <line x1="145" y1="180" x2="420" y2="180" class="sync-arrow" />
+  <text x="280" y="173" class="msg-label" text-anchor="middle">1: enterAdminPin("admin123")</text>
 
-  <line x1="370" y1="165" x2="615" y2="165" class="sync-msg" />
-  <text x="490" y="158" class="msg-text" text-anchor="middle">2: verifyCredentials(pin)</text>
+  <line x1="430" y1="205" x2="705" y2="205" class="sync-arrow" />
+  <text x="565" y="198" class="msg-label" text-anchor="middle">2: verifyCredentials(pin)</text>
 
-  <!-- 3. Fetch Dashboard Telemetry -->
-  <line x1="625" y1="190" x2="625" y2="215" class="sync-msg" />
-  <text x="635" y="205" class="msg-text">3: loadTelemetryData()</text>
+  <!-- 3. Load Telemetry -->
+  <line x1="715" y1="230" x2="715" y2="255" class="sync-arrow" />
+  <text x="725" y="245" class="msg-label">3: loadTelemetryData(sales, orders, tables)</text>
 
-  <line x1="615" y1="240" x2="370" y2="240" class="reply-msg" />
-  <text x="490" y="233" class="msg-text" text-anchor="middle">4: return (orders, revenue, menu)</text>
+  <line x1="705" y1="280" x2="430" y2="280" class="reply-arrow" />
+  <text x="565" y="273" class="msg-label" text-anchor="middle">4: return (telemetryPayload)</text>
 
-  <line x1="360" y1="265" x2="130" y2="265" class="reply-msg" />
-  <text x="245" y="258" class="msg-text" text-anchor="middle">5: renderKPIsAndOrdersTable()</text>
+  <line x1="420" y1="310" x2="145" y2="310" class="reply-arrow" />
+  <text x="280" y="303" class="msg-label" text-anchor="middle">5: renderKPIsAndOrdersBoard()</text>
 
-  <!-- 6. Admin selects Order and changes status -->
-  <line x1="130" y1="310" x2="360" y2="310" class="sync-msg" />
-  <text x="245" y="303" class="msg-text" text-anchor="middle">6: selectOrderUpdate(id, newStatus: "Cooking")</text>
+  <!-- 6. Change Order Status -->
+  <line x1="145" y1="355" x2="420" y2="355" class="sync-arrow" stroke="#b45309" stroke-width="2" />
+  <text x="280" y="348" class="msg-label" text-anchor="middle" fill="#b45309">6: selectOrderUpdate(id, newStatus: "In Kitchen")</text>
 
-  <line x1="370" y1="335" x2="615" y2="335" class="sync-msg" />
-  <text x="490" y="328" class="msg-text" text-anchor="middle">7: mutateOrderStatus(id, "Cooking")</text>
+  <line x1="430" y1="380" x2="705" y2="380" class="sync-arrow" />
+  <text x="565" y="373" class="msg-label" text-anchor="middle">7: mutateOrderStatus(id, "In Kitchen")</text>
 
-  <line x1="615" y1="365" x2="370" y2="365" class="reply-msg" />
-  <text x="490" y="358" class="msg-text" text-anchor="middle">8: statusUpdated(broadcastStorageEvent)</text>
+  <line x1="705" y1="410" x2="430" y2="410" class="reply-arrow" />
+  <text x="565" y="403" class="msg-label" text-anchor="middle">8: statusUpdated(broadcastStorageEvent)</text>
 
-  <line x1="360" y1="390" x2="130" y2="390" class="reply-msg" />
-  <text x="245" y="383" class="msg-text" text-anchor="middle">9: showToast("Order status updated to Cooking")</text>
+  <line x1="420" y1="440" x2="145" y2="440" class="reply-arrow" />
+  <text x="280" y="433" class="msg-label" text-anchor="middle">9: showToast("Order #WL-8492 updated to In Kitchen")</text>
 
-  <!-- 10. Admin clicks Export to Excel -->
-  <line x1="130" y1="445" x2="360" y2="445" class="sync-msg" />
-  <text x="245" y="438" class="msg-text" text-anchor="middle">10: clickExportOrdersExcelBtn()</text>
+  <!-- 10. Click Export to Excel -->
+  <line x1="145" y1="500" x2="420" y2="500" class="sync-arrow" stroke="#059669" stroke-width="2.2" />
+  <text x="280" y="493" class="msg-label" text-anchor="middle" fill="#047857">10: clickExportOrdersExcelBtn()</text>
 
-  <line x1="370" y1="470" x2="615" y2="470" class="sync-msg" />
-  <text x="490" y="463" class="msg-text" text-anchor="middle">11: getOrdersDataset()</text>
+  <line x1="430" y1="525" x2="705" y2="525" class="sync-arrow" />
+  <text x="565" y="518" class="msg-label" text-anchor="middle">11: getOrdersDataset()</text>
 
-  <line x1="625" y1="495" x2="865" y2="495" class="sync-msg" />
-  <text x="745" y="488" class="msg-text" text-anchor="middle">12: formatCSVPayload(orders, UTF8_BOM)</text>
+  <line x1="715" y1="550" x2="995" y2="550" class="sync-arrow" stroke="#059669" stroke-width="2" />
+  <text x="855" y="543" class="msg-label" text-anchor="middle" fill="#047857">12: generateCSV(orders, headers, UTF8_BOM)</text>
 
-  <line x1="865" y1="530" x2="625" y2="530" class="reply-msg" />
-  <text x="745" y="523" class="msg-text" text-anchor="middle">13: return generatedBlob(type: "text/csv")</text>
+  <!-- Self-call format -->
+  <path d="M 1005 570 L 1045 570 L 1045 595 L 1005 595" fill="none" stroke="#059669" stroke-width="1.6" />
+  <text x="1055" y="587" class="msg-label" fill="#047857">13: serializeOrderRecords()</text>
 
-  <line x1="615" y1="560" x2="370" y2="560" class="reply-msg" />
-  <text x="490" y="553" class="msg-text" text-anchor="middle">14: triggerBrowserDownload("Wonder_Land_Orders_Report.csv")</text>
+  <line x1="995" y1="625" x2="715" y2="625" class="reply-arrow" />
+  <text x="855" y="618" class="msg-label" text-anchor="middle">14: return blob(text/csv)</text>
 
-  <line x1="360" y1="595" x2="130" y2="595" class="reply-msg" />
-  <text x="245" y="588" class="msg-text" text-anchor="middle">15: showToast("Excel spreadsheet downloaded successfully")</text>
+  <line x1="705" y1="660" x2="430" y2="660" class="reply-arrow" />
+  <text x="565" y="653" class="msg-label" text-anchor="middle">15: triggerBrowserDownload("Wonder_Land_Orders_Report.csv")</text>
+
+  <line x1="420" y1="700" x2="145" y2="700" class="reply-arrow" stroke="#059669" stroke-width="2" />
+  <text x="280" y="693" class="msg-label" text-anchor="middle" fill="#047857">16: showToast("Excel report exported successfully")</text>
 </svg>
