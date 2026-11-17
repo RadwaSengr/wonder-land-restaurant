@@ -30,6 +30,11 @@
     box-sizing: border-box;
 }
 
+img {
+    max-width: 100%;
+    height: auto;
+}
+
 html {
     scroll-behavior: smooth;
 }
@@ -478,7 +483,8 @@ header .content p {
     margin-bottom: 45px;
 }
 
-.menu-tab {
+.menu-tab,
+.menu-category-btn {
     padding: 10px 24px;
     background: var(--white);
     border: 1px solid #ddd7cc;
@@ -492,16 +498,19 @@ header .content p {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
 }
 
-.menu-tab:hover {
+.menu-tab:hover,
+.menu-category-btn:hover {
     border-color: var(--primary-gold);
     color: var(--primary-gold);
     transform: translateY(-2px);
 }
 
-.menu-tab.active {
+.menu-tab.active,
+.menu-category-btn.active {
     background: var(--primary-gold);
     border-color: var(--primary-gold);
-    color: var(--white);
+    color: var(--dark-slate);
+    font-weight: 700;
     box-shadow: 0 6px 16px rgba(228, 185, 91, 0.35);
 }
 
