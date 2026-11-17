@@ -285,6 +285,37 @@
             <div class="diagram-img-wrap">
                 <img src="./diagrams/01_use_case_diagram.svg" alt="Use Case Diagram">
             </div>
+
+            <!-- Formal Use Case Specification: UC-05 Place Order (COD) -->
+            <div style="margin-top: 25px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px;">
+                <h4 style="color: #0f172a; margin-bottom: 12px; font-size: 16px;"><i class="fa-solid fa-file-lines" style="color: #d97706;"></i> Use Case Specification: UC-05 Place Order (Cash on Delivery - COD)</h4>
+                <table style="width: 100%; border-collapse: collapse; font-size: 13.5px;">
+                    <tr style="border-bottom: 1px solid #cbd5e1;"><th style="text-align: left; padding: 8px; width: 220px; background: #e2e8f0;">Field</th><th style="text-align: left; padding: 8px; background: #e2e8f0;">Specification Details</th></tr>
+                    <tr style="border-bottom: 1px solid #e2e8f0;"><td style="padding: 8px; font-weight: 700;">Use Case ID</td><td style="padding: 8px;">UC-05: Place Food Order via Cash on Delivery (COD)</td></tr>
+                    <tr style="border-bottom: 1px solid #e2e8f0;"><td style="padding: 8px; font-weight: 700;">Primary Actor</td><td style="padding: 8px;">Customer (External Online Guest)</td></tr>
+                    <tr style="border-bottom: 1px solid #e2e8f0;"><td style="padding: 8px; font-weight: 700;">Secondary Actors</td><td style="padding: 8px;">Restaurant Kitchen Staff (Fulfillment), Delivery Courier (Cash Collector)</td></tr>
+                    <tr style="border-bottom: 1px solid #e2e8f0;"><td style="padding: 8px; font-weight: 700;">Pre-Conditions</td><td style="padding: 8px;">1. Customer has selected &ge; 1 available dish in active cart.<br>2. Delivery address and phone number are valid within the delivery radius.</td></tr>
+                    <tr style="border-bottom: 1px solid #e2e8f0;"><td style="padding: 8px; font-weight: 700;">Trigger</td><td style="padding: 8px;">Customer opens cart drawer, clicks "Proceed to Checkout", selects "Cash on Delivery", and clicks "Place Order Now".</td></tr>
+                    <tr style="border-bottom: 1px solid #e2e8f0;"><td style="padding: 8px; font-weight: 700;">Main Success Flow (10 Steps)</td><td style="padding: 8px;">
+                        1. Customer reviews cart summary (Dishes, Subtotal, 14% VAT, $3 Delivery Fee).<br>
+                        2. Customer inputs Full Name, Mobile Phone, and Delivery Address in Checkout Modal.<br>
+                        3. Customer selects Payment Option: "Cash on Delivery (COD)".<br>
+                        4. System validates inputs and checks live inventory availability in RestaurantDataStore.<br>
+                        5. System instantiates Order entity with unique ID (#WL-xxxx) and status "Pending".<br>
+                        6. System flags payment as "COD - Collect Upon Handover".<br>
+                        7. System clears customer active cart and saves order to LocalStorage.<br>
+                        8. System renders Order Receipt with print action and opens Live Order Tracker.<br>
+                        9. System broadcasts cross-tab storage event; Admin/Kitchen portal updates dispatch board.<br>
+                        10. Delivery Courier collects cash upon physical food delivery and marks status "Delivered".
+                    </td></tr>
+                    <tr style="border-bottom: 1px solid #e2e8f0;"><td style="padding: 8px; font-weight: 700;">Alternative Flows</td><td style="padding: 8px;">
+                        4a. Required input missing: System highlights empty fields and halts submission.<br>
+                        4b. Dish sold out: System alerts customer to remove unavailable dish before checkout.<br>
+                        8a. Order cancellation: Customer can cancel while in Pending or Confirmed state.
+                    </td></tr>
+                    <tr><td style="padding: 8px; font-weight: 700;">Post-Conditions</td><td style="padding: 8px;">Order is committed to database; status is visible on customer live stepper; KOT queued in kitchen.</td></tr>
+                </table>
+            </div>
         </div>
 
         <!-- Diagram 2 -->
@@ -302,19 +333,19 @@
         <!-- Diagram 3 -->
         <div class="diagram-card">
             <div class="diagram-header">
-                <span class="diagram-title">UML Diagram 03: Sequence Diagram - Food Ordering &amp; Checkout</span>
+                <span class="diagram-title">Visual UML: Sequence Diagram (Checkout &amp; COD Order)</span>
                 <a href="./diagrams/03_sequence_order_food.svg" target="_blank" class="diagram-file-link"><i class="fa-solid fa-up-right-from-square"></i> Open High-Res SVG</a>
             </div>
-            <p>Detailed chronological interaction between Customer, WebGUI, CartController, PaymentGateway, and RestaurantDataStore for dish selection, cart computation, payment approval, and receipt rendering.</p>
+            <p>Detailed chronological interaction between Customer, WebGUI, CartController, PaymentGateway, and RestaurantDataStore for dish selection, cart computation, Cash on Delivery (COD) verification, and receipt rendering.</p>
             <div class="diagram-img-wrap">
-                <img src="./diagrams/03_sequence_order_food.svg" alt="Sequence Diagram Food Ordering">
+                <img src="./diagrams/03_sequence_order_food.svg" alt="Sequence Diagram Checkout and COD Order">
             </div>
         </div>
 
         <!-- Diagram 4 -->
         <div class="diagram-card">
             <div class="diagram-header">
-                <span class="diagram-title">UML Diagram 04: Sequence Diagram - Dining Table Reservation</span>
+                <span class="diagram-title">Visual UML: Sequence Diagram (Dining Table Reservation)</span>
                 <a href="./diagrams/04_sequence_table_reservation.svg" target="_blank" class="diagram-file-link"><i class="fa-solid fa-up-right-from-square"></i> Open High-Res SVG</a>
             </div>
             <p>Step-by-step messaging for table booking, capacity validation, slot persistence in DataStore, and instant confirmation toast notification.</p>
@@ -326,24 +357,24 @@
         <!-- Diagram 5 -->
         <div class="diagram-card">
             <div class="diagram-header">
-                <span class="diagram-title">UML Diagram 05: Sequence Diagram - Admin Management &amp; Menu CRUD</span>
+                <span class="diagram-title">Visual UML: Sequence Diagram (Admin Management &amp; Excel)</span>
                 <a href="./diagrams/05_sequence_admin_management.svg" target="_blank" class="diagram-file-link"><i class="fa-solid fa-up-right-from-square"></i> Open High-Res SVG</a>
             </div>
-            <p>Demonstrates administrative PIN authentication, order lifecycle mutation, and real-time menu catalog creation with instant client synchronization.</p>
+            <p>Demonstrates administrative PIN authentication, order lifecycle mutation, and 1-Click Excel (.csv) report export with automatic file download.</p>
             <div class="diagram-img-wrap">
-                <img src="./diagrams/05_sequence_admin_management.svg" alt="Sequence Diagram Admin Management">
+                <img src="./diagrams/05_sequence_admin_management.svg" alt="Sequence Diagram Admin Management &amp; Excel">
             </div>
         </div>
 
         <!-- Diagram 6 -->
         <div class="diagram-card">
             <div class="diagram-header">
-                <span class="diagram-title">UML Diagram 06: Activity Diagram - Order &amp; Checkout with Swimlanes</span>
+                <span class="diagram-title">Visual UML: Activity Diagram (End-to-End Workflow)</span>
                 <a href="./diagrams/06_activity_order_processing.svg" target="_blank" class="diagram-file-link"><i class="fa-solid fa-up-right-from-square"></i> Open High-Res SVG</a>
             </div>
-            <p>Organized into 4 swimlanes: Customer, Web Application (GUI), Payment Engine, and Kitchen Dispatch. Captures validation decisions, payment branches, and parallel fork/join execution.</p>
+            <p>Organized into 4 swimlanes: Customer, Web Application (GUI), Payment Engine, and Kitchen Dispatch. Captures complete end-to-end customer order processing, COD branching, and kitchen fulfillment.</p>
             <div class="diagram-img-wrap">
-                <img src="./diagrams/06_activity_order_processing.svg" alt="Activity Diagram Order Processing">
+                <img src="./diagrams/06_activity_order_processing.svg" alt="Activity Diagram End-to-End Workflow">
             </div>
         </div>
 
@@ -362,7 +393,7 @@
         <!-- Diagram 8 -->
         <div class="diagram-card">
             <div class="diagram-header">
-                <span class="diagram-title">UML Diagram 08: State Machine Diagram - Food Order Lifecycle</span>
+                <span class="diagram-title">Visual UML: State Machine Diagram (Order Lifecycle)</span>
                 <a href="./diagrams/08_state_order_lifecycle.svg" target="_blank" class="diagram-file-link"><i class="fa-solid fa-up-right-from-square"></i> Open High-Res SVG</a>
             </div>
             <p>Models the 5 states implemented in the live GUI stepper: <code>Pending ➔ Confirmed ➔ In Kitchen (Cooking) ➔ Out for Delivery ➔ Delivered</code>, plus the cancellation guard condition.</p>
@@ -374,7 +405,7 @@
         <!-- Diagram 9 -->
         <div class="diagram-card">
             <div class="diagram-header">
-                <span class="diagram-title">UML Diagram 09: State Machine Diagram - Table Reservation Lifecycle</span>
+                <span class="diagram-title">Visual UML: State Machine Diagram (Table Reservation Lifecycle)</span>
                 <a href="./diagrams/09_state_reservation_lifecycle.svg" target="_blank" class="diagram-file-link"><i class="fa-solid fa-up-right-from-square"></i> Open High-Res SVG</a>
             </div>
             <p>Models booking states: <code>Requested ➔ Confirmed ➔ Seated (Active Dining) ➔ Completed</code> and cancellation transition.</p>
@@ -386,24 +417,24 @@
         <!-- Diagram 10 -->
         <div class="diagram-card">
             <div class="diagram-header">
-                <span class="diagram-title">UML Diagram 10: Component Diagram</span>
+                <span class="diagram-title">Visual UML: Component Architecture Diagram</span>
                 <a href="./diagrams/10_component_diagram.svg" target="_blank" class="diagram-file-link"><i class="fa-solid fa-up-right-from-square"></i> Open High-Res SVG</a>
             </div>
-            <p>Illustrates the modular subsystems: Presentation Tier (Portal, Cart, Tracker, Admin), Business Services (Order Processing, Catalog, Payment, Analytics), and LocalStorage Persistence Adapter.</p>
+            <p>Illustrates the modular subsystems: Presentation Tier (Portal, Cart, Tracker, Admin), Business Services (Order Processing, Catalog, Payment, Excel Export &amp; Telemetry), and LocalStorage Persistence Adapter.</p>
             <div class="diagram-img-wrap">
-                <img src="./diagrams/10_component_diagram.svg" alt="Component Diagram">
+                <img src="./diagrams/10_component_diagram.svg" alt="Component Architecture Diagram">
             </div>
         </div>
 
         <!-- Diagram 11 -->
         <div class="diagram-card">
             <div class="diagram-header">
-                <span class="diagram-title">UML Diagram 11: Deployment Diagram</span>
+                <span class="diagram-title">Visual UML: Deployment Diagram (Hardware &amp; Topology)</span>
                 <a href="./diagrams/11_deployment_diagram.svg" target="_blank" class="diagram-file-link"><i class="fa-solid fa-up-right-from-square"></i> Open High-Res SVG</a>
             </div>
             <p>Physical nodes: Client Device (Workstation/Smartphone executing Chrome/Edge/Safari), HTML5 LocalStorage Node, communicating via HTTP/HTTPS to the Web Server Node.</p>
             <div class="diagram-img-wrap">
-                <img src="./diagrams/11_deployment_diagram.svg" alt="Deployment Diagram">
+                <img src="./diagrams/11_deployment_diagram.svg" alt="Deployment Diagram Hardware and Topology">
             </div>
         </div>
 
@@ -434,12 +465,12 @@
         <!-- Diagram 14 -->
         <div class="diagram-card">
             <div class="diagram-header">
-                <span class="diagram-title">UML Diagram 14: Entity Relationship Diagram (ERD)</span>
+                <span class="diagram-title">Visual UML: Entity-Relationship Diagram (ERD)</span>
                 <a href="./diagrams/14_entity_relationship_diagram.svg" target="_blank" class="diagram-file-link"><i class="fa-solid fa-up-right-from-square"></i> Open High-Res SVG</a>
             </div>
             <p>Relational database schema: CUSTOMERS, ORDERS, ORDER_ITEMS, MENU_ITEMS, CATEGORIES, PAYMENTS, TABLE_RESERVATIONS, REVIEWS with PKs, FKs, and crow-foot cardinalities.</p>
             <div class="diagram-img-wrap">
-                <img src="./diagrams/14_entity_relationship_diagram.svg" alt="Entity Relationship Diagram">
+                <img src="./diagrams/14_entity_relationship_diagram.svg" alt="Entity Relationship Diagram ERD">
             </div>
         </div>
 

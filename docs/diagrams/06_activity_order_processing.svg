@@ -22,7 +22,7 @@
 
   <rect width="100%" height="100%" class="bg" />
 
-  <text x="550" y="32" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="bold" fill="#0f172a" text-anchor="middle">Activity Diagram: Complete Order &amp; Checkout Lifecycle</text>
+  <text x="550" y="32" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="bold" fill="#0f172a" text-anchor="middle">Activity Diagram: End-to-End Workflow (Customer Order to Kitchen Fulfillment)</text>
 
   <!-- Swimlane Header Backgrounds -->
   <rect x="40" y="55" width="250" height="35" class="swimlane-header" />

@@ -242,17 +242,18 @@ const docSections = [
     bodyPara('File: docs/diagrams/01_use_case_diagram.svg'),
     bodyPara('Captures system boundaries, external actors (Customer, Admin, Kitchen Chef), and use cases including UC01 (Browse Menu), UC03 (Manage Cart), UC04 (Checkout & Order), UC05 (Process Payment with <<include>>), UC02 (Filter by Category with <<extend>>), UC06 (Track Order), UC07 (Book Table), UC10 (Manage Menu CRUD), and UC11 (Update Orders).'),
 
-    heading3('Formal Use Case Specification: UC04 - Checkout & Place Order'),
+    heading3('Formal Use Case Specification: UC-05 Place Order (COD)'),
     createStyledTable(
         ['Field', 'Specification Details'],
         [
-            ['Use Case ID', 'UC04: Checkout & Place Order'],
-            ['Primary Actor', 'Customer'],
-            ['Pre-conditions', 'Customer has added at least one available dish to the shopping cart.'],
-            ['Trigger', 'Customer clicks "Proceed to Checkout" in the cart drawer.'],
-            ['Main Success Flow', '1. System displays checkout modal with item summary and total.\n2. Customer inputs Name, Phone, and Delivery Address.\n3. Customer selects Payment Method (Cash, Card, Digital Wallet).\n4. Customer clicks "Place Order Now".\n5. System validates inputs and charges payment (UC05).\n6. System saves Order in LocalStorage with status "Pending".\n7. System clears active cart.\n8. System generates unique Order ID (#WL-xxxx) and opens receipt with live tracker button.'],
-            ['Alternative Flow', '4a. Required input missing: System highlights invalid field and halts submission.\n5a. Payment fails: System prompts for alternative payment method.'],
-            ['Post-conditions', 'Order is committed to database; status is visible to kitchen and customer tracker.']
+            ['Use Case ID', 'UC-05: Place Food Order via Cash on Delivery (COD)'],
+            ['Primary Actor', 'Customer (External Online Guest)'],
+            ['Secondary Actors', 'Restaurant Kitchen Staff (Fulfillment), Delivery Courier (Cash Collector)'],
+            ['Pre-conditions', 'Customer has added at least one available dish to the shopping cart; Valid delivery coordinates provided.'],
+            ['Trigger', 'Customer opens cart drawer, clicks "Proceed to Checkout", selects "Cash on Delivery", and clicks "Place Order Now".'],
+            ['Main Success Flow', '1. Customer reviews cart summary (Dishes, Subtotal, 14% VAT, $3 Delivery Fee).\n2. Customer submits Full Name, Mobile Phone, and Delivery Address in Checkout Modal.\n3. Customer selects Payment Option: "Cash on Delivery (COD)".\n4. System validates inputs and checks live inventory availability in RestaurantDataStore.\n5. System instantiates Order entity with unique ID (#WL-xxxx) and status "Pending".\n6. System flags payment as "COD - Collect Upon Handover".\n7. System clears customer active cart and saves order to LocalStorage.\n8. System renders Order Receipt with print action and opens Live Order Tracker.\n9. System broadcasts cross-tab storage event; Admin/Kitchen portal updates dispatch board.'],
+            ['Alternative Flow', '4a. Required input missing: System highlights invalid field and halts submission.\n4b. Dish sold out: System alerts customer to remove unavailable dish before checkout.\n8a. Order cancellation: Customer can cancel while in Pending or Confirmed state.'],
+            ['Post-conditions', 'Order is committed to database; status is visible to kitchen and customer live stepper; KOT queued in kitchen.']
         ],
         [2400, 6600]
     ),
@@ -271,9 +272,9 @@ const docSections = [
 
     heading2('3.3 Diagrams 03, 04 & 05: Sequence Diagrams'),
     bodyPara('Files: docs/diagrams/03_sequence_order_food.svg, 04_sequence_table_reservation.svg, 05_sequence_admin_management.svg'),
-    bulletItem('Sequence 1 - Order Placement:', 'Customer ➔ WebGUI ➔ CartController (addItem, computeCartTotals) ➔ CheckoutModal ➔ PaymentGateway (executeTransaction) ➔ RestaurantDataStore (persistOrder) ➔ WebGUI (renderOrderReceiptAndLiveTracker).'),
-    bulletItem('Sequence 2 - Table Reservation:', 'Customer ➔ ReservationModal ➔ ReservationController (checkTableCapacity) ➔ DataStore (query bookings) ➔ ReservationController (create booking) ➔ WebGUI (confirmation toast & details).'),
-    bulletItem('Sequence 3 - Admin Management:', 'Admin ➔ AdminDashboardGUI (enterAdminPin) ➔ AdminService (verifyCredentials) ➔ DataStore (getTelemetry) ➔ updateOrderStatus(id, "Cooking") ➔ DataStore mutation ➔ real-time customer tracker sync.'),
+    bulletItem('Sequence 1 - Checkout & COD Order (03):', 'Customer ➔ WebGUI ➔ CartController (addItem, computeCartTotals) ➔ CheckoutModal (select COD) ➔ PaymentGateway (verifyCODAvailability) ➔ RestaurantDataStore (persistOrder, status: Pending) ➔ WebGUI (renderOrderReceiptAndLiveTracker).'),
+    bulletItem('Sequence 2 - Table Reservation (04):', 'Customer ➔ ReservationModal ➔ ReservationController (checkTableCapacity) ➔ DataStore (query bookings) ➔ ReservationController (create booking) ➔ WebGUI (confirmation toast & details).'),
+    bulletItem('Sequence 3 - Admin Management & Excel Export (05):', 'Admin ➔ AdminDashboardGUI (enterAdminPin) ➔ AdminService (verifyCredentials) ➔ DataStore (getTelemetry) ➔ updateOrderStatus(id, "Cooking") ➔ DataStore mutation ➔ real-time customer tracker sync ➔ clickExportOrdersExcelBtn() ➔ serializeToCSV(UTF8_BOM) ➔ triggerBrowserDownload("Wonder_Land_Orders_Report.csv").'),
 
     heading2('3.4 Diagrams 06 & 07: Activity Diagrams with Swimlanes'),
     bodyPara('Files: docs/diagrams/06_activity_order_processing.svg, 07_activity_table_reservation.svg'),

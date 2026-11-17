@@ -473,7 +473,7 @@ const seqOrderSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 8
 
   <rect width="100%" height="100%" class="bg" />
 
-  <text x="550" y="32" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="bold" fill="#0f172a" text-anchor="middle">Sequence Diagram: Customer Places Food Order &amp; Checkout</text>
+  <text x="550" y="32" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="bold" fill="#0f172a" text-anchor="middle">Sequence Diagram: Customer Checkout &amp; Cash on Delivery (COD) Order</text>
 
   <!-- Lifeline Headers -->
   <!-- 1. Customer -->
@@ -535,24 +535,24 @@ const seqOrderSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 8
 
   <!-- 7. Submit order details & payment -->
   <line x1="115" y1="335" x2="310" y2="335" class="sync-msg" />
-  <text x="210" y="328" class="msg-text" text-anchor="middle">7: submitOrder(customerInfo, payMethod)</text>
+  <text x="210" y="328" class="msg-text" text-anchor="middle">7: submitOrder(customerInfo, paymentMethod: "COD")</text>
 
   <!-- 8. Validate & Prepare -->
   <line x1="320" y1="360" x2="530" y2="360" class="sync-msg" />
-  <text x="425" y="353" class="msg-text" text-anchor="middle">8: processCheckout(cart, info)</text>
+  <text x="425" y="353" class="msg-text" text-anchor="middle">8: processCheckout(cart, info, isCOD: true)</text>
 
   <!-- 9. Process Payment with Gateway -->
   <line x1="540" y1="390" x2="745" y2="390" class="sync-msg" />
-  <text x="640" y="383" class="msg-text" text-anchor="middle">9: executeTransaction(amount, details)</text>
+  <text x="640" y="383" class="msg-text" text-anchor="middle">9: verifyCODAvailability(customerAddress, total)</text>
 
   <!-- Alt Block: Payment Success / Failure -->
   <rect x="510" y="415" width="480" height="200" class="alt-box" />
-  <rect x="510" y="415" width="90" height="20" class="alt-header" />
-  <text x="518" y="429" class="alt-text">[Payment OK]</text>
+  <rect x="510" y="415" width="120" height="20" class="alt-header" />
+  <text x="518" y="429" class="alt-text">[COD Approved]</text>
 
   <!-- 10. Payment confirmed -->
   <line x1="745" y1="460" x2="540" y2="460" class="reply-msg" />
-  <text x="640" y="453" class="msg-text" text-anchor="middle">10: paymentApproved(authCode)</text>
+  <text x="640" y="453" class="msg-text" text-anchor="middle">10: codAccepted(flag: "Pay on Handover")</text>
 
   <!-- 11. Save Order to Database / LocalStorage -->
   <line x1="540" y1="500" x2="970" y2="500" class="sync-msg" />
@@ -698,30 +698,30 @@ const seqAdminSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 6
 
   <rect width="100%" height="100%" class="bg" />
 
-  <text x="500" y="32" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="bold" fill="#0f172a" text-anchor="middle">Sequence Diagram: Admin Updates Order Status &amp; Menu Catalog</text>
+  <text x="500" y="32" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="bold" fill="#0f172a" text-anchor="middle">Sequence Diagram: Admin Management &amp; Excel Export</text>
 
   <!-- Lifeline Headers -->
   <rect x="60" y="60" width="130" height="40" class="actor-box" fill="#b45309" />
   <text x="125" y="80" class="actor-title">:Admin / Manager</text>
-  <line x1="125" y1="100" x2="125" y2="640" class="lifeline" />
+  <line x1="125" y1="100" x2="125" y2="650" class="lifeline" />
 
   <rect x="290" y="60" width="150" height="40" class="actor-box" fill="#475569" />
   <text x="365" y="80" class="actor-title">:AdminDashboardGUI</text>
-  <line x1="365" y1="100" x2="365" y2="640" class="lifeline" />
+  <line x1="365" y1="100" x2="365" y2="650" class="lifeline" />
 
   <rect x="540" y="60" width="160" height="40" class="actor-box" fill="#ea580c" />
   <text x="620" y="80" class="actor-title">:AdminService</text>
-  <line x1="620" y1="100" x2="620" y2="640" class="lifeline" />
+  <line x1="620" y1="100" x2="620" y2="650" class="lifeline" />
 
-  <rect x="790" y="60" width="160" height="40" class="actor-box" fill="#7c3aed" />
-  <text x="870" y="80" class="actor-title">:RestaurantDataStore</text>
-  <line x1="870" y1="100" x2="870" y2="640" class="lifeline" />
+  <rect x="790" y="60" width="160" height="40" class="actor-box" fill="#15803d" />
+  <text x="870" y="80" class="actor-title">:ExcelExportEngine</text>
+  <line x1="870" y1="100" x2="870" y2="650" class="lifeline" />
 
   <!-- Activations -->
-  <rect x="120" y="120" width="10" height="500" class="activation" />
-  <rect x="360" y="130" width="10" height="480" class="activation" />
-  <rect x="615" y="160" width="10" height="430" class="activation" />
-  <rect x="865" y="190" width="10" height="380" class="activation" />
+  <rect x="120" y="120" width="10" height="510" class="activation" />
+  <rect x="360" y="130" width="10" height="490" class="activation" />
+  <rect x="615" y="160" width="10" height="450" class="activation" />
+  <rect x="865" y="470" width="10" height="130" class="activation" />
 
   <!-- 1. Login with PIN -->
   <line x1="130" y1="140" x2="360" y2="140" class="sync-msg" />
@@ -731,43 +731,46 @@ const seqAdminSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 6
   <text x="490" y="158" class="msg-text" text-anchor="middle">2: verifyCredentials(pin)</text>
 
   <!-- 3. Fetch Dashboard Telemetry -->
-  <line x1="625" y1="190" x2="865" y2="190" class="sync-msg" />
-  <text x="745" y="183" class="msg-text" text-anchor="middle">3: getDashboardTelemetry()</text>
+  <line x1="625" y1="190" x2="625" y2="215" class="sync-msg" />
+  <text x="635" y="205" class="msg-text">3: loadTelemetryData()</text>
 
-  <line x1="865" y1="230" x2="625" y2="230" class="reply-msg" />
-  <text x="745" y="223" class="msg-text" text-anchor="middle">4: return (orders, revenue, menu)</text>
+  <line x1="615" y1="240" x2="370" y2="240" class="reply-msg" />
+  <text x="490" y="233" class="msg-text" text-anchor="middle">4: return (orders, revenue, menu)</text>
 
-  <line x1="615" y1="260" x2="370" y2="260" class="reply-msg" />
-  <text x="490" y="253" class="msg-text" text-anchor="middle">5: renderKPIsAndTables()</text>
+  <line x1="360" y1="265" x2="130" y2="265" class="reply-msg" />
+  <text x="245" y="258" class="msg-text" text-anchor="middle">5: renderKPIsAndOrdersTable()</text>
 
   <!-- 6. Admin selects Order and changes status -->
   <line x1="130" y1="310" x2="360" y2="310" class="sync-msg" />
   <text x="245" y="303" class="msg-text" text-anchor="middle">6: selectOrderUpdate(id, newStatus: "Cooking")</text>
 
-  <line x1="370" y1="340" x2="615" y2="340" class="sync-msg" />
-  <text x="490" y="333" class="msg-text" text-anchor="middle">7: updateStatus(id, "Cooking")</text>
+  <line x1="370" y1="335" x2="615" y2="335" class="sync-msg" />
+  <text x="490" y="328" class="msg-text" text-anchor="middle">7: mutateOrderStatus(id, "Cooking")</text>
 
-  <line x1="625" y1="370" x2="865" y2="370" class="sync-msg" />
-  <text x="745" y="363" class="msg-text" text-anchor="middle">8: mutateOrderStatus(id, "Cooking")</text>
+  <line x1="615" y1="365" x2="370" y2="365" class="reply-msg" />
+  <text x="490" y="358" class="msg-text" text-anchor="middle">8: statusUpdated(broadcastStorageEvent)</text>
 
-  <line x1="865" y1="400" x2="625" y2="400" class="reply-msg" />
-  <text x="745" y="393" class="msg-text" text-anchor="middle">9: statusUpdated()</text>
+  <line x1="360" y1="390" x2="130" y2="390" class="reply-msg" />
+  <text x="245" y="383" class="msg-text" text-anchor="middle">9: showToast("Order status updated to Cooking")</text>
 
-  <!-- 10. Add New Dish -->
-  <line x1="130" y1="460" x2="360" y2="460" class="sync-msg" />
-  <text x="245" y="453" class="msg-text" text-anchor="middle">10: submitNewMenuItem(dishData)</text>
+  <!-- 10. Admin clicks Export to Excel -->
+  <line x1="130" y1="445" x2="360" y2="445" class="sync-msg" />
+  <text x="245" y="438" class="msg-text" text-anchor="middle">10: clickExportOrdersExcelBtn()</text>
 
-  <line x1="370" y1="490" x2="615" y2="490" class="sync-msg" />
-  <text x="490" y="483" class="msg-text" text-anchor="middle">11: createMenuItem(dishData)</text>
+  <line x1="370" y1="470" x2="615" y2="470" class="sync-msg" />
+  <text x="490" y="463" class="msg-text" text-anchor="middle">11: getOrdersDataset()</text>
 
-  <line x1="625" y1="520" x2="865" y2="520" class="sync-msg" />
-  <text x="745" y="513" class="msg-text" text-anchor="middle">12: appendMenuItemToStore(dish)</text>
+  <line x1="625" y1="495" x2="865" y2="495" class="sync-msg" />
+  <text x="745" y="488" class="msg-text" text-anchor="middle">12: formatCSVPayload(orders, UTF8_BOM)</text>
 
-  <line x1="865" y1="550" x2="370" y2="550" class="reply-msg" />
-  <text x="615" y="543" class="msg-text" text-anchor="middle">13: refreshCustomerAndAdminMenu()</text>
+  <line x1="865" y1="530" x2="625" y2="530" class="reply-msg" />
+  <text x="745" y="523" class="msg-text" text-anchor="middle">13: return generatedBlob(type: "text/csv")</text>
 
-  <line x1="360" y1="585" x2="130" y2="585" class="reply-msg" />
-  <text x="245" y="578" class="msg-text" text-anchor="middle">14: showToast("Dish added successfully")</text>
+  <line x1="615" y1="560" x2="370" y2="560" class="reply-msg" />
+  <text x="490" y="553" class="msg-text" text-anchor="middle">14: triggerBrowserDownload("Wonder_Land_Orders_Report.csv")</text>
+
+  <line x1="360" y1="595" x2="130" y2="595" class="reply-msg" />
+  <text x="245" y="588" class="msg-text" text-anchor="middle">15: showToast("Excel spreadsheet downloaded successfully")</text>
 </svg>`;
 
 saveSvg('05_sequence_admin_management.svg', seqAdminSvg);
@@ -799,7 +802,7 @@ const actOrderSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 9
 
   <rect width="100%" height="100%" class="bg" />
 
-  <text x="550" y="32" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="bold" fill="#0f172a" text-anchor="middle">Activity Diagram: Complete Order &amp; Checkout Lifecycle</text>
+  <text x="550" y="32" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="bold" fill="#0f172a" text-anchor="middle">Activity Diagram: End-to-End Workflow (Customer Order to Kitchen Fulfillment)</text>
 
   <!-- Swimlane Header Backgrounds -->
   <rect x="40" y="55" width="250" height="35" class="swimlane-header" />
@@ -1368,9 +1371,9 @@ const componentSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 
 
   <!-- Comp 8: Analytics Engine -->
   <g transform="translate(580, 420)">
-    <rect width="260" height="55" class="comp-box" />
+    <rect width="280" height="55" class="comp-box" />
     <text x="20" y="25" class="comp-stereotype">&lt;&lt;component&gt;&gt;</text>
-    <text x="20" y="42" class="comp-header">Sales &amp; Financial Analytics</text>
+    <text x="20" y="42" class="comp-header">Excel Exporter &amp; Telemetry Engine</text>
   </g>
 
   <!-- Layer 3: Persistence Tier -->

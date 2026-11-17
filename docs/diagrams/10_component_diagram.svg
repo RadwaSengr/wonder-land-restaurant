@@ -99,9 +99,9 @@
 
   <!-- Comp 8: Analytics Engine -->
   <g transform="translate(580, 420)">
-    <rect width="260" height="55" class="comp-box" />
+    <rect width="280" height="55" class="comp-box" />
     <text x="20" y="25" class="comp-stereotype">&lt;&lt;component&gt;&gt;</text>
-    <text x="20" y="42" class="comp-header">Sales &amp; Financial Analytics</text>
+    <text x="20" y="42" class="comp-header">Excel Exporter &amp; Telemetry Engine</text>
   </g>
 
   <!-- Layer 3: Persistence Tier -->

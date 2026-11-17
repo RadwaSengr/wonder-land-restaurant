@@ -283,6 +283,52 @@
         });
     }
 
+    // Export Live Orders to Excel (.csv format with UTF-8 BOM for Microsoft Excel)
+    function exportOrdersToExcel(db) {
+        if (!db.orders || db.orders.length === 0) {
+            alert('No orders available in the database to export.');
+            return;
+        }
+
+        const headers = ['Order ID', 'Date & Time', 'Customer Name', 'Customer Phone', 'Delivery Address', 'Ordered Items', 'Payment Method', 'Subtotal ($)', 'Tax 14% ($)', 'Delivery Fee ($)', 'Total Amount ($)', 'Order Status'];
+        
+        const rows = db.orders.map(order => {
+            const itemsStr = (order.items || []).map(i => `${i.title} (x${i.quantity})`).join('; ');
+            return [
+                order.id,
+                order.createdAt ? new Date(order.createdAt).toLocaleString() : '',
+                `"${(order.customer?.name || '').replace(/"/g, '""')}"`,
+                `"${(order.customer?.phone || '').replace(/"/g, '""')}"`,
+                `"${(order.customer?.address || '').replace(/"/g, '""')}"`,
+                `"${itemsStr.replace(/"/g, '""')}"`,
+                order.paymentMethod || 'Cash on Delivery',
+                (order.subtotal || 0).toFixed(2),
+                (order.tax || 0).toFixed(2),
+                (order.deliveryFee || 0).toFixed(2),
+                (order.total || 0).toFixed(2),
+                order.status
+            ].join(',');
+        });
+
+        const csvContent = '\uFEFF' + [headers.join(','), ...rows].join('\r\n');
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.setAttribute('href', url);
+        link.setAttribute('download', `Wonder_Land_Orders_Report_${new Date().toISOString().slice(0, 10)}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+    }
+
+    const exportBtn = document.getElementById('exportOrdersExcelBtn');
+    if (exportBtn) {
+        exportBtn.addEventListener('click', () => {
+            exportOrdersToExcel(WonderLandApp.getDB());
+        });
+    }
+
     // 4. Render Menu Catalog (CRUD)
     function renderMenuCatalog(db) {
         const tbody = document.getElementById('menuCatalogTableBody');

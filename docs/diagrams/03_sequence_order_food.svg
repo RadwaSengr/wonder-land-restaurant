@@ -23,7 +23,7 @@
 
   <rect width="100%" height="100%" class="bg" />
 
-  <text x="550" y="32" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="bold" fill="#0f172a" text-anchor="middle">Sequence Diagram: Customer Places Food Order &amp; Checkout</text>
+  <text x="550" y="32" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="bold" fill="#0f172a" text-anchor="middle">Sequence Diagram: Customer Checkout &amp; Cash on Delivery (COD) Order</text>
 
   <!-- Lifeline Headers -->
   <!-- 1. Customer -->
@@ -85,24 +85,24 @@
 
   <!-- 7. Submit order details & payment -->
   <line x1="115" y1="335" x2="310" y2="335" class="sync-msg" />
-  <text x="210" y="328" class="msg-text" text-anchor="middle">7: submitOrder(customerInfo, payMethod)</text>
+  <text x="210" y="328" class="msg-text" text-anchor="middle">7: submitOrder(customerInfo, paymentMethod: "COD")</text>
 
   <!-- 8. Validate & Prepare -->
   <line x1="320" y1="360" x2="530" y2="360" class="sync-msg" />
-  <text x="425" y="353" class="msg-text" text-anchor="middle">8: processCheckout(cart, info)</text>
+  <text x="425" y="353" class="msg-text" text-anchor="middle">8: processCheckout(cart, info, isCOD: true)</text>
 
   <!-- 9. Process Payment with Gateway -->
   <line x1="540" y1="390" x2="745" y2="390" class="sync-msg" />
-  <text x="640" y="383" class="msg-text" text-anchor="middle">9: executeTransaction(amount, details)</text>
+  <text x="640" y="383" class="msg-text" text-anchor="middle">9: verifyCODAvailability(customerAddress, total)</text>
 
   <!-- Alt Block: Payment Success / Failure -->
   <rect x="510" y="415" width="480" height="200" class="alt-box" />
-  <rect x="510" y="415" width="90" height="20" class="alt-header" />
-  <text x="518" y="429" class="alt-text">[Payment OK]</text>
+  <rect x="510" y="415" width="120" height="20" class="alt-header" />
+  <text x="518" y="429" class="alt-text">[COD Approved]</text>
 
   <!-- 10. Payment confirmed -->
   <line x1="745" y1="460" x2="540" y2="460" class="reply-msg" />
-  <text x="640" y="453" class="msg-text" text-anchor="middle">10: paymentApproved(authCode)</text>
+  <text x="640" y="453" class="msg-text" text-anchor="middle">10: codAccepted(flag: "Pay on Handover")</text>
 
   <!-- 11. Save Order to Database / LocalStorage -->
   <line x1="540" y1="500" x2="970" y2="500" class="sync-msg" />
