@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" width="900" height="700">
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .swimlane-line { stroke: #94a3b8; stroke-width: 1.5; stroke-dasharray: 5,4; }
+      .swimlane-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; font-weight: bold; fill: #1e3a8a; text-anchor: middle; }
+      .swimlane-header { fill: #e2e8f0; }
+      .start-node { fill: #0f172a; }
+      .end-outer { fill: none; stroke: #0f172a; stroke-width: 2; }
+      .end-inner { fill: #0f172a; }
+      .action-rect { fill: #ffffff; stroke: #c026d3; stroke-width: 1.8; rx: 16; }
+      .action-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: 600; fill: #0f172a; text-anchor: middle; dominant-baseline: central; }
+      .decision-diamond { fill: #fef3c7; stroke: #d97706; stroke-width: 1.8; }
+      .flow-arrow { stroke: #334155; stroke-width: 1.6; marker-end: url(#actArrow2); }
+      .guard-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #b45309; }
+    </style>
+    <marker id="actArrow2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#334155" />
+    </marker>
+  </defs>
+
+  <rect width="100%" height="100%" class="bg" />
+
+  <text x="450" y="32" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="bold" fill="#0f172a" text-anchor="middle">Activity Diagram: Table Reservation Workflow</text>
+
+  <!-- Swimlane Headers -->
+  <rect x="40" y="55" width="280" height="35" class="swimlane-header" />
+  <rect x="320" y="55" width="300" height="35" class="swimlane-header" fill="#cbd5e1" />
+  <rect x="620" y="55" width="240" height="35" class="swimlane-header" />
+
+  <text x="180" y="78" class="swimlane-title">Guest / Customer</text>
+  <text x="470" y="78" class="swimlane-title">Reservation System</text>
+  <text x="740" y="78" class="swimlane-title">Restaurant Host / Staff</text>
+
+  <line x1="320" y1="55" x2="320" y2="670" class="swimlane-line" />
+  <line x1="620" y1="55" x2="620" y2="670" class="swimlane-line" />
+
+  <!-- Start -->
+  <circle cx="180" cy="115" r="12" class="start-node" />
+  <line x1="180" y1="127" x2="180" y2="155" class="flow-arrow" />
+
+  <!-- Action: Open Booking Modal -->
+  <rect x="100" y="155" width="160" height="40" class="action-rect" />
+  <text x="180" y="175" class="action-text">Click "Book a Table"</text>
+  <line x1="180" y1="195" x2="180" y2="230" class="flow-arrow" />
+
+  <!-- Action: Enter Reservation Criteria -->
+  <rect x="90" y="230" width="180" height="45" class="action-rect" />
+  <text x="180" y="245" class="action-text">Select Date, Time,</text>
+  <text x="180" y="261" class="action-text">Guests &amp; Seating Zone</text>
+  <line x1="270" y1="252" x2="380" y2="252" class="flow-arrow" />
+
+  <!-- Action: Check Table Availability -->
+  <rect x="380" y="232" width="180" height="40" class="action-rect" stroke="#059669" />
+  <text x="470" y="252" class="action-text" fill="#065f46">Check Slot Availability</text>
+  <line x1="470" y1="272" x2="470" y2="310" class="flow-arrow" />
+
+  <!-- Decision: Slot Available? -->
+  <polygon points="470,310 500,330 470,350 440,330" class="decision-diamond" />
+  <!-- No: Suggest other slot -->
+  <line x1="440" y1="330" x2="270" y2="330" class="flow-arrow" />
+  <text x="330" y="320" class="guard-text">[Fully Booked]</text>
+  <line x1="180" y1="330" x2="180" y2="275" class="flow-arrow" />
+
+  <!-- Yes -->
+  <line x1="470" y1="350" x2="470" y2="390" class="flow-arrow" />
+  <text x="480" y="375" class="guard-text">[Available]</text>
+
+  <!-- Action: Record Reservation & Generate ID -->
+  <rect x="380" y="390" width="180" height="45" class="action-rect" stroke="#7c3aed" />
+  <text x="470" y="405" class="action-text">Record in DataStore</text>
+  <text x="470" y="421" class="action-text">&amp; Generate Res-ID</text>
+  <line x1="380" y1="412" x2="270" y2="412" class="flow-arrow" />
+  <line x1="560" y1="412" x2="660" y2="412" class="flow-arrow" />
+
+  <!-- Action: Show Confirmation Toast to Guest -->
+  <rect x="90" y="390" width="180" height="45" class="action-rect" />
+  <text x="180" y="405" class="action-text">Display Confirmation</text>
+  <text x="180" y="421" class="action-text">Toast &amp; Save Details</text>
+
+  <!-- Action: Host Notified in Dashboard -->
+  <rect x="660" y="390" width="170" height="45" class="action-rect" stroke="#b45309" />
+  <text x="745" y="405" class="action-text">Table Blocked in</text>
+  <text x="745" y="421" class="action-text">Admin Host Schedule</text>
+  <line x1="745" y1="435" x2="745" y2="480" class="flow-arrow" />
+
+  <!-- Action: Host Greets & Seats Guest -->
+  <rect x="660" y="480" width="170" height="45" class="action-rect" stroke="#b45309" />
+  <text x="745" y="495" class="action-text">Guest Arrives: Verify</text>
+  <text x="745" y="511" class="action-text">ID &amp; Mark as "Seated"</text>
+  <line x1="745" y1="525" x2="745" y2="570" class="flow-arrow" />
+
+  <!-- Action: Complete Dining -->
+  <rect x="660" y="570" width="170" height="40" class="action-rect" stroke="#059669" />
+  <text x="745" y="590" class="action-text" fill="#065f46">Mark Table "Completed"</text>
+  <line x1="745" y1="610" x2="745" y2="640" class="flow-arrow" />
+
+  <!-- End Node -->
+  <circle cx="745" cy="650" r="14" class="end-outer" />
+  <circle cx="745" cy="650" r="9" class="end-inner" />
+</svg>

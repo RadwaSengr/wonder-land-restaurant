@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin &amp; Staff Dashboard | Wonder Land Restaurant Management System</title>
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="./admin.css">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="icon" type="image/png" href="./img/logo.png">
+</head>
+
+<body>
+
+    <!-- Security Gate / Login Screen -->
+    <div id="loginGate" class="login-gate-overlay">
+        <div class="login-gate-card">
+            <img src="./img/logo.png" alt="Wonder Land Logo">
+            <h2>Staff &amp; Admin Portal</h2>
+            <p>Enter your authorization PIN to access real-time restaurant controls.</p>
+            <form id="adminLoginForm">
+                <input type="password" id="adminPinInput" class="pin-input" placeholder="••••••••" autofocus required>
+                <button type="submit" class="btn-admin btn-admin-gold" style="width: 100%; justify-content: center; padding: 12px;">
+                    <i class="fa-solid fa-lock-open"></i> Unlock Dashboard
+                </button>
+            </form>
+            <div style="margin-top: 18px; font-size: 12px; color: #94a3b8;">
+                Default Evaluation PIN: <code style="background: #f1f5f9; padding: 2px 6px; border-radius: 4px; color: #0f172a; font-weight: bold;">admin123</code>
+            </div>
+            <div style="margin-top: 14px;">
+                <a href="./index.html" style="font-size: 12.5px; color: #64748b; text-decoration: none;">
+                    &larr; Return to Customer Website
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar Navigation -->
+    <aside class="admin-sidebar">
+        <div class="sidebar-brand">
+            <img src="./img/logo.png" alt="Wonder Land">
+            <div>
+                <h2>WONDER LAND</h2>
+                <span>Management Hub</span>
+            </div>
+        </div>
+
+        <ul class="sidebar-menu">
+            <li>
+                <a href="#overview" class="tab-link active" data-tab="tabOverview">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Dashboard KPIs</span>
+                </a>
+            </li>
+            <li>
+                <a href="#orders" class="tab-link" data-tab="tabOrders">
+                    <i class="fa-solid fa-receipt"></i>
+                    <span>Live Orders</span>
+                    <span id="sidebarOrderBadge" class="badge">4</span>
+                </a>
+            </li>
+            <li>
+                <a href="#menu" class="tab-link" data-tab="tabMenu">
+                    <i class="fa-solid fa-utensils"></i>
+                    <span>Menu Catalog (CRUD)</span>
+                </a>
+            </li>
+            <li>
+                <a href="#reservations" class="tab-link" data-tab="tabReservations">
+                    <i class="fa-solid fa-calendar-check"></i>
+                    <span>Reservations</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <button type="button" id="btnSeedData" class="btn-admin btn-admin-secondary" style="font-size: 12px; justify-content: center;">
+                <i class="fa-solid fa-rotate-left"></i> Reset Demo Seed Data
+            </button>
+            <a href="./index.html" class="btn-customer-site">
+                <i class="fa-solid fa-store"></i> Customer Front-End
+            </a>
+            <button type="button" id="btnLogout" class="btn-admin btn-admin-danger" style="font-size: 12px; justify-content: center;">
+                <i class="fa-solid fa-right-from-bracket"></i> Lock Session
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="admin-main">
+        <!-- Top Navigation Bar -->
+        <header class="admin-topbar">
+            <div class="topbar-title">
+                <h1 id="pageSectionTitle">Executive Operational Dashboard</h1>
+                <p>Real-Time Synchronized State • Connected to Client LocalStorage</p>
+            </div>
+            <div class="topbar-actions">
+                <div class="admin-user-pill">
+                    <div class="admin-user-avatar">AD</div>
+                    <div>
+                        <strong style="font-size: 13px;">Admin Officer</strong>
+                        <div style="font-size: 11px; color: var(--admin-text-muted);">Root Clearance</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dynamic Body Content -->
+        <div class="admin-content-body">
+
+            <!-- TAB 1: OVERVIEW & KPIS -->
+            <section id="tabOverview" class="admin-tab-section active">
+                <!-- KPI Statistics -->
+                <div class="kpi-grid">
+                    <div class="kpi-card kpi-revenue">
+                        <div class="kpi-icon-wrap"><i class="fa-solid fa-sack-dollar"></i></div>
+                        <div class="kpi-info">
+                            <h3>Total Revenue</h3>
+                            <div class="kpi-value" id="kpiRevenue">$0.00</div>
+                        </div>
+                    </div>
+                    <div class="kpi-card kpi-orders">
+                        <div class="kpi-icon-wrap"><i class="fa-solid fa-boxes-packing"></i></div>
+                        <div class="kpi-info">
+                            <h3>Total Orders</h3>
+                            <div class="kpi-value" id="kpiOrders">0</div>
+                        </div>
+                    </div>
+                    <div class="kpi-card kpi-kitchen">
+                        <div class="kpi-icon-wrap"><i class="fa-solid fa-fire-burner"></i></div>
+                        <div class="kpi-info">
+                            <h3>Kitchen Queue</h3>
+                            <div class="kpi-value" id="kpiKitchen">0</div>
+                        </div>
+                    </div>
+                    <div class="kpi-card kpi-tables">
+                        <div class="kpi-icon-wrap"><i class="fa-solid fa-chair"></i></div>
+                        <div class="kpi-info">
+                            <h3>Table Bookings</h3>
+                            <div class="kpi-value" id="kpiTables">0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity Overview Table -->
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <h2>Recent Inbound Customer Orders</h2>
+                        <a href="#orders" class="btn-admin btn-admin-primary" onclick="switchTab('tabOrders')">
+                            View All Orders &rarr;
+                        </a>
+                    </div>
+                    <div class="admin-table-wrap">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Customer</th>
+                                    <th>Items Count</th>
+                                    <th>Total Paid</th>
+                                    <th>Payment Method</th>
+                                    <th>Current Status</th>
+                                    <th>Live Control</th>
+                                </tr>
+                            </thead>
+                            <tbody id="overviewRecentOrdersTable">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 2: LIVE ORDERS MANAGEMENT -->
+            <section id="tabOrders" class="admin-tab-section">
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <h2>Order Lifecycle &amp; Kitchen Dispatch</h2>
+                        <div class="panel-header-controls">
+                            <label style="font-size: 13px; font-weight: 600; color: var(--admin-text-muted);">Filter by State:</label>
+                            <select id="orderFilterStatus" class="status-select-inline">
+                                <option value="ALL">All Statuses</option>
+                                <option value="Pending">Pending</option>
+                                <option value="Confirmed">Confirmed</option>
+                                <option value="In Kitchen">In Kitchen</option>
+                                <option value="Out for Delivery">Out for Delivery</option>
+                                <option value="Delivered">Delivered</option>
+                                <option value="Cancelled">Cancelled</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="admin-table-wrap">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Time</th>
+                                    <th>Customer &amp; Contact</th>
+                                    <th>Delivery Destination</th>
+                                    <th>Items Details</th>
+                                    <th>Financials</th>
+                                    <th>Status (State Machine)</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="allOrdersTableBody">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 3: MENU CATALOG (CRUD) -->
+            <section id="tabMenu" class="admin-tab-section">
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <h2>Culinary Menu Catalog &amp; Dish Inventories</h2>
+                        <div class="panel-header-controls">
+                            <button type="button" class="btn-admin btn-admin-gold" id="btnOpenAddDishModal">
+                                <i class="fa-solid fa-plus"></i> Add New Dish
+                            </button>
+                        </div>
+                    </div>
+                    <div class="admin-table-wrap">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Dish Image</th>
+                                    <th>Dish Name</th>
+                                    <th>Category</th>
+                                    <th>Unit Price</th>
+                                    <th>Description</th>
+                                    <th>Availability Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="menuCatalogTableBody">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 4: RESERVATIONS -->
+            <section id="tabReservations" class="admin-tab-section">
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <h2>Table Seating &amp; Guest Reservations</h2>
+                    </div>
+                    <div class="admin-table-wrap">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Reservation ID</th>
+                                    <th>Guest Name</th>
+                                    <th>Phone</th>
+                                    <th>Date &amp; Time Slot</th>
+                                    <th>Party Size</th>
+                                    <th>Seating Zone</th>
+                                    <th>Special Wishes</th>
+                                    <th>Status</th>
+                                    <th>Host Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="reservationsTableBody">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Modal: Add / Edit Dish -->
+    <div id="dishModal" class="admin-modal-overlay">
+        <div class="admin-modal-box">
+            <div class="admin-modal-header">
+                <h3 id="dishModalTitle">Create Culinary Menu Item</h3>
+                <button type="button" class="admin-modal-close" id="closeDishModal">&times;</button>
+            </div>
+            <form id="dishForm">
+                <div class="admin-modal-body">
+                    <input type="hidden" id="dishFormId" value="">
+                    <div class="form-group-admin">
+                        <label for="dishTitle">Dish Title</label>
+                        <input type="text" id="dishTitle" placeholder="e.g. WOOD-FIRED DIAVOLA PIZZA" required>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                        <div class="form-group-admin">
+                            <label for="dishCategory">Category</label>
+                            <select id="dishCategory" required>
+                                <option value="starters">Starters &amp; Appetizers</option>
+                                <option value="mains">Chef Signature Mains</option>
+                                <option value="pizzas">Artisan Stone Pizzas</option>
+                                <option value="desserts">Sweet Pastries &amp; Desserts</option>
+                            </select>
+                        </div>
+                        <div class="form-group-admin">
+                            <label for="dishPrice">Price ($ USD)</label>
+                            <input type="number" id="dishPrice" step="0.50" min="1" placeholder="25.00" required>
+                        </div>
+                    </div>
+                    <div class="form-group-admin">
+                        <label for="dishImage">Image Path or URL</label>
+                        <input type="text" id="dishImage" placeholder="./img/food1.png" required>
+                    </div>
+                    <div class="form-group-admin">
+                        <label for="dishDescription">Gastronomy Description</label>
+                        <textarea id="dishDescription" rows="3" placeholder="Artisanal recipe details, seasoning, and sauce notes..." required></textarea>
+                    </div>
+                    <div class="form-group-admin">
+                        <label for="dishAvailability">Initial Availability</label>
+                        <select id="dishAvailability">
+                            <option value="true">Available for Ordering</option>
+                            <option value="false">Sold Out / Unavailable</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="admin-modal-footer">
+                    <button type="button" class="btn-admin btn-admin-secondary" id="cancelDishModal">Cancel</button>
+                    <button type="submit" class="btn-admin btn-admin-gold">
+                        <i class="fa-solid fa-floppy-disk"></i> Save Dish to Catalog
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: View Order Receipt Details -->
+    <div id="adminReceiptModal" class="admin-modal-overlay">
+        <div class="admin-modal-box">
+            <div class="admin-modal-header">
+                <h3>Order Audit &amp; Invoice</h3>
+                <button type="button" class="admin-modal-close" onclick="document.getElementById('adminReceiptModal').classList.remove('active')">&times;</button>
+            </div>
+            <div class="admin-modal-body" id="adminReceiptBody">
+                <!-- Populated dynamically -->
+            </div>
+            <div class="admin-modal-footer">
+                <button type="button" class="btn-admin btn-admin-secondary" onclick="window.print()">
+                    <i class="fa-solid fa-print"></i> Print Kitchen Ticket
+                </button>
+                <button type="button" class="btn-admin btn-admin-primary" onclick="document.getElementById('adminReceiptModal').classList.remove('active')">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="./app.js"></script>
+    <script src="./admin.js"></script>
+</body>
+
+</html>

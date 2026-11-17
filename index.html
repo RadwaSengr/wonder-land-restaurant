@@ -54,6 +54,14 @@
                         <li><a href="#testimonials" class="nav-link">Reviews</a></li>
                         <li><a href="#gallery" class="nav-link">Gallery</a></li>
                         <li><a href="#contact" class="nav-link">Contact</a></li>
+                        <li><a href="javascript:void(0)" class="nav-link open-tracker-btn"><i class="fa-solid fa-location-crosshairs"></i> Track Order</a></li>
+                        <li>
+                            <button type="button" class="btn-nav-cart open-cart-btn">
+                                <i class="fa-solid fa-cart-shopping"></i> Cart
+                                <span class="cart-badge">0</span>
+                            </button>
+                        </li>
+                        <li><a href="./admin.html" class="nav-link nav-admin-badge" target="_blank"><i class="fa-solid fa-shield-halved"></i> Staff Portal</a></li>
                     </ul>
                 </nav>
             </div>
@@ -83,7 +91,7 @@
                             <a href="#menu" class="btn btn-secondary">DISCOVER OUR STORY</a>
                         </div>
                         <div class="about-image-wrapper">
-                            <img src="./img/about_img.png" alt="Artisan stone-baked pizza at Wonder Land" loading="lazy">
+                            <img src="./img/about_img.png" alt="Wonder Land culinary heritage and restaurant ambiance" loading="lazy">
                         </div>
                     </div>
                 </div>
@@ -99,26 +107,26 @@
                     </div>
                     <div class="offers-items">
                         <div class="offer-card">
-                            <img src="./img/offer1.png" alt="Alfredo Pasta with Sauce" loading="lazy">
+                            <img src="./img/offer1.png" alt="Creamy Truffle Fettuccine Alfredo" loading="lazy">
                             <div class="offer-details">
-                                <h3>ALFREDO PASTA WITH SAUCE</h3>
-                                <p>Silky fettuccine ribbons tossed in a rich, velvety Parmesan and garlic cream sauce with fresh herbs.</p>
-                                <p class="price"><del>$40.00</del> <span class="primary-text">$20.00</span></p>
+                                <h3>CREAMY TRUFFLE FETTUCCINE ALFREDO</h3>
+                                <p>Silky handmade pasta ribbons tossed in a rich, velvety Parmesan and garlic cream sauce with fresh herbs.</p>
+                                <p class="price"><del>$45.00</del> <span class="primary-text">$30.00</span></p>
                             </div>
                         </div>
                         <div class="offer-card">
-                            <img src="./img/offer2.png" alt="Creamy Shrimp Pasta" loading="lazy">
+                            <img src="./img/offer2.png" alt="Garlic Butter Jumbo Shrimp Pasta" loading="lazy">
                             <div class="offer-details">
-                                <h3>CREAMY SHRIMP PASTA</h3>
+                                <h3>GARLIC BUTTER JUMBO SHRIMP PASTA</h3>
                                 <p>Succulent wild prawns sautéed in white wine garlic butter, folded into a delicate cream sauce over linguine.</p>
-                                <p class="price"><del>$100.00</del> <span class="primary-text">$60.00</span></p>
+                                <p class="price"><del>$60.00</del> <span class="primary-text">$42.00</span></p>
                             </div>
                         </div>
                         <div class="offer-card">
-                            <img src="./img/offer3.png" alt="Spaghetti Pasta with Bolognese Sauce" loading="lazy">
+                            <img src="./img/gallery1.jpeg" alt="Executive Charcoal Shish Kebab Combo" loading="lazy">
                             <div class="offer-details">
-                                <h3>SPAGHETTI BOLOGNESE & LEMONADE</h3>
-                                <p>Slow-braised beef ragù simmered with San Marzano tomatoes and basil, paired with chilled mint lemonade.</p>
+                                <h3>EXECUTIVE SHISH KEBAB COMBO</h3>
+                                <p>Tender prime beef skewers flame-grilled with sweet bell peppers, zucchini, and mushrooms, served with barbecue dip.</p>
                                 <p class="price"><del>$50.00</del> <span class="primary-text">$35.00</span></p>
                             </div>
                         </div>
@@ -135,110 +143,28 @@
                         <p>Handpicked specialties prepared fresh daily to elevate your palate</p>
                     </div>
 
-                    <!-- Category Filter Tabs -->
-                    <div class="menu-tabs">
-                        <button class="menu-tab active" data-filter="all">All Dishes</button>
-                        <button class="menu-tab" data-filter="starters">Starters & Salads</button>
-                        <button class="menu-tab" data-filter="mains">Mains & Grills</button>
-                        <button class="menu-tab" data-filter="pizzas">Artisan Pizzas</button>
-                        <button class="menu-tab" data-filter="desserts">Desserts & Shakes</button>
-                    </div>
-
-                    <div class="menu-items" id="menuGrid">
-                        <!-- Left Column -->
-                        <div class="menu-items-left">
-                            <div class="menu-item" data-category="starters">
-                                <img src="./img/food1.png" alt="Chicken Caesar Salad" loading="lazy">
-                                <div>
-                                    <h3>CHICKEN CAESAR SALAD <span class="primary-text">$18.00</span></h3>
-                                    <p>Crisp romaine hearts, herb-marinated chicken, artisanal garlic croutons, and aged parmesan shavings.</p>
-                                </div>
-                            </div>
-                            <div class="menu-item" data-category="starters">
-                                <img src="./img/food2.png" alt="Dynamite Shrimp" loading="lazy">
-                                <div>
-                                    <h3>DYNAMITE SHRIMP <span class="primary-text">$24.00</span></h3>
-                                    <p>Golden tempura shrimp glazed in our house-crafted sweet chili sriracha sauce and fresh scallions.</p>
-                                </div>
-                            </div>
-                            <div class="menu-item" data-category="desserts">
-                                <img src="./img/food3.png" alt="Artisan Milkshakes" loading="lazy">
-                                <div>
-                                    <h3>ARTISAN CHOCOLATE & FRUIT SHAKE <span class="primary-text">$12.00</span></h3>
-                                    <p>Velvety chocolate gelato shake infused with wild berry coulis and whipped Madagascar vanilla cream.</p>
-                                </div>
-                            </div>
-                            <div class="menu-item" data-category="mains">
-                                <img src="./img/food4.png" alt="Capo Steak" loading="lazy">
-                                <div>
-                                    <h3>CHARCOAL CAPO STEAK <span class="primary-text">$60.00</span></h3>
-                                    <p>USDA Prime tenderloin seared to perfection, finished with rosemary truffle butter and roasted veggies.</p>
-                                </div>
-                            </div>
-                            <div class="menu-item" data-category="desserts">
-                                <img src="./img/food5.png" alt="Gourmet Donuts" loading="lazy">
-                                <div>
-                                    <h3>GLAZED ARTISAN DONUTS <span class="primary-text">$8.00</span></h3>
-                                    <p>Trio of light brioche donuts glazed with vanilla bean frosting, cinnamon crumb, and dark chocolate drizzle.</p>
-                                </div>
-                            </div>
-                            <div class="menu-item" data-category="pizzas">
-                                <img src="./img/food6.png" alt="Classic Cheese Pizza" loading="lazy">
-                                <div>
-                                    <h3>TRADITIONAL MARGHERITA PIZZA <span class="primary-text">$18.00</span></h3>
-                                    <p>San Marzano tomato base, fresh fior di latte mozzarella, extra virgin olive oil, and sweet garden basil.</p>
-                                </div>
-                            </div>
+                    <!-- Search and Live Category Filter Controls -->
+                    <div class="menu-controls-wrapper">
+                        <div class="menu-search-box">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" id="menuSearchInput" placeholder="Search dishes by name or ingredients (e.g. Pizza, Truffle, Steak)...">
                         </div>
 
-                        <!-- Right Column -->
-                        <div class="menu-items-right">
-                            <div class="menu-item" data-category="mains">
-                                <img src="./img/food7.jpeg" alt="Spiced Kofta Meat" loading="lazy">
-                                <div>
-                                    <h3>GRILLED SKEWERED KOFTA <span class="primary-text">$40.00</span></h3>
-                                    <p>Ground beef and lamb seasoned with aromatic spices, flame-grilled and served with sesame tahini dip.</p>
-                                </div>
-                            </div>
-                            <div class="menu-item" data-category="desserts">
-                                <img src="./img/food8.jpeg" alt="Fluffy Pancakes" loading="lazy">
-                                <div>
-                                    <h3>BUTTERMILK BERRY PANCAKES <span class="primary-text">$10.00</span></h3>
-                                    <p>Fluffy golden pancakes stacked with wild berries, churned butter, and 100% pure maple syrup.</p>
-                                </div>
-                            </div>
-                            <div class="menu-item" data-category="starters">
-                                <img src="./img/food9.jpeg" alt="Cheesy Garlic Flatbread" loading="lazy">
-                                <div>
-                                    <h3>HERBED CHEESY FLATBREAD <span class="primary-text">$6.00</span></h3>
-                                    <p>Stone-hearth flatbread brushed with garlic-infused butter, molten mozzarella, and fresh garden thyme.</p>
-                                </div>
-                            </div>
-                            <div class="menu-item" data-category="desserts">
-                                <img src="./img/food10.jpeg" alt="Fresh Fruit Salad" loading="lazy">
-                                <div>
-                                    <h3>SEASONAL TROPICAL FRUIT BOWL <span class="primary-text">$14.00</span></h3>
-                                    <p>Vibrant assortment of seasonal melons, kiwi, and berries drizzled with citrus blossom honey glaze.</p>
-                                </div>
-                            </div>
-                            <div class="menu-item" data-category="mains">
-                                <img src="./img/food11.jpeg" alt="Chicken Shawarma Platter" loading="lazy">
-                                <div>
-                                    <h3>AUTHENTIC CHICKEN SHAWARMA <span class="primary-text">$20.00</span></h3>
-                                    <p>Thinly carved spiced rotisserie chicken wrapped in flatbread with authentic garlic toum and pickles.</p>
-                                </div>
-                            </div>
-                            <div class="menu-item" data-category="pizzas">
-                                <img src="./img/food12.jpeg" alt="Mega Cheese Pizza" loading="lazy">
-                                <div>
-                                    <h3>QUATTRO FORMAGGI MEGA PIZZA <span class="primary-text">$30.00</span></h3>
-                                    <p>Wood-fired pizza topped with a gourmet blend of mozzarella, aged gorgonzola, smoked provolone, and parmesan.</p>
-                                </div>
-                            </div>
+                        <div class="menu-tabs">
+                            <button class="menu-category-btn active" data-category="all">All Dishes</button>
+                            <button class="menu-category-btn" data-category="starters">Starters &amp; Salads</button>
+                            <button class="menu-category-btn" data-category="mains">Mains &amp; Grills</button>
+                            <button class="menu-category-btn" data-category="pizzas">Artisan Pizzas</button>
+                            <button class="menu-category-btn" data-category="desserts">Desserts &amp; Shakes</button>
                         </div>
                     </div>
 
-                    <div class="text-center">
+                    <!-- Dynamic Menu Grid Container rendered via app.js -->
+                    <div id="dynamicMenuItemsContainer">
+                        <!-- Populated dynamically by WonderLandApp.renderMenu -->
+                    </div>
+
+                    <div class="text-center" style="margin-top: 25px;">
                         <button class="btn btn-third open-reserve-modal">RESERVE A TASTING TABLE</button>
                     </div>
                 </div>
@@ -278,52 +204,33 @@
             <section id="testimonials">
                 <div class="container">
                     <div class="title">
-                        <h2>Guest Testimonials</h2>
-                        <p>What food lovers and critics are saying about Wonder Land</p>
+                        <h2>Guest Testimonials &amp; Reviews</h2>
+                        <p>Genuine dining experiences shared by our valued patrons</p>
                     </div>
-                    <div class="testimonials-grid">
-                        <div class="testimonial-card">
-                            <div class="stars">
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
+
+                    <!-- Dynamic Reviews Container rendered via app.js -->
+                    <div id="dynamicTestimonialsContainer" class="testimonials-grid">
+                        <!-- Populated dynamically by WonderLandApp.renderReviews -->
+                    </div>
+
+                    <!-- Guest Review Submission Form -->
+                    <div style="max-width: 650px; margin: 40px auto 0; background: #ffffff; padding: 28px; border-radius: 15px; box-shadow: var(--card-shadow); text-align: left;">
+                        <h3 style="font-size: 18px; color: var(--dark-slate); margin-bottom: 6px; text-align: center;">Share Your Dining Experience</h3>
+                        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; text-align: center;">Your verified review is recorded live in the system database and displayed immediately.</p>
+                        <form id="submitReviewForm">
+                            <div class="form-row">
+                                <input type="text" id="reviewerName" placeholder="Your Full Name" required>
+                                <select id="reviewerRating" required>
+                                    <option value="5">★★★★★ (5 Stars - Exceptional)</option>
+                                    <option value="4">★★★★☆ (4 Stars - Great)</option>
+                                    <option value="3">★★★☆☆ (3 Stars - Average)</option>
+                                </select>
                             </div>
-                            <p class="review-text">"An absolute culinary jewel in Alexandria! The wood-fired Quattro Formaggi pizza and Capo Steak were prepared to perfection. The seaside ambiance is second to none."</p>
-                            <div class="reviewer-info">
-                                <h4>Sarah Mansour</h4>
-                                <span>Verified Dining Guest</span>
-                            </div>
-                        </div>
-                        <div class="testimonial-card featured">
-                            <div class="stars">
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                            </div>
-                            <p class="review-text">"Wonder Land has been our family's favorite weekend tradition for years. Their creamy shrimp pasta and signature dynamite shrimp rival top Michelin-starred bistros."</p>
-                            <div class="reviewer-info">
-                                <h4>Omar Khaled</h4>
-                                <span>Culinary Critic & Blogger</span>
-                            </div>
-                        </div>
-                        <div class="testimonial-card">
-                            <div class="stars">
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                            </div>
-                            <p class="review-text">"Flawless hospitality from arrival to departure. The buttermilk berry pancakes paired with Belgian artisan milkshakes made our Sunday brunch truly magical!"</p>
-                            <div class="reviewer-info">
-                                <h4>Elena Rostova</h4>
-                                <span>Travel & Gourmet Enthusiast</span>
-                            </div>
-                        </div>
+                            <textarea id="reviewerComment" rows="3" placeholder="Tell us about your favorite dishes and service..." required></textarea>
+                            <button type="submit" class="btn btn-secondary" style="width: 100%; margin-top: 10px;">
+                                <i class="fa-solid fa-paper-plane"></i> SUBMIT VERIFIED REVIEW
+                            </button>
+                        </form>
                     </div>
                 </div>
             </section>
@@ -335,12 +242,12 @@
                     <h2>Our Food Gallery</h2>
                     <p class="gallery-hint">Click any photo to explore dish details in high resolution</p>
                     <div class="img-gallery">
-                        <img src="./img/gallery1.jpeg" alt="Signature dish culinary presentation" data-caption="Signature Gourmet Seafood Course" loading="lazy">
-                        <img src="./img/gallery2.jpeg" alt="Freshly baked artisan course" data-caption="Artisan Stone-Fired Italian Special" loading="lazy">
-                        <img src="./img/gallery3.jpeg" alt="Gourmet meat specialty" data-caption="Prime Charcoal-Seared Tenderloin Steak" loading="lazy">
-                        <img src="./img/gallery4.jpeg" alt="Wood-fired oven creation" data-caption="Authentic Handcrafted Neapolitan Pizza" loading="lazy">
-                        <img src="./img/gallery5.jpeg" alt="Handcrafted dessert plate" data-caption="Decadent Chocolate Ganache & Wild Berries" loading="lazy">
-                        <img src="./img/gallery6.jpeg" alt="Chef signature presentation" data-caption="Executive Chef Signature Tasting Platter" loading="lazy">
+                        <img src="./img/gallery1.jpeg" alt="Executive Charcoal Shish Kebab" data-caption="Executive Charcoal-Grilled Shish Kebab &amp; Roasted Vegetables" loading="lazy">
+                        <img src="./img/gallery2.jpeg" alt="Gourmet Fresh Fruit Salad Bowl" data-caption="Tropical Gourmet Fresh Fruit Salad Bowl with Wild Berries" loading="lazy">
+                        <img src="./img/gallery3.jpeg" alt="Mediterranean Fattoush Salad" data-caption="Crispy Mediterranean Fattoush Salad with Toasted Pita Chips" loading="lazy">
+                        <img src="./img/gallery4.jpeg" alt="Signature Grilled Chicken Sub" data-caption="Gourmet Grilled Chicken Sub Baguette with Golden French Fries" loading="lazy">
+                        <img src="./img/food12.jpeg" alt="Rustic Portobello Mushroom Pizza" data-caption="Stone-Baked Rustic Pizza with Wild Mushrooms &amp; Sweet Corn" loading="lazy">
+                        <img src="./img/gallery6.jpeg" alt="Crispy Artisan Meatballs" data-caption="Crispy Artisan Meatballs &amp; Croquettes with Savory Dipping Sauce" loading="lazy">
                     </div>
                 </div>
             </section>
@@ -396,6 +303,127 @@
             <i class="fa-solid fa-arrow-up"></i>
         </a>
 
+        <!-- Floating Quick Actions Bar -->
+        <div class="floating-actions-bar">
+            <button type="button" class="floating-btn floating-cart open-cart-btn" title="Open Culinary Cart">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span class="cart-badge">0</span>
+            </button>
+            <button type="button" class="floating-btn open-tracker-btn" title="Track Live Order Status">
+                <i class="fa-solid fa-location-crosshairs"></i>
+            </button>
+            <a href="./admin.html" class="floating-btn" target="_blank" title="Restaurant Staff &amp; Admin Hub">
+                <i class="fa-solid fa-shield-halved"></i>
+            </a>
+        </div>
+
+        <!-- Slide-In Shopping Cart Drawer -->
+        <div id="cartDrawerOverlay" class="cart-drawer-overlay"></div>
+        <aside id="cartDrawer" class="cart-drawer" aria-label="Culinary Shopping Cart">
+            <div class="cart-drawer-header">
+                <h3><i class="fa-solid fa-bag-shopping"></i> Culinary Cart</h3>
+                <button type="button" id="closeCartDrawer" class="btn-close-drawer" aria-label="Close cart">&times;</button>
+            </div>
+            <div id="cartDrawerItems" class="cart-drawer-body">
+                <!-- Dynamically populated by WonderLandApp.renderCart -->
+            </div>
+            <div class="cart-drawer-footer">
+                <div class="cart-summary-line">
+                    <span>Subtotal</span>
+                    <strong id="cartSubtotal">$0.00</strong>
+                </div>
+                <div class="cart-summary-line">
+                    <span>VAT &amp; Municipal Tax (14%)</span>
+                    <strong id="cartTax">$0.00</strong>
+                </div>
+                <div class="cart-summary-line">
+                    <span>Courier Delivery Fee</span>
+                    <strong id="cartDelivery">$3.00</strong>
+                </div>
+                <div class="cart-summary-total">
+                    <span>Estimated Total</span>
+                    <strong id="cartTotal" class="highlight-price">$0.00</strong>
+                </div>
+                <button type="button" id="cartCheckoutBtn" class="btn btn-primary" style="width: 100%; margin-top: 14px; justify-content: center; padding: 14px;">
+                    <i class="fa-solid fa-credit-card"></i> Proceed to Checkout
+                </button>
+            </div>
+        </aside>
+
+        <!-- Checkout & Payment Modal -->
+        <div id="checkoutModal" class="modal-overlay" aria-hidden="true">
+            <div class="modal-box" style="max-width: 580px;">
+                <button class="modal-close" id="closeCheckoutModal" aria-label="Close modal">&times;</button>
+                <div class="modal-header">
+                    <h3>Complete Food Order &amp; Checkout</h3>
+                    <p>Enter your dispatch coordinates and select your preferred payment gateway</p>
+                </div>
+                <form id="checkoutForm">
+                    <div id="checkoutModalSummary" style="background:#f8fafc; padding:12px 18px; border-radius:10px; margin-bottom:18px; font-size:13.5px;"></div>
+
+                    <div class="form-row">
+                        <input type="text" id="custName" placeholder="Full Name" required>
+                        <input type="tel" id="custPhone" placeholder="Mobile Phone (for delivery SMS)" required>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 12px;">
+                        <input type="text" id="custAddress" placeholder="Delivery Street Address, Building, Floor &amp; Apt" required style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #cbd5e1;">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 16px;">
+                        <input type="text" id="custNotes" placeholder="Special Chef Notes (e.g. Extra spicy, No onions, Ring doorbell twice)" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 13px;">
+                    </div>
+
+                    <div style="margin-bottom: 20px; text-align: left;">
+                        <label style="display: block; font-weight: bold; font-size: 13.5px; margin-bottom: 8px; color: var(--dark-slate);">Payment Method:</label>
+                        <div style="display: flex; flex-direction: column; gap: 8px; font-size: 13.5px;">
+                            <label style="display:flex; align-items:center; gap:8px; cursor:pointer; background:#f8fafc; padding:8px 12px; border-radius:6px; border:1px solid #e2e8f0;">
+                                <input type="radio" name="paymentMethod" value="Cash on Delivery" checked>
+                                <span><i class="fa-solid fa-money-bill-wave" style="color:#16a34a;"></i> Cash on Delivery (Pay at your doorstep)</span>
+                            </label>
+                            <label style="display:flex; align-items:center; gap:8px; cursor:pointer; background:#f8fafc; padding:8px 12px; border-radius:6px; border:1px solid #e2e8f0;">
+                                <input type="radio" name="paymentMethod" value="Credit / Debit Card">
+                                <span><i class="fa-brands fa-cc-visa" style="color:#2563eb;"></i> Credit / Debit Card (Visa, Mastercard, Meeza)</span>
+                            </label>
+                            <label style="display:flex; align-items:center; gap:8px; cursor:pointer; background:#f8fafc; padding:8px 12px; border-radius:6px; border:1px solid #e2e8f0;">
+                                <input type="radio" name="paymentMethod" value="Vodafone Cash / Fawry">
+                                <span><i class="fa-solid fa-mobile-screen-button" style="color:#d97706;"></i> Digital Wallet (Vodafone Cash / Fawry Pay / InstaPay)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%; padding: 14px; font-size: 15px;">
+                        <i class="fa-solid fa-circle-check"></i> PLACE ORDER NOW
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Order Confirmed Receipt Modal -->
+        <div id="orderReceiptModal" class="modal-overlay" aria-hidden="true">
+            <div class="modal-box" style="max-width: 480px; text-align: center;">
+                <div id="receiptModalContent"></div>
+            </div>
+        </div>
+
+        <!-- Live Order Tracking Modal (UML State Machine Visualization) -->
+        <div id="trackerModal" class="modal-overlay" aria-hidden="true">
+            <div class="modal-box" style="max-width: 650px;">
+                <button class="modal-close" id="closeTrackerModal" aria-label="Close tracker">&times;</button>
+                <div class="modal-header">
+                    <h3><i class="fa-solid fa-location-crosshairs"></i> Live Order State Machine Tracker</h3>
+                    <p>Track your culinary preparation &amp; courier dispatch in real time</p>
+                </div>
+                
+                <form id="trackerSearchForm" style="display: flex; gap: 10px; margin-bottom: 20px;">
+                    <input type="text" id="trackerOrderIdInput" placeholder="Enter Order ID (e.g. WL-101, WL-102)" required style="flex:1; padding:12px; border-radius:8px; border:2px solid #cbd5e1; font-weight:bold; font-size:15px;">
+                    <button type="submit" class="btn btn-secondary" style="white-space:nowrap; padding:12px 20px;">
+                        <i class="fa-solid fa-magnifying-glass"></i> Track Order
+                    </button>
+                </form>
+
+                <div id="trackerResultContainer" style="display:none;"></div>
+            </div>
+        </div>
+
         <!-- Table Reservation Modal -->
         <div id="reservationModal" class="modal-overlay" aria-hidden="true">
             <div class="modal-box">
@@ -406,22 +434,22 @@
                 </div>
                 <form id="modalReserveForm">
                     <div class="form-row">
-                        <input type="text" placeholder="Full Name" required>
-                        <input type="tel" placeholder="Phone Number" required>
+                        <input type="text" id="resName" placeholder="Full Name" required>
+                        <input type="tel" id="resPhone" placeholder="Phone Number" required>
                     </div>
                     <div class="form-row">
-                        <input type="date" required id="reserveDate">
-                        <select required>
+                        <input type="date" required id="resDate">
+                        <select id="resTime" required>
                             <option value="" disabled selected>Preferred Time Slot</option>
-                            <option value="12:00 PM">Lunch: 12:00 PM</option>
-                            <option value="02:00 PM">Lunch: 02:00 PM</option>
-                            <option value="05:00 PM">Evening: 05:00 PM</option>
-                            <option value="07:30 PM">Dinner: 07:30 PM</option>
-                            <option value="09:30 PM">Dinner: 09:30 PM</option>
+                            <option value="Lunch: 12:00 PM">Lunch: 12:00 PM</option>
+                            <option value="Lunch: 02:00 PM">Lunch: 02:00 PM</option>
+                            <option value="Evening: 05:00 PM">Evening: 05:00 PM</option>
+                            <option value="Dinner: 07:30 PM">Dinner: 07:30 PM</option>
+                            <option value="Dinner: 09:30 PM">Dinner: 09:30 PM</option>
                         </select>
                     </div>
                     <div class="form-row">
-                        <select required>
+                        <select id="resGuests" required>
                             <option value="" disabled selected>Number of Guests</option>
                             <option value="1">1 Guest</option>
                             <option value="2">2 Guests (Table for Two)</option>
@@ -429,14 +457,14 @@
                             <option value="6">5 - 8 Guests</option>
                             <option value="10">9+ Guests (VIP Hall)</option>
                         </select>
-                        <select required>
+                        <select id="resZone" required>
                             <option value="" disabled selected>Seating Preference</option>
-                            <option value="indoor">Main Dining Hall</option>
-                            <option value="outdoor">Outdoor Seaside Terrace</option>
-                            <option value="vip">Private VIP Room</option>
+                            <option value="Indoor Main Dining">Indoor Main Dining</option>
+                            <option value="Romantic Outdoor Patio">Romantic Outdoor Patio</option>
+                            <option value="VIP Private Booth">VIP Private Booth</option>
                         </select>
                     </div>
-                    <textarea rows="3" placeholder="Special requirements (e.g. Birthday, Anniversary, Dietary restrictions)..."></textarea>
+                    <textarea id="resNotes" rows="3" placeholder="Special requirements (e.g. Birthday, Anniversary, Dietary restrictions)..."></textarea>
                     <button type="submit" class="btn btn-third">CONFIRM RESERVATION</button>
                     <div id="modalFeedback" class="form-feedback" style="display: none;"></div>
                 </form>
@@ -639,6 +667,8 @@
                 });
             }
         </script>
+        <!-- Application Business Logic Engine -->
+        <script src="./app.js"></script>
     </body>
 
 </html>

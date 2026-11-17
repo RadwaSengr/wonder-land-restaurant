@@ -1,0 +1,177 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .entity-box { fill: #ffffff; stroke: #334155; stroke-width: 1.8; rx: 4; }
+      .entity-header { fill: #1e3a8a; }
+      .entity-name { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #ffffff; text-anchor: middle; dominant-baseline: central; }
+      .field-text { font-family: 'Consolas', monospace; font-size: 11.5px; fill: #0f172a; }
+      .pk-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 10px; font-weight: bold; fill: #d97706; }
+      .fk-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 10px; font-weight: bold; fill: #2563eb; }
+      .erd-line { stroke: #475569; stroke-width: 1.8; }
+      .crow-foot { stroke: #475569; stroke-width: 1.8; fill: none; }
+      .cardinality { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #64748b; }
+    </style>
+  </defs>
+
+  <rect width="100%" height="100%" class="bg" />
+
+  <text x="600" y="32" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="bold" fill="#0f172a" text-anchor="middle">Entity Relationship Diagram (ERD): Database &amp; Storage Schema</text>
+
+  <!-- ENTITY 1: CUSTOMERS -->
+  <g transform="translate(50, 70)">
+    <rect width="220" height="180" class="entity-box" />
+    <rect width="220" height="28" class="entity-header" fill="#0369a1" />
+    <text x="110" y="14" class="entity-name">CUSTOMERS</text>
+    <text x="12" y="48" class="pk-text">PK</text><text x="36" y="48" class="field-text">customer_id (VARCHAR)</text>
+    <text x="36" y="68" class="field-text">full_name (VARCHAR)</text>
+    <text x="36" y="88" class="field-text">phone (VARCHAR)</text>
+    <text x="36" y="108" class="field-text">email (VARCHAR)</text>
+    <text x="36" y="128" class="field-text">address (TEXT)</text>
+    <text x="36" y="148" class="field-text">created_at (TIMESTAMP)</text>
+    <text x="36" y="168" class="field-text">loyalty_points (INT)</text>
+  </g>
+
+  <!-- ENTITY 2: ORDERS -->
+  <g transform="translate(370, 70)">
+    <rect width="230" height="210" class="entity-box" />
+    <rect width="230" height="28" class="entity-header" fill="#15803d" />
+    <text x="115" y="14" class="entity-name">ORDERS</text>
+    <text x="12" y="48" class="pk-text">PK</text><text x="36" y="48" class="field-text">order_id (VARCHAR)</text>
+    <text x="12" y="68" class="fk-text">FK</text><text x="36" y="68" class="field-text">customer_id (VARCHAR)</text>
+    <text x="36" y="88" class="field-text">order_date (TIMESTAMP)</text>
+    <text x="36" y="108" class="field-text">status (VARCHAR)</text>
+    <text x="36" y="128" class="field-text">subtotal (DECIMAL)</text>
+    <text x="36" y="148" class="field-text">tax (DECIMAL)</text>
+    <text x="36" y="168" class="field-text">delivery_fee (DECIMAL)</text>
+    <text x="36" y="188" class="field-text">total_amount (DECIMAL)</text>
+    <text x="36" y="204" class="field-text">special_notes (TEXT)</text>
+  </g>
+
+  <!-- Relation: Customers -> Orders (1 to N) -->
+  <line x1="270" y1="160" x2="370" y2="160" class="erd-line" />
+  <text x="280" y="152" class="cardinality">1</text>
+  <!-- Crow foot at Orders -->
+  <path d="M 370 160 L 355 150 M 370 160 L 355 170" class="crow-foot" />
+  <text x="345" y="152" class="cardinality">0..*</text>
+
+  <!-- ENTITY 3: ORDER_ITEMS -->
+  <g transform="translate(690, 70)">
+    <rect width="220" height="170" class="entity-box" />
+    <rect width="220" height="28" class="entity-header" fill="#15803d" />
+    <text x="110" y="14" class="entity-name">ORDER_ITEMS</text>
+    <text x="12" y="48" class="pk-text">PK</text><text x="36" y="48" class="field-text">order_item_id (VARCHAR)</text>
+    <text x="12" y="68" class="fk-text">FK</text><text x="36" y="68" class="field-text">order_id (VARCHAR)</text>
+    <text x="12" y="88" class="fk-text">FK</text><text x="36" y="88" class="field-text">menu_item_id (VARCHAR)</text>
+    <text x="36" y="108" class="field-text">quantity (INT)</text>
+    <text x="36" y="128" class="field-text">unit_price (DECIMAL)</text>
+    <text x="36" y="148" class="field-text">line_total (DECIMAL)</text>
+    <text x="36" y="164" class="field-text">notes (VARCHAR)</text>
+  </g>
+
+  <!-- Relation: Orders -> OrderItems (1 to N) -->
+  <line x1="600" y1="160" x2="690" y2="160" class="erd-line" />
+  <text x="610" y="152" class="cardinality">1</text>
+  <path d="M 690 160 L 675 150 M 690 160 L 675 170" class="crow-foot" />
+  <text x="665" y="152" class="cardinality">1..*</text>
+
+  <!-- ENTITY 4: MENU_ITEMS -->
+  <g transform="translate(980, 70)">
+    <rect width="200" height="190" class="entity-box" />
+    <rect width="200" height="28" class="entity-header" fill="#7c3aed" />
+    <text x="100" y="14" class="entity-name">MENU_ITEMS</text>
+    <text x="12" y="48" class="pk-text">PK</text><text x="36" y="48" class="field-text">item_id (VARCHAR)</text>
+    <text x="12" y="68" class="fk-text">FK</text><text x="36" y="68" class="field-text">category_id (VARCHAR)</text>
+    <text x="36" y="88" class="field-text">title (VARCHAR)</text>
+    <text x="36" y="108" class="field-text">price (DECIMAL)</text>
+    <text x="36" y="128" class="field-text">description (TEXT)</text>
+    <text x="36" y="148" class="field-text">image_url (VARCHAR)</text>
+    <text x="36" y="168" class="field-text">is_available (BOOLEAN)</text>
+    <text x="36" y="184" class="field-text">rating (DECIMAL)</text>
+  </g>
+
+  <!-- Relation: MenuItems -> OrderItems (1 to N) -->
+  <line x1="980" y1="160" x2="910" y2="160" class="erd-line" />
+  <text x="965" y="152" class="cardinality">1</text>
+  <path d="M 910 160 L 925 150 M 910 160 L 925 170" class="crow-foot" />
+  <text x="920" y="152" class="cardinality">0..*</text>
+
+  <!-- ENTITY 5: CATEGORIES -->
+  <g transform="translate(980, 360)">
+    <rect width="200" height="120" class="entity-box" />
+    <rect width="200" height="28" class="entity-header" fill="#6d28d9" />
+    <text x="100" y="14" class="entity-name">CATEGORIES</text>
+    <text x="12" y="48" class="pk-text">PK</text><text x="36" y="48" class="field-text">category_id (VARCHAR)</text>
+    <text x="36" y="68" class="field-text">name (VARCHAR)</text>
+    <text x="36" y="88" class="field-text">slug (VARCHAR)</text>
+    <text x="36" y="108" class="field-text">display_order (INT)</text>
+  </g>
+  <!-- Relation Categories -> MenuItems (1 to N) -->
+  <line x1="1080" y1="360" x2="1080" y2="260" class="erd-line" />
+  <text x="1090" y="340" class="cardinality">1</text>
+  <path d="M 1080 260 L 1070 275 M 1080 260 L 1090 275" class="crow-foot" />
+  <text x="1090" y="280" class="cardinality">1..*</text>
+
+  <!-- ENTITY 6: PAYMENTS -->
+  <g transform="translate(370, 360)">
+    <rect width="230" height="180" class="entity-box" />
+    <rect width="230" height="28" class="entity-header" fill="#047857" />
+    <text x="115" y="14" class="entity-name">PAYMENTS</text>
+    <text x="12" y="48" class="pk-text">PK</text><text x="36" y="48" class="field-text">payment_id (VARCHAR)</text>
+    <text x="12" y="68" class="fk-text">FK</text><text x="36" y="68" class="field-text">order_id (VARCHAR)</text>
+    <text x="36" y="88" class="field-text">method (VARCHAR)</text>
+    <text x="36" y="108" class="field-text">amount (DECIMAL)</text>
+    <text x="36" y="128" class="field-text">status (VARCHAR)</text>
+    <text x="36" y="148" class="field-text">transaction_ref (VARCHAR)</text>
+    <text x="36" y="168" class="field-text">paid_at (TIMESTAMP)</text>
+  </g>
+  <!-- Relation Orders -> Payments (1 to 1) -->
+  <line x1="485" y1="280" x2="485" y2="360" class="erd-line" />
+  <text x="495" y="295" class="cardinality">1</text>
+  <text x="495" y="345" class="cardinality">1</text>
+
+  <!-- ENTITY 7: TABLE_RESERVATIONS -->
+  <g transform="translate(50, 360)">
+    <rect width="230" height="190" class="entity-box" />
+    <rect width="230" height="28" class="entity-header" fill="#c026d3" />
+    <text x="115" y="14" class="entity-name">TABLE_RESERVATIONS</text>
+    <text x="12" y="48" class="pk-text">PK</text><text x="36" y="48" class="field-text">reservation_id (VARCHAR)</text>
+    <text x="12" y="68" class="fk-text">FK</text><text x="36" y="68" class="field-text">customer_id (VARCHAR)</text>
+    <text x="36" y="88" class="field-text">guest_name (VARCHAR)</text>
+    <text x="36" y="108" class="field-text">guest_phone (VARCHAR)</text>
+    <text x="36" y="128" class="field-text">reserve_date (DATE)</text>
+    <text x="36" y="148" class="field-text">time_slot (VARCHAR)</text>
+    <text x="36" y="168" class="field-text">party_size (INT)</text>
+    <text x="36" y="184" class="field-text">seating_zone (VARCHAR)</text>
+  </g>
+  <!-- Relation Customers -> Reservations (1 to N) -->
+  <line x1="160" y1="250" x2="160" y2="360" class="erd-line" />
+  <text x="170" y="270" class="cardinality">1</text>
+  <path d="M 160 360 L 150 345 M 160 360 L 170 345" class="crow-foot" />
+  <text x="170" y="340" class="cardinality">0..*</text>
+
+  <!-- ENTITY 8: REVIEWS -->
+  <g transform="translate(690, 360)">
+    <rect width="220" height="150" class="entity-box" />
+    <rect width="220" height="28" class="entity-header" fill="#e11d48" />
+    <text x="110" y="14" class="entity-name">REVIEWS</text>
+    <text x="12" y="48" class="pk-text">PK</text><text x="36" y="48" class="field-text">review_id (VARCHAR)</text>
+    <text x="12" y="68" class="fk-text">FK</text><text x="36" y="68" class="field-text">customer_id (VARCHAR)</text>
+    <text x="36" y="88" class="field-text">rating_stars (INT)</text>
+    <text x="36" y="108" class="field-text">comment (TEXT)</text>
+    <text x="36" y="128" class="field-text">created_at (TIMESTAMP)</text>
+    <text x="36" y="144" class="field-text">is_verified (BOOLEAN)</text>
+  </g>
+
+  <!-- ENTITY 9: ADMIN_USERS -->
+  <g transform="translate(50, 600)">
+    <rect width="230" height="140" class="entity-box" />
+    <rect width="230" height="28" class="entity-header" fill="#b45309" />
+    <text x="115" y="14" class="entity-name">ADMIN_USERS</text>
+    <text x="12" y="48" class="pk-text">PK</text><text x="36" y="48" class="field-text">admin_id (VARCHAR)</text>
+    <text x="36" y="68" class="field-text">username (VARCHAR)</text>
+    <text x="36" y="88" class="field-text">pin_hash (VARCHAR)</text>
+    <text x="36" y="108" class="field-text">role (VARCHAR)</text>
+    <text x="36" y="128" class="field-text">last_login (TIMESTAMP)</text>
+  </g>
+</svg>

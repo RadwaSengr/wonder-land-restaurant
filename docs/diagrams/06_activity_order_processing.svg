@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 900" width="1100" height="900">
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .swimlane-line { stroke: #94a3b8; stroke-width: 1.5; stroke-dasharray: 5,4; }
+      .swimlane-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; font-weight: bold; fill: #1e3a8a; text-anchor: middle; }
+      .swimlane-header { fill: #e2e8f0; }
+      .start-node { fill: #0f172a; }
+      .end-outer { fill: none; stroke: #0f172a; stroke-width: 2; }
+      .end-inner { fill: #0f172a; }
+      .action-rect { fill: #ffffff; stroke: #2563eb; stroke-width: 1.8; rx: 16; }
+      .action-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: 600; fill: #0f172a; text-anchor: middle; dominant-baseline: central; }
+      .decision-diamond { fill: #fef3c7; stroke: #d97706; stroke-width: 1.8; }
+      .fork-bar { fill: #0f172a; }
+      .flow-arrow { stroke: #334155; stroke-width: 1.6; marker-end: url(#actArrow); }
+      .guard-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #b45309; }
+    </style>
+    <marker id="actArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#334155" />
+    </marker>
+  </defs>
+
+  <rect width="100%" height="100%" class="bg" />
+
+  <text x="550" y="32" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="bold" fill="#0f172a" text-anchor="middle">Activity Diagram: Complete Order &amp; Checkout Lifecycle</text>
+
+  <!-- Swimlane Header Backgrounds -->
+  <rect x="40" y="55" width="250" height="35" class="swimlane-header" />
+  <rect x="290" y="55" width="270" height="35" class="swimlane-header" fill="#cbd5e1" />
+  <rect x="560" y="55" width="270" height="35" class="swimlane-header" />
+  <rect x="830" y="55" width="230" height="35" class="swimlane-header" fill="#cbd5e1" />
+
+  <!-- Swimlane Titles -->
+  <text x="165" y="78" class="swimlane-title">Customer</text>
+  <text x="425" y="78" class="swimlane-title">Web Application (GUI)</text>
+  <text x="695" y="78" class="swimlane-title">Payment Engine</text>
+  <text x="945" y="78" class="swimlane-title">Kitchen / Dispatch</text>
+
+  <!-- Swimlane Separator Lines -->
+  <line x1="290" y1="55" x2="290" y2="870" class="swimlane-line" />
+  <line x1="560" y1="55" x2="560" y2="870" class="swimlane-line" />
+  <line x1="830" y1="55" x2="830" y2="870" class="swimlane-line" />
+
+  <!-- Start Node -->
+  <circle cx="165" cy="120" r="12" class="start-node" />
+  <line x1="165" y1="132" x2="165" y2="165" class="flow-arrow" />
+
+  <!-- Action: Browse Menu -->
+  <rect x="90" y="165" width="150" height="40" class="action-rect" />
+  <text x="165" y="185" class="action-text">Browse &amp; Filter Menu</text>
+  <line x1="165" y1="205" x2="165" y2="245" class="flow-arrow" />
+
+  <!-- Action: Add Items to Cart -->
+  <rect x="90" y="245" width="150" height="40" class="action-rect" />
+  <text x="165" y="265" class="action-text">Add Items to Cart</text>
+  <line x1="240" y1="265" x2="350" y2="265" class="flow-arrow" />
+
+  <!-- Action: Compute Totals -->
+  <rect x="350" y="245" width="160" height="40" class="action-rect" stroke="#059669" />
+  <text x="430" y="265" class="action-text" fill="#065f46">Calculate Subtotal &amp; Tax</text>
+  <line x1="430" y1="285" x2="430" y2="325" class="flow-arrow" />
+
+  <!-- Action: Click Checkout -->
+  <rect x="90" y="325" width="150" height="40" class="action-rect" />
+  <text x="165" y="345" class="action-text">Proceed to Checkout</text>
+  <line x1="430" y1="325" x2="240" y2="345" class="flow-arrow" />
+  <line x1="165" y1="365" x2="165" y2="405" class="flow-arrow" />
+
+  <!-- Action: Enter Details & Pick Payment -->
+  <rect x="80" y="405" width="170" height="45" class="action-rect" />
+  <text x="165" y="420" class="action-text">Enter Contact Info &amp;</text>
+  <text x="165" y="436" class="action-text">Select Payment Method</text>
+  <line x1="250" y1="427" x2="350" y2="427" class="flow-arrow" />
+
+  <!-- Action: Validate Form Inputs -->
+  <rect x="350" y="407" width="160" height="40" class="action-rect" stroke="#059669" />
+  <text x="430" y="427" class="action-text" fill="#065f46">Validate Delivery Form</text>
+  <line x1="430" y1="447" x2="430" y2="480" class="flow-arrow" />
+
+  <!-- Decision: Form Valid? -->
+  <polygon points="430,480 460,500 430,520 400,500" class="decision-diamond" />
+  <text x="445" y="490" class="guard-text">[Valid]</text>
+  <line x1="400" y1="500" x2="250" y2="500" class="flow-arrow" />
+  <text x="310" y="490" class="guard-text">[Invalid]</text>
+  <!-- Return to enter details if invalid -->
+  <line x1="250" y1="500" x2="200" y2="450" class="flow-arrow" />
+
+  <line x1="460" y1="500" x2="610" y2="500" class="flow-arrow" />
+
+  <!-- Decision: Payment Type -->
+  <polygon points="640,480 670,500 640,520 610,500" class="decision-diamond" />
+  <!-- Cash vs Online -->
+  <line x1="640" y1="480" x2="640" y2="430" class="flow-arrow" />
+  <text x="645" y="460" class="guard-text">[Cash on Delivery]</text>
+
+  <line x1="670" y1="500" x2="720" y2="500" class="flow-arrow" />
+  <text x="670" y="490" class="guard-text">[Card / Wallet]</text>
+
+  <!-- Action: Process Online Gateway -->
+  <rect x="720" y="480" width="100" height="40" class="action-rect" stroke="#16a34a" />
+  <text x="770" y="500" class="action-text" font-size="11">Verify &amp; Charge</text>
+  <line x1="770" y1="520" x2="770" y2="560" class="flow-arrow" />
+
+  <!-- Decision: Payment Success? -->
+  <polygon points="770,560 795,580 770,600 745,580" class="decision-diamond" />
+  <line x1="745" y1="580" x2="510" y2="580" class="flow-arrow" />
+  <text x="600" y="570" class="guard-text">[Success or Cash]</text>
+
+  <!-- Connect Cash path -->
+  <line x1="640" y1="430" x2="510" y2="430" class="flow-arrow" />
+  <line x1="510" y1="430" x2="510" y2="580" />
+
+  <!-- Action: Persist Order & Generate ID -->
+  <rect x="350" y="610" width="160" height="45" class="action-rect" stroke="#7c3aed" />
+  <text x="430" y="625" class="action-text">Save Order in Store</text>
+  <text x="430" y="641" class="action-text">&amp; Generate #Order-ID</text>
+  <line x1="430" y1="580" x2="430" y2="610" class="flow-arrow" />
+  <line x1="430" y1="655" x2="430" y2="685" class="flow-arrow" />
+
+  <!-- Fork Bar: Notify Customer & Kitchen in parallel -->
+  <rect x="250" y="685" width="700" height="8" class="fork-bar" />
+
+  <!-- Thread 1 to Customer -->
+  <line x1="350" y1="693" x2="165" y2="730" class="flow-arrow" />
+  <rect x="80" y="730" width="170" height="45" class="action-rect" />
+  <text x="165" y="745" class="action-text">Show Receipt &amp;</text>
+  <text x="165" y="761" class="action-text">Track Live Status Stepper</text>
+
+  <!-- Thread 2 to Kitchen -->
+  <line x1="880" y1="693" x2="945" y2="730" class="flow-arrow" />
+  <rect x="860" y="730" width="170" height="45" class="action-rect" stroke="#b45309" />
+  <text x="945" y="745" class="action-text">Receive Ticket in Kitchen</text>
+  <text x="945" y="761" class="action-text">&amp; Start Food Preparation</text>
+
+  <!-- Join Bar -->
+  <rect x="250" y="810" width="700" height="8" class="fork-bar" />
+  <line x1="165" y1="775" x2="350" y2="810" class="flow-arrow" />
+  <line x1="945" y1="775" x2="880" y2="810" class="flow-arrow" />
+
+  <!-- Final End Node -->
+  <line x1="600" y1="818" x2="600" y2="845" class="flow-arrow" />
+  <circle cx="600" cy="855" r="14" class="end-outer" />
+  <circle cx="600" cy="855" r="9" class="end-inner" />
+</svg>

@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="1000" height="700">
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .pkg-tab { fill: #cbd5e1; stroke: #334155; stroke-width: 1.6; }
+      .pkg-body { fill: #ffffff; stroke: #334155; stroke-width: 1.6; rx: 4; }
+      .pkg-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #0f172a; }
+      .pkg-tab-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: 600; fill: #334155; }
+      .class-pill { fill: #f1f5f9; stroke: #64748b; stroke-width: 1; rx: 4; }
+      .class-pill-text { font-family: 'Consolas', monospace; font-size: 11px; fill: #1e293b; text-anchor: middle; dominant-baseline: central; }
+      .import-line { stroke: #0284c7; stroke-width: 1.6; stroke-dasharray: 5,4; marker-end: url(#pkgArrow); }
+      .import-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #0284c7; }
+    </style>
+    <marker id="pkgArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#0284c7" />
+    </marker>
+  </defs>
+
+  <rect width="100%" height="100%" class="bg" />
+
+  <text x="500" y="32" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="bold" fill="#0f172a" text-anchor="middle">Package Diagram: Architectural Layering &amp; Dependencies</text>
+
+  <!-- Package 1: Presentation Layer -->
+  <g transform="translate(60, 60)">
+    <path d="M 0 0 L 140 0 L 155 18 L 0 18 Z" class="pkg-tab" />
+    <text x="10" y="13" class="pkg-tab-title">Presentation</text>
+    <rect x="0" y="18" width="400" height="160" class="pkg-body" />
+    <text x="15" y="42" class="pkg-title">com.wonderland.presentation</text>
+
+    <g transform="translate(20, 55)"><rect width="160" height="26" class="class-pill" /><text x="80" y="13" class="class-pill-text">CustomerPortalView</text></g>
+    <g transform="translate(200, 55)"><rect width="180" height="26" class="class-pill" /><text x="90" y="13" class="class-pill-text">CartDrawerComponent</text></g>
+    <g transform="translate(20, 90)"><rect width="160" height="26" class="class-pill" /><text x="80" y="13" class="class-pill-text">AdminDashboardView</text></g>
+    <g transform="translate(200, 90)"><rect width="180" height="26" class="class-pill" /><text x="90" y="13" class="class-pill-text">OrderTrackerComponent</text></g>
+    <g transform="translate(20, 125)"><rect width="160" height="26" class="class-pill" /><text x="80" y="13" class="class-pill-text">ReservationModalView</text></g>
+    <g transform="translate(200, 125)"><rect width="180" height="26" class="class-pill" /><text x="90" y="13" class="class-pill-text">MenuFilterComponent</text></g>
+  </g>
+
+  <!-- Package 2: Business Logic / Controllers -->
+  <g transform="translate(60, 290)">
+    <path d="M 0 0 L 150 0 L 165 18 L 0 18 Z" class="pkg-tab" fill="#bae6fd" />
+    <text x="10" y="13" class="pkg-tab-title">Business Logic</text>
+    <rect x="0" y="18" width="400" height="160" class="pkg-body" stroke="#0284c7" />
+    <text x="15" y="42" class="pkg-title" fill="#0369a1">com.wonderland.business</text>
+
+    <g transform="translate(20, 55)"><rect width="160" height="26" class="class-pill" /><text x="80" y="13" class="class-pill-text">OrderManager</text></g>
+    <g transform="translate(200, 55)"><rect width="180" height="26" class="class-pill" /><text x="90" y="13" class="class-pill-text">CartService</text></g>
+    <g transform="translate(20, 90)"><rect width="160" height="26" class="class-pill" /><text x="80" y="13" class="class-pill-text">ReservationManager</text></g>
+    <g transform="translate(200, 90)"><rect width="180" height="26" class="class-pill" /><text x="90" y="13" class="class-pill-text">MenuCatalogService</text></g>
+    <g transform="translate(20, 125)"><rect width="160" height="26" class="class-pill" /><text x="80" y="13" class="class-pill-text">PaymentStrategyService</text></g>
+    <g transform="translate(200, 125)"><rect width="180" height="26" class="class-pill" /><text x="90" y="13" class="class-pill-text">AnalyticsCalculator</text></g>
+  </g>
+
+  <!-- Presentation imports Business Logic -->
+  <line x1="260" y1="238" x2="260" y2="290" class="import-line" />
+  <text x="270" y="268" class="import-text">&lt;&lt;import&gt;&gt;</text>
+
+  <!-- Package 3: Domain Models -->
+  <g transform="translate(540, 170)">
+    <path d="M 0 0 L 140 0 L 155 18 L 0 18 Z" class="pkg-tab" fill="#bbf7d0" />
+    <text x="10" y="13" class="pkg-tab-title">Domain Models</text>
+    <rect x="0" y="18" width="400" height="170" class="pkg-body" stroke="#16a34a" />
+    <text x="15" y="42" class="pkg-title" fill="#15803d">com.wonderland.model</text>
+
+    <g transform="translate(20, 55)"><rect width="160" height="26" class="class-pill" /><text x="80" y="13" class="class-pill-text">Order &amp; OrderItem</text></g>
+    <g transform="translate(200, 55)"><rect width="180" height="26" class="class-pill" /><text x="90" y="13" class="class-pill-text">MenuItem &amp; Category</text></g>
+    <g transform="translate(20, 90)"><rect width="160" height="26" class="class-pill" /><text x="80" y="13" class="class-pill-text">TableReservation</text></g>
+    <g transform="translate(200, 90)"><rect width="180" height="26" class="class-pill" /><text x="90" y="13" class="class-pill-text">Payment (Hierarchy)</text></g>
+    <g transform="translate(20, 125)"><rect width="160" height="26" class="class-pill" /><text x="80" y="13" class="class-pill-text">Customer &amp; Admin</text></g>
+    <g transform="translate(200, 125)"><rect width="180" height="26" class="class-pill" /><text x="90" y="13" class="class-pill-text">Review</text></g>
+  </g>
+
+  <!-- Business Logic imports Models -->
+  <line x1="460" y1="330" x2="540" y2="280" class="import-line" />
+  <text x="500" y="300" class="import-text">&lt;&lt;import&gt;&gt;</text>
+
+  <!-- Presentation imports Models -->
+  <line x1="460" y1="150" x2="540" y2="190" class="import-line" />
+  <text x="500" y="165" class="import-text">&lt;&lt;import&gt;&gt;</text>
+
+  <!-- Package 4: Data Access / Storage Layer -->
+  <g transform="translate(60, 510)">
+    <path d="M 0 0 L 140 0 L 155 18 L 0 18 Z" class="pkg-tab" fill="#fed7aa" />
+    <text x="10" y="13" class="pkg-tab-title">Data Access</text>
+    <rect x="0" y="18" width="400" height="150" class="pkg-body" stroke="#ea580c" />
+    <text x="15" y="42" class="pkg-title" fill="#c2410c">com.wonderland.data</text>
+
+    <g transform="translate(20, 55)"><rect width="170" height="26" class="class-pill" /><text x="85" y="13" class="class-pill-text">RestaurantDataStore</text></g>
+    <g transform="translate(210, 55)"><rect width="170" height="26" class="class-pill" /><text x="85" y="13" class="class-pill-text">LocalStorageAdapter</text></g>
+    <g transform="translate(20, 95)"><rect width="170" height="26" class="class-pill" /><text x="85" y="13" class="class-pill-text">SeedDataLoader</text></g>
+    <g transform="translate(210, 95)"><rect width="170" height="26" class="class-pill" /><text x="85" y="13" class="class-pill-text">StorageEventNotifier</text></g>
+  </g>
+
+  <!-- Business Logic imports Data Access -->
+  <line x1="260" y1="468" x2="260" y2="510" class="import-line" />
+  <text x="270" y="490" class="import-text">&lt;&lt;import&gt;&gt;</text>
+
+  <!-- Data Access imports Models -->
+  <line x1="460" y1="560" x2="680" y2="358" class="import-line" />
+  <text x="590" y="480" class="import-text">&lt;&lt;import&gt;&gt;</text>
+</svg>

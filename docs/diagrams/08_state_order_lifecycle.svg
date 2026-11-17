@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 550" width="1100" height="550">
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .state-box { fill: #ffffff; stroke: #1e3a8a; stroke-width: 2; rx: 14; }
+      .state-header { fill: #1e40af; rx: 12; }
+      .state-name { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: bold; fill: #ffffff; text-anchor: middle; }
+      .state-body-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; fill: #334155; }
+      .trans-line { stroke: #0284c7; stroke-width: 1.8; marker-end: url(#stateArrow); }
+      .trans-cancel { stroke: #e11d48; stroke-width: 1.8; stroke-dasharray: 5,4; marker-end: url(#stateCancelArrow); }
+      .trans-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: 600; fill: #0f172a; }
+      .start-node { fill: #0f172a; }
+      .end-outer { fill: none; stroke: #0f172a; stroke-width: 2; }
+      .end-inner { fill: #0f172a; }
+    </style>
+    <marker id="stateArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#0284c7" />
+    </marker>
+    <marker id="stateCancelArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#e11d48" />
+    </marker>
+  </defs>
+
+  <rect width="100%" height="100%" class="bg" />
+
+  <text x="550" y="35" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="bold" fill="#0f172a" text-anchor="middle">State Machine Diagram: Food Order Lifecycle</text>
+
+  <!-- Start -->
+  <circle cx="50" cy="180" r="14" class="start-node" />
+  <line x1="64" y1="180" x2="110" y2="180" class="trans-line" />
+  <text x="85" y="170" class="trans-text" text-anchor="middle">checkout()</text>
+
+  <!-- State 1: Pending / Created -->
+  <g transform="translate(110, 135)">
+    <rect width="150" height="90" class="state-box" />
+    <rect width="150" height="28" class="state-header" fill="#0284c7" />
+    <text x="75" y="19" class="state-name">Pending (Created)</text>
+    <text x="10" y="48" class="state-body-text">entry / saveToStore()</text>
+    <text x="10" y="66" class="state-body-text">do / notifyStaff()</text>
+    <text x="10" y="84" class="state-body-text">exit / logTimestamp()</text>
+  </g>
+
+  <!-- Transition 1 -> 2 -->
+  <line x1="260" y1="180" x2="330" y2="180" class="trans-line" />
+  <text x="295" y="168" class="trans-text" text-anchor="middle">confirmOrder()</text>
+
+  <!-- State 2: Confirmed -->
+  <g transform="translate(330, 135)">
+    <rect width="150" height="90" class="state-box" />
+    <rect width="150" height="28" class="state-header" fill="#0284c7" />
+    <text x="75" y="19" class="state-name">Confirmed</text>
+    <text x="10" y="48" class="state-body-text">entry / assignTicket()</text>
+    <text x="10" y="66" class="state-body-text">do / queueInKitchen()</text>
+    <text x="10" y="84" class="state-body-text">exit / printKOT()</text>
+  </g>
+
+  <!-- Transition 2 -> 3 -->
+  <line x1="480" y1="180" x2="550" y2="180" class="trans-line" />
+  <text x="515" y="168" class="trans-text" text-anchor="middle">startCooking()</text>
+
+  <!-- State 3: In Kitchen / Preparing -->
+  <g transform="translate(550, 135)">
+    <rect width="160" height="90" class="state-box" />
+    <rect width="160" height="28" class="state-header" fill="#d97706" />
+    <text x="80" y="19" class="state-name">In Kitchen (Cooking)</text>
+    <text x="10" y="48" class="state-body-text">entry / chefStartsPrep()</text>
+    <text x="10" y="66" class="state-body-text">do / assembleIngredients()</text>
+    <text x="10" y="84" class="state-body-text">exit / packAndSeal()</text>
+  </g>
+
+  <!-- Transition 3 -> 4 -->
+  <line x1="710" y1="180" x2="780" y2="180" class="trans-line" />
+  <text x="745" y="168" class="trans-text" text-anchor="middle">dispatchOrder()</text>
+
+  <!-- State 4: Out for Delivery -->
+  <g transform="translate(780, 135)">
+    <rect width="160" height="90" class="state-box" />
+    <rect width="160" height="28" class="state-header" fill="#7c3aed" />
+    <text x="80" y="19" class="state-name">Out for Delivery</text>
+    <text x="10" y="48" class="state-body-text">entry / handToDriver()</text>
+    <text x="10" y="66" class="state-body-text">do / transitToCustomer()</text>
+    <text x="10" y="84" class="state-body-text">exit / collectPayment()</text>
+  </g>
+
+  <!-- Transition 4 -> 5 -->
+  <line x1="860" y1="225" x2="860" y2="340" class="trans-line" />
+  <text x="870" y="285" class="trans-text">handoverConfirmed()</text>
+
+  <!-- State 5: Delivered / Completed -->
+  <g transform="translate(780, 340)">
+    <rect width="160" height="90" class="state-box" />
+    <rect width="160" height="28" class="state-header" fill="#059669" />
+    <text x="80" y="19" class="state-name">Delivered (Done)</text>
+    <text x="10" y="48" class="state-body-text">entry / closeOrder()</text>
+    <text x="10" y="66" class="state-body-text">do / requestReview()</text>
+    <text x="10" y="84" class="state-body-text">exit / archiveOrder()</text>
+  </g>
+
+  <!-- End 1 -->
+  <line x1="780" y1="385" x2="710" y2="385" class="trans-line" />
+  <circle cx="690" cy="385" r="14" class="end-outer" />
+  <circle cx="690" cy="385" r="9" class="end-inner" />
+
+  <!-- Cancellation State -->
+  <g transform="translate(220, 360)">
+    <rect width="160" height="80" class="state-box" stroke="#e11d48" />
+    <rect width="160" height="28" class="state-header" fill="#e11d48" />
+    <text x="80" y="19" class="state-name">Cancelled</text>
+    <text x="10" y="48" class="state-body-text">entry / logReason()</text>
+    <text x="10" y="66" class="state-body-text">exit / issueRefundIfPaid()</text>
+  </g>
+
+  <!-- Cancel transitions from Pending and Confirmed -->
+  <path d="M 180 225 L 180 400 L 220 400" fill="none" class="trans-cancel" />
+  <text x="120" y="320" class="trans-text" fill="#e11d48">cancel()</text>
+
+  <path d="M 405 225 L 405 390 L 380 390" fill="none" class="trans-cancel" />
+  <text x="415" y="300" class="trans-text" fill="#e11d48">cancel() [Within 5m]</text>
+
+  <!-- End 2 (From Cancelled) -->
+  <line x1="300" y1="440" x2="300" y2="490" class="trans-line" stroke="#e11d48" />
+  <circle cx="300" cy="505" r="14" class="end-outer" />
+  <circle cx="300" cy="505" r="9" class="end-inner" />
+</svg>

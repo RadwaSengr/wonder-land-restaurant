@@ -1,0 +1,27 @@
+{
+  "name": "wonder-land-restaurant",
+  "version": "1.0.0",
+  "description": "Wonder Land Restaurant & Food Ordering Management System - UML & Software Engineering Project",
+  "main": "app.js",
+  "scripts": {
+    "start": "npx serve .",
+    "diagrams": "node generate_diagrams.js",
+    "docx": "node generate_docx.js",
+    "pptx": "node generate_pptx.js",
+    "build:all": "node generate_diagrams.js && node generate_docx.js && node generate_pptx.js"
+  },
+  "keywords": [
+    "restaurant",
+    "uml",
+    "software-engineering",
+    "order-management",
+    "food-ordering",
+    "ooad"
+  ],
+  "author": "Software Engineering Team",
+  "license": "MIT",
+  "dependencies": {
+    "docx": "^9.6.0",
+    "pptxgenjs": "^4.0.1"
+  }
+}

@@ -1,121 +1,71 @@
-<div align="center">
+# 🍽️ Wonder Land Restaurant & Food Ordering Management System
+### Software Engineering & Object-Oriented Analysis and Design (OOAD) Project
 
-# 🍽️ Wonder Land Restaurant
-
-**A Modern, Responsive & Elegant Culinary Experience Showcase**
-
-[![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
-[![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
-[![Responsive](https://img.shields.io/badge/Design-Fully%20Responsive-brightgreen?style=for-the-badge)](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Responsive_Design)
-[![Live Demo](https://img.shields.io/badge/Live-Demo%20Preview-FF5722?style=for-the-badge&logo=google-chrome&logoColor=white)](https://radwasengr.github.io/wonder-land-restaurant/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
-
-[🌐 **Live Demo Website**](https://radwasengr.github.io/wonder-land-restaurant/) • [Key Features](#-key-features) • [Installation & Usage](#-getting-started) • [Contact](#-author--contact)
-
-</div>
+> **A Complete End-to-End Academic & Engineering Solution:** Featuring 14 Comprehensive UML Diagrams, Fully Implemented Interactive GUI (Customer Portal + Staff Admin Hub), Native Microsoft Word & HTML Documentation, and Native PowerPoint Presentation (.pptx).
 
 ---
 
-## 📖 About The Project
+## 🚀 Quick Access Links & Project Deliverables
 
-**Wonder Land Restaurant** is a modern, responsive culinary website crafted for a premier dining establishment. Designed with clean semantic HTML5 and custom CSS3, the site delivers a seamless experience across all device form factors—from mobile phones to widescreen desktops.
-
-It highlights the restaurant's rich culinary heritage, seasonal offers, comprehensive categorized menu, interactive photo gallery, operating hours, and an accessible booking/inquiry section.
-
----
-
-## ✨ Key Features
-
-- 📱 **Fully Responsive Layout**: Adaptive layout optimized for mobile devices, tablets, laptops, and ultra-wide screens.
-- 🎨 **Modern Visual Design**: Warm gourmet color scheme featuring gold accents, subtle shadows, and clean typography.
-- 🎯 **Sticky Glassmorphic Navigation**: Smooth header with dynamic blur effect and active scroll tracking.
-- 🍽️ **Interactive Menu Filter Tabs**: Dynamic category switching (`All`, `Starters`, `Mains`, `Pizzas`, `Desserts`) with smooth animation.
-- 🗓️ **Dedicated Reservation Modal**: Complete table booking modal with guest count, seating preference, and instant confirmation toast.
-- 🔍 **Gallery Lightbox Modal**: High-resolution image viewer with captions and smooth keyboard `Esc` dismiss.
-- ⭐ **Guest Testimonials & Reviews**: Verified customer critique cards and 5-star ratings.
-- ⏰ **Service Hours Schedule**: Clear breakdown of daily service windows (Breakfast, Lunch, Dinner, Dessert).
-- ✉️ **Interactive Contact Form**: In-place validation and client feedback notification.
-- ⚡ **Performance & SEO Optimized**: Open Graph and Twitter meta tags, with lazy loading on assets.
+| Deliverable | File Path | Format / Description |
+|---|---|---|
+| **Customer Web GUI** | [`index.html`](file:///C:/Users/DELL/Downloads/wonder-land-restaurant-main/wonder-land-restaurant-main/index.html) | Menu, Cart Drawer, Checkout, Live Order Stepper Tracker, Table Reservation, Reviews |
+| **Admin & Staff Hub** | [`admin.html`](file:///C:/Users/DELL/Downloads/wonder-land-restaurant-main/wonder-land-restaurant-main/admin.html) | PIN Gate (`admin123`), Real-time KPIs, Order Status Mutation, Menu CRUD, Table Seating |
+| **PowerPoint Presentation** | [`presentation/Wonder_Land_Restaurant_Project_Presentation.pptx`](file:///C:/Users/DELL/Downloads/wonder-land-restaurant-main/wonder-land-restaurant-main/presentation/Wonder_Land_Restaurant_Project_Presentation.pptx) | Native 17-slide PPTX with dark/gold theme, UML diagrams, GUI walkthrough |
+| **Full Design Document (Word)** | [`docs/Wonder_Land_Restaurant_UML_Software_Design_Document.docx`](file:///C:/Users/DELL/Downloads/wonder-land-restaurant-main/wonder-land-restaurant-main/docs/Wonder_Land_Restaurant_UML_Software_Design_Document.docx) | Native Word (.docx) document with specifications, use case scenarios, and traceability |
+| **Interactive Design Document** | [`docs/UML_Design_Document.html`](file:///C:/Users/DELL/Downloads/wonder-land-restaurant-main/wonder-land-restaurant-main/docs/UML_Design_Document.html) | Web document with all 14 SVG diagrams embedded + Print-to-PDF ready |
+| **Markdown Design Document** | [`docs/UML_Design_Document.md`](file:///C:/Users/DELL/Downloads/wonder-land-restaurant-main/wonder-land-restaurant-main/docs/UML_Design_Document.md) | Standard GitHub-flavored Markdown specification |
 
 ---
 
-## 📁 Project Structure
+## 📊 Complete Directory of 14 UML Diagrams
 
-```plaintext
-WonderlandResturant/
-├── img/
-│   ├── about_img.png           # Story & about section feature image
-│   ├── home_bg.jpeg            # Hero banner background
-│   ├── daytime_bg.jpeg         # Operating hours background
-│   ├── offer-background.jpg    # Special offers & gallery background
-│   ├── breckfastIcon.png       # Service category icons
-│   ├── lunchIcon.png
-│   ├── dinnerIcon.png
-│   ├── dessertIcon.png
-│   ├── food1.png - food12.jpeg # Signature menu dishes
-│   ├── gallery1 - gallery6     # Photo gallery items
-│   ├── offer1.png - offer3.png # Special discount dishes
-│   ├── logo.png                # Brand logo
-│   └── favicon.svg             # Web browser icon
-├── index.html                  # Semantic markup & content
-├── style.css                   # Custom CSS styling & responsive queries
-└── README.md                   # Project documentation
-```
+All diagrams are available in crisp vector SVG format under `docs/diagrams/`:
+
+1. **[01. Use Case Diagram](file:///C:/Users/DELL/Downloads/wonder-land-restaurant-main/wonder-land-restaurant-main/docs/diagrams/01_use_case_diagram.svg):** Actors (Customer, Admin, Chef), system boundary, `<<include>>` to Payment, `<<extend>>` to Filters.
+2. **[02. Domain Class Diagram](file:///C:/Users/DELL/Downloads/wonder-land-restaurant-main/wonder-land-restaurant-main/docs/diagrams/02_class_diagram.svg):** Detailed domain classes, inheritance (`User` ➔ `Customer`, `Admin`), composition (`Order` ➔ `OrderItem`), aggregation (`Category` ➔ `MenuItem`), polymorphic `Payment` hierarchy, and `RestaurantDataStore` singleton.
+3. **[03. Sequence Diagram - Food Ordering & Checkout](file:///C:/Users/DELL/Downloads/wonder-land-restaurant-main/wonder-land-restaurant-main/docs/diagrams/03_sequence_order_food.svg):** Customer dish selection, cart computation, checkout submission, payment approval, receipt generation, and tracker stepper initialization.
+4. **[04. Sequence Diagram - Dining Table Reservation](file:///C:/Users/DELL/Downloads/wonder-land-restaurant-main/wonder-land-restaurant-main/docs/diagrams/04_sequence_table_reservation.svg):** Table booking criteria, slot capacity verification against DataStore, confirmation toast, and host blocking.
+5. **[05. Sequence Diagram - Admin Management & Menu CRUD](file:///C:/Users/DELL/Downloads/wonder-land-restaurant-main/wonder-land-restaurant-main/docs/diagrams/05_sequence_admin_management.svg):** PIN authentication, order lifecycle status advancement, dish addition, and real-time customer menu sync.
+6. **[06. Activity Diagram - Order Processing](file:///C:/Users/DELL/Downloads/wonder-land-restaurant-main/wonder-land-restaurant-main/docs/diagrams/06_activity_order_processing.svg):** 4 Swimlanes (Customer, Web GUI, Payment Engine, Kitchen) with validation decisions, payment branching, parallel fork/join, and end node.
+7. **[07. Activity Diagram - Table Reservation](file:///C:/Users/DELL/Downloads/wonder-land-restaurant-main/wonder-land-restaurant-main/docs/diagrams/07_activity_table_reservation.svg):** Guest reservation criteria, availability check, alternative slot handling, host greeting, and table turnover.
+8. **[08. State Machine Diagram - Food Order Lifecycle](file:///C:/Users/DELL/Downloads/wonder-land-restaurant-main/wonder-land-restaurant-main/docs/diagrams/08_state_order_lifecycle.svg):** Order progression: `Pending` ➔ `Confirmed` ➔ `In Kitchen (Cooking)` ➔ `Out for Delivery` ➔ `Delivered` + cancellation guard condition.
+9. **[09. State Machine Diagram - Table Reservation Lifecycle](file:///C:/Users/DELL/Downloads/wonder-land-restaurant-main/wonder-land-restaurant-main/docs/diagrams/09_state_reservation_lifecycle.svg):** Booking progression: `Requested` ➔ `Confirmed` ➔ `Seated (Active)` ➔ `Completed` / `Cancelled`.
+10. **[10. Component Diagram](file:///C:/Users/DELL/Downloads/wonder-land-restaurant-main/wonder-land-restaurant-main/docs/diagrams/10_component_diagram.svg):** Presentation Components, Order Engine, Menu Catalog Service, Payment Strategy Gateway, LocalStorage Persistence Adapter.
+11. **[11. Deployment Diagram](file:///C:/Users/DELL/Downloads/wonder-land-restaurant-main/wonder-land-restaurant-main/docs/diagrams/11_deployment_diagram.svg):** Client Device Node (Browser Runtime), HTML5 LocalStorage Node, and Web Server Host Node over HTTPS.
+12. **[12. Package Diagram](file:///C:/Users/DELL/Downloads/wonder-land-restaurant-main/wonder-land-restaurant-main/docs/diagrams/12_package_diagram.svg):** Architectural layers (`presentation`, `business`, `model`, `data`) with strict `<<import>>` dependencies.
+13. **[13. Communication Diagram](file:///C:/Users/DELL/Downloads/wonder-land-restaurant-main/wonder-land-restaurant-main/docs/diagrams/13_communication_diagram.svg):** Numbered object collaborations between Customer, Cart, OrderManager, Payment, and DataStore.
+14. **[14. Entity Relationship Diagram (ERD)](file:///C:/Users/DELL/Downloads/wonder-land-restaurant-main/wonder-land-restaurant-main/docs/diagrams/14_entity_relationship_diagram.svg):** Relational schema: `CUSTOMERS`, `ORDERS`, `ORDER_ITEMS`, `MENU_ITEMS`, `CATEGORIES`, `PAYMENTS`, `TABLE_RESERVATIONS`, `REVIEWS`.
 
 ---
 
-## 🛠️ Built With
+## 🎯 Traceability Matrix: Diagrams vs. Physical GUI Implementation
 
-* **HTML5**: Semantic elements, accessibility attributes (`aria-label`, `alt`), and modern meta tags.
-* **CSS3**: CSS Custom Properties (`:root`), Flexbox layouts, animations, and responsive media queries.
-* **Google Fonts**: [Quicksand](https://fonts.google.com/specimen/Quicksand) font family for clean, modern readability.
-* **Font Awesome v6**: Vector icons for contacts, location, and social links.
-
----
-
-## 🚀 Getting Started
-
-Follow these simple steps to get a local copy up and running:
-
-### Prerequisites
-All you need is a modern web browser (Google Chrome, Mozilla Firefox, Microsoft Edge, or Safari).
-
-### Setup Steps
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/RadwaSengr/wonder-land-restaurant.git
-   ```
-2. **Navigate into the project directory:**
-   ```bash
-   cd wonder-land-restaurant/WonderlandResturant
-   ```
-3. **Open in browser:**
-   - Double-click `index.html` to open it directly in your browser.
-   - Or open the folder in **VS Code** and use the **Live Server** extension (`Alt + L, Alt + O`) for hot-reloading.
+| UML Diagram Concept | Physical Code Implementation | Executable GUI Verification |
+|---|---|---|
+| **UC01 & UC02 Browse & Filter** | `app.js: renderDynamicMenu()` | Live search input (`#menuSearchInput`) and category filter tabs |
+| **UC03 Manage Cart Items** | `app.js: addToCart(), updateCartQuantity()` | Slide-out cart drawer (`#cartDrawer`) with live quantity (+/-) and badge |
+| **UC04 & UC05 Checkout & Pay** | `app.js: placeOrder(), calculateTotals()` | Checkout modal (`#checkoutModal`) with Cash on Delivery, Card, Digital Wallet |
+| **UC06 Live Order Tracking** | `app.js: renderOrderTracker(order)` | Visual 5-stage animated stepper (`#trackerModal`) showing real-time stage |
+| **UC07 Table Reservation** | `app.js: bookTable(resData)` | Reservation modal (`#reservationModal`) with zone, time slot, and guest count |
+| **UC08 Verified Guest Reviews** | `app.js: addReview()` | Review form (`#submitReviewForm`) with immediate testimonial publication |
+| **UC09 Admin Authentication** | `admin.js: checkAuth()` | Security PIN gate in `admin.html` (PIN: `admin123`) with session locking |
+| **UC10 Menu Catalog CRUD** | `admin.js: openDishModal(), deleteDish()` | Menu table with Add New Dish modal, edit price/details, and availability toggle |
+| **UC11 Order Status Mutation** | `admin.js: handleOrderStatusChange()` | Status selector in `admin.html` instantly updates customer tracker in real-time |
+| **UC12 Table Host Controls** | `admin.js: updateReservationStatus()` | Admin table reservations table with Seat guests and Cancel/Free table actions |
+| **Order State Machine** | States: `Pending` ➔ `Confirmed` ➔ `Cooking` ➔ `Delivery` ➔ `Done` | Animated glowing stepper nodes (`.step-circle`, `.step-connector`) |
+| **Singleton DataStore** | `app.js: RestaurantDataStore` | HTML5 LocalStorage (Key: `WONDERLAND_SYSTEM_DB_V1`) persisting across sessions |
 
 ---
 
-## 🎥 Video Demo
+## 💻 How to Run and Test
 
-Watch the visual walkthrough of the Wonder Land Restaurant website:
-
-[![Watch the video](https://img.youtube.com/vi/MR2iKtGD-IE/0.jpg)](https://www.youtube.com/watch?v=MR2iKtGD-IE)
-
----
-
-## 📄 License
-
-Distributed under the MIT License. See the `LICENSE` file for more information.
+1. **Open Customer Front-End:** Double-click [`index.html`](file:///C:/Users/DELL/Downloads/wonder-land-restaurant-main/wonder-land-restaurant-main/index.html) in your browser.
+2. **Order Food:** Search for dishes, add them to cart, open the cart drawer, proceed to checkout, and place your order.
+3. **Track Order:** Note your Order ID (e.g. `#WL-101`) and click "Track Live Order" to inspect the visual stepper.
+4. **Open Staff Hub:** Open [`admin.html`](file:///C:/Users/DELL/Downloads/wonder-land-restaurant-main/wonder-land-restaurant-main/admin.html) in another tab. Enter PIN `admin123`.
+5. **Observe Real-Time Sync:** Change the order status to "In Kitchen" or "Out for Delivery" in `admin.html`. Switch back to `index.html` to see the customer stepper update automatically!
 
 ---
 
-## 👩‍💻 Author & Contact
-
-**Radwa Sengr**
-- Portfolio: [radwasengr.github.io/radwa-portfolio](https://radwasengr.github.io/radwa-portfolio/)
-- GitHub: [@RadwaSengr](https://github.com/RadwaSengr)
-- Email: [radwaosama410@gmail.com](mailto:radwaosama410@gmail.com)
-
-<div align="center">
-  <sub>Made with ❤️ by Radwa Sengr • Wonder Land Restaurant © 2026</sub>
-</div>
+*Wonder Land Restaurant System • Software Engineering & OOAD Deliverable © 2026*

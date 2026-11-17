@@ -1,0 +1,255 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 950" width="1300" height="950">
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .class-box { fill: #ffffff; stroke: #334155; stroke-width: 1.8; rx: 6; }
+      .class-header { fill: #1e293b; }
+      .class-header-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; font-weight: bold; fill: #ffffff; text-anchor: middle; }
+      .class-section-divider { stroke: #cbd5e1; stroke-width: 1.2; }
+      .attr-text { font-family: 'Consolas', monospace; font-size: 11.5px; fill: #0f172a; }
+      .method-text { font-family: 'Consolas', monospace; font-size: 11.5px; fill: #1e3a8a; }
+      .assoc-line { stroke: #475569; stroke-width: 1.5; }
+      .multiplicity { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #64748b; }
+      .inheritance-line { stroke: #0284c7; stroke-width: 1.8; marker-end: url(#hollowTriangle); }
+      .comp-diamond { fill: #0f172a; stroke: #0f172a; }
+      .agg-diamond { fill: #ffffff; stroke: #0f172a; stroke-width: 1.5; }
+    </style>
+    <marker id="hollowTriangle" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="10" markerHeight="10" orient="auto">
+      <polygon points="0 0, 11 6, 0 12" fill="#ffffff" stroke="#0284c7" stroke-width="1.5" />
+    </marker>
+  </defs>
+
+  <rect width="100%" height="100%" class="bg" />
+
+  <text x="650" y="32" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="bold" fill="#0f172a" text-anchor="middle">Class Diagram: Wonder Land Restaurant System Domain Model</text>
+
+  <!-- CLASS: User (Abstract Base) -->
+  <g transform="translate(60, 60)">
+    <rect width="220" height="150" class="class-box" />
+    <rect width="220" height="32" class="class-header" fill="#0f172a" />
+    <text x="110" y="21" class="class-header-text">&lt;&lt;abstract&gt;&gt; User</text>
+    <text x="10" y="52" class="attr-text"># id: String</text>
+    <text x="10" y="68" class="attr-text"># fullName: String</text>
+    <text x="10" y="84" class="attr-text"># email: String</text>
+    <text x="10" y="100" class="attr-text"># phone: String</text>
+    <line x1="0" y1="108" x2="220" y2="108" class="class-section-divider" />
+    <text x="10" y="126" class="method-text">+ login(credentials): Boolean</text>
+    <text x="10" y="142" class="method-text">+ logout(): Void</text>
+  </g>
+
+  <!-- CLASS: Customer (inherits User) -->
+  <g transform="translate(30, 260)">
+    <rect width="240" height="150" class="class-box" />
+    <rect width="240" height="32" class="class-header" fill="#0369a1" />
+    <text x="120" y="21" class="class-header-text">Customer</text>
+    <text x="10" y="52" class="attr-text">- deliveryAddress: String</text>
+    <text x="10" y="68" class="attr-text">- orderHistory: List&lt;Order&gt;</text>
+    <text x="10" y="84" class="attr-text">- loyaltyPoints: Integer</text>
+    <line x1="0" y1="92" x2="240" y2="92" class="class-section-divider" />
+    <text x="10" y="110" class="method-text">+ placeOrder(cart): Order</text>
+    <text x="10" y="126" class="method-text">+ trackOrder(orderId): OrderStatus</text>
+    <text x="10" y="142" class="method-text">+ bookTable(reservation): Boolean</text>
+  </g>
+  <!-- Inheritance Customer -> User -->
+  <line x1="150" y1="260" x2="150" y2="210" class="inheritance-line" />
+
+  <!-- CLASS: Admin (inherits User) -->
+  <g transform="translate(320, 60)">
+    <rect width="230" height="150" class="class-box" />
+    <rect width="230" height="32" class="class-header" fill="#b45309" />
+    <text x="115" y="21" class="class-header-text">Admin</text>
+    <text x="10" y="52" class="attr-text">- role: String = "Manager"</text>
+    <text x="10" y="68" class="attr-text">- accessLevel: Integer = 1</text>
+    <text x="10" y="84" class="attr-text">- adminPin: String</text>
+    <line x1="0" y1="92" x2="230" y2="92" class="class-section-divider" />
+    <text x="10" y="110" class="method-text">+ manageMenu(action, item): Void</text>
+    <text x="10" y="126" class="method-text">+ updateOrderStatus(id, st): Void</text>
+    <text x="10" y="142" class="method-text">+ getFinancialSummary(): Report</text>
+  </g>
+  <!-- Inheritance Admin -> User -->
+  <line x1="320" y1="135" x2="280" y2="135" class="inheritance-line" />
+
+  <!-- CLASS: Order -->
+  <g transform="translate(360, 260)">
+    <rect width="250" height="230" class="class-box" />
+    <rect width="250" height="32" class="class-header" fill="#15803d" />
+    <text x="125" y="21" class="class-header-text">Order</text>
+    <text x="10" y="52" class="attr-text">- orderId: String</text>
+    <text x="10" y="68" class="attr-text">- orderDate: DateTime</text>
+    <text x="10" y="84" class="attr-text">- customerInfo: CustomerInfo</text>
+    <text x="10" y="100" class="attr-text">- status: OrderStatus</text>
+    <text x="10" y="116" class="attr-text">- subtotal: Double</text>
+    <text x="10" y="132" class="attr-text">- tax: Double</text>
+    <text x="10" y="148" class="attr-text">- deliveryFee: Double</text>
+    <text x="10" y="164" class="attr-text">- totalAmount: Double</text>
+    <line x1="0" y1="172" x2="250" y2="172" class="class-section-divider" />
+    <text x="10" y="190" class="method-text">+ calculateTotals(): Double</text>
+    <text x="10" y="206" class="method-text">+ advanceStatus(): OrderStatus</text>
+    <text x="10" y="222" class="method-text">+ cancelOrder(): Boolean</text>
+  </g>
+
+  <!-- Customer -> Order (1 to 0..*) -->
+  <line x1="270" y1="335" x2="360" y2="335" class="assoc-line" />
+  <text x="278" y="325" class="multiplicity">1</text>
+  <text x="335" y="325" class="multiplicity">0..*</text>
+
+  <!-- CLASS: OrderItem (Composition with Order) -->
+  <g transform="translate(710, 260)">
+    <rect width="220" height="150" class="class-box" />
+    <rect width="220" height="32" class="class-header" fill="#15803d" />
+    <text x="110" y="21" class="class-header-text">OrderItem</text>
+    <text x="10" y="52" class="attr-text">- itemId: String</text>
+    <text x="10" y="68" class="attr-text">- quantity: Integer</text>
+    <text x="10" y="84" class="attr-text">- unitPrice: Double</text>
+    <text x="10" y="100" class="attr-text">- specialInstructions: String</text>
+    <line x1="0" y1="108" x2="220" y2="108" class="class-section-divider" />
+    <text x="10" y="126" class="method-text">+ getLineTotal(): Double</text>
+    <text x="10" y="142" class="method-text">+ updateQuantity(qty): Void</text>
+  </g>
+
+  <!-- Order Composition diamond to OrderItem -->
+  <polygon points="610,335 622,329 634,335 622,341" class="comp-diamond" />
+  <line x1="634" y1="335" x2="710" y2="335" class="assoc-line" />
+  <text x="640" y="325" class="multiplicity">1</text>
+  <text x="690" y="325" class="multiplicity">1..*</text>
+
+  <!-- CLASS: MenuItem -->
+  <g transform="translate(1010, 260)">
+    <rect width="240" height="190" class="class-box" />
+    <rect width="240" height="32" class="class-header" fill="#7c3aed" />
+    <text x="120" y="21" class="class-header-text">MenuItem</text>
+    <text x="10" y="52" class="attr-text">- id: String</text>
+    <text x="10" y="68" class="attr-text">- title: String</text>
+    <text x="10" y="84" class="attr-text">- category: String</text>
+    <text x="10" y="100" class="attr-text">- price: Double</text>
+    <text x="10" y="116" class="attr-text">- description: String</text>
+    <text x="10" y="132" class="attr-text">- imagePath: String</text>
+    <text x="10" y="148" class="attr-text">- isAvailable: Boolean</text>
+    <line x1="0" y1="154" x2="240" y2="154" class="class-section-divider" />
+    <text x="10" y="172" class="method-text">+ updateDetails(data): Void</text>
+    <text x="10" y="188" class="method-text">+ toggleAvailability(): Boolean</text>
+  </g>
+  <!-- OrderItem -> MenuItem (Association) -->
+  <line x1="930" y1="335" x2="1010" y2="335" class="assoc-line" />
+  <text x="940" y="325" class="multiplicity">1..*</text>
+  <text x="990" y="325" class="multiplicity">1</text>
+
+  <!-- CLASS: Category -->
+  <g transform="translate(1030, 60)">
+    <rect width="200" height="130" class="class-box" />
+    <rect width="200" height="32" class="class-header" fill="#6d28d9" />
+    <text x="100" y="21" class="class-header-text">Category</text>
+    <text x="10" y="52" class="attr-text">- slug: String</text>
+    <text x="10" y="68" class="attr-text">- displayName: String</text>
+    <text x="10" y="84" class="attr-text">- icon: String</text>
+    <line x1="0" y1="92" x2="200" y2="92" class="class-section-divider" />
+    <text x="10" y="112" class="method-text">+ getItems(): List&lt;MenuItem&gt;</text>
+  </g>
+  <!-- MenuItem -> Category (Aggregation) -->
+  <polygon points="1130,260 1124,248 1130,236 1136,248" class="agg-diamond" />
+  <line x1="1130" y1="236" x2="1130" y2="190" class="assoc-line" />
+  <text x="1140" y="248" class="multiplicity">*</text>
+  <text x="1140" y="205" class="multiplicity">1</text>
+
+  <!-- CLASS: Payment (Abstract) & Subclasses -->
+  <g transform="translate(360, 560)">
+    <rect width="250" height="140" class="class-box" />
+    <rect width="250" height="32" class="class-header" fill="#047857" />
+    <text x="125" y="21" class="class-header-text">&lt;&lt;abstract&gt;&gt; Payment</text>
+    <text x="10" y="52" class="attr-text"># paymentId: String</text>
+    <text x="10" y="68" class="attr-text"># amount: Double</text>
+    <text x="10" y="84" class="attr-text"># paymentDate: DateTime</text>
+    <text x="10" y="100" class="attr-text"># status: PaymentStatus</text>
+    <line x1="0" y1="108" x2="250" y2="108" class="class-section-divider" />
+    <text x="10" y="126" class="method-text">+ processPayment(): Boolean</text>
+  </g>
+  <!-- Order -> Payment (1 to 1) -->
+  <line x1="485" y1="490" x2="485" y2="560" class="assoc-line" />
+  <text x="495" y="505" class="multiplicity">1</text>
+  <text x="495" y="545" class="multiplicity">1</text>
+
+  <!-- Subclasses of Payment -->
+  <!-- CashPayment -->
+  <g transform="translate(200, 750)">
+    <rect width="180" height="90" class="class-box" />
+    <rect width="180" height="28" class="class-header" fill="#059669" />
+    <text x="90" y="19" class="class-header-text" font-size="13">CashPayment</text>
+    <text x="10" y="46" class="attr-text">- tenderedAmount: Double</text>
+    <text x="10" y="62" class="attr-text">- changeDue: Double</text>
+    <text x="10" y="80" class="method-text">+ processPayment(): Bool</text>
+  </g>
+  <line x1="290" y1="750" x2="420" y2="700" class="inheritance-line" />
+
+  <!-- CreditCardPayment -->
+  <g transform="translate(400, 750)">
+    <rect width="200" height="105" class="class-box" />
+    <rect width="200" height="28" class="class-header" fill="#059669" />
+    <text x="100" y="19" class="class-header-text" font-size="13">CreditCardPayment</text>
+    <text x="10" y="46" class="attr-text">- cardNumberMasked: String</text>
+    <text x="10" y="62" class="attr-text">- cardHolder: String</text>
+    <text x="10" y="78" class="attr-text">- authTransactionId: String</text>
+    <text x="10" y="96" class="method-text">+ processPayment(): Bool</text>
+  </g>
+  <line x1="485" y1="750" x2="485" y2="700" class="inheritance-line" />
+
+  <!-- DigitalWalletPayment -->
+  <g transform="translate(620, 750)">
+    <rect width="200" height="90" class="class-box" />
+    <rect width="200" height="28" class="class-header" fill="#059669" />
+    <text x="100" y="19" class="class-header-text" font-size="13">DigitalWalletPayment</text>
+    <text x="10" y="46" class="attr-text">- provider: String // Fawry/VF</text>
+    <text x="10" y="62" class="attr-text">- walletPhone: String</text>
+    <text x="10" y="80" class="method-text">+ processPayment(): Bool</text>
+  </g>
+  <line x1="680" y1="750" x2="550" y2="700" class="inheritance-line" />
+
+  <!-- CLASS: TableReservation -->
+  <g transform="translate(30, 480)">
+    <rect width="240" height="200" class="class-box" />
+    <rect width="240" height="32" class="class-header" fill="#c026d3" />
+    <text x="120" y="21" class="class-header-text">TableReservation</text>
+    <text x="10" y="52" class="attr-text">- reservationId: String</text>
+    <text x="10" y="68" class="attr-text">- guestName: String</text>
+    <text x="10" y="84" class="attr-text">- guestPhone: String</text>
+    <text x="10" y="100" class="attr-text">- reserveDate: Date</text>
+    <text x="10" y="116" class="attr-text">- timeSlot: String</text>
+    <text x="10" y="132" class="attr-text">- partySize: Integer</text>
+    <text x="10" y="148" class="attr-text">- seatingZone: SeatingZone</text>
+    <text x="10" y="164" class="attr-text">- status: ReserveStatus</text>
+    <line x1="0" y1="172" x2="240" y2="172" class="class-section-divider" />
+    <text x="10" y="190" class="method-text">+ confirmBooking(): Void</text>
+  </g>
+  <!-- Customer -> TableReservation (1 to 0..*) -->
+  <line x1="150" y1="410" x2="150" y2="480" class="assoc-line" />
+  <text x="160" y="425" class="multiplicity">1</text>
+  <text x="160" y="465" class="multiplicity">0..*</text>
+
+  <!-- CLASS: Review -->
+  <g transform="translate(710, 480)">
+    <rect width="220" height="150" class="class-box" />
+    <rect width="220" height="32" class="class-header" fill="#e11d48" />
+    <text x="110" y="21" class="class-header-text">Review</text>
+    <text x="10" y="52" class="attr-text">- reviewId: String</text>
+    <text x="10" y="68" class="attr-text">- customerName: String</text>
+    <text x="10" y="84" class="attr-text">- ratingStars: Integer (1-5)</text>
+    <text x="10" y="100" class="attr-text">- comment: String</text>
+    <text x="10" y="116" class="attr-text">- createdAt: DateTime</text>
+    <line x1="0" y1="124" x2="220" y2="124" class="class-section-divider" />
+    <text x="10" y="142" class="method-text">+ publishReview(): Void</text>
+  </g>
+
+  <!-- CLASS: LocalStorageDataStore (Singleton Repository) -->
+  <g transform="translate(980, 560)">
+    <rect width="280" height="180" class="class-box" />
+    <rect width="280" height="32" class="class-header" fill="#334155" />
+    <text x="140" y="21" class="class-header-text">&lt;&lt;Singleton&gt;&gt; RestaurantDataStore</text>
+    <text x="10" y="52" class="attr-text">- instance: RestaurantDataStore</text>
+    <text x="10" y="68" class="attr-text">- storageKey: String = "WL_DATA"</text>
+    <line x1="0" y1="76" x2="280" y2="76" class="class-section-divider" />
+    <text x="10" y="94" class="method-text">+ getAllOrders(): List&lt;Order&gt;</text>
+    <text x="10" y="110" class="method-text">+ saveOrder(order): Boolean</text>
+    <text x="10" y="126" class="method-text">+ getMenuItems(): List&lt;MenuItem&gt;</text>
+    <text x="10" y="142" class="method-text">+ getReservations(): List&lt;Reserve&gt;</text>
+    <text x="10" y="158" class="method-text">+ syncState(): Void</text>
+  </g>
+</svg>

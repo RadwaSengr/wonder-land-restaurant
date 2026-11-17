@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 950 480" width="950" height="480">
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .state-box { fill: #ffffff; stroke: #701a75; stroke-width: 2; rx: 14; }
+      .state-header { fill: #a21caf; rx: 12; }
+      .state-name { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5px; font-weight: bold; fill: #ffffff; text-anchor: middle; }
+      .state-body-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; fill: #334155; }
+      .trans-line { stroke: #a21caf; stroke-width: 1.8; marker-end: url(#statePurpArrow); }
+      .trans-cancel { stroke: #e11d48; stroke-width: 1.8; stroke-dasharray: 5,4; marker-end: url(#stateCancelArrow2); }
+      .trans-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: 600; fill: #0f172a; }
+      .start-node { fill: #0f172a; }
+      .end-outer { fill: none; stroke: #0f172a; stroke-width: 2; }
+      .end-inner { fill: #0f172a; }
+    </style>
+    <marker id="statePurpArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#a21caf" />
+    </marker>
+    <marker id="stateCancelArrow2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#e11d48" />
+    </marker>
+  </defs>
+
+  <rect width="100%" height="100%" class="bg" />
+
+  <text x="475" y="35" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="bold" fill="#0f172a" text-anchor="middle">State Machine Diagram: Table Reservation Lifecycle</text>
+
+  <!-- Start -->
+  <circle cx="50" cy="150" r="14" class="start-node" />
+  <line x1="64" y1="150" x2="120" y2="150" class="trans-line" />
+  <text x="90" y="140" class="trans-text" text-anchor="middle">request()</text>
+
+  <!-- State 1: Requested -->
+  <g transform="translate(120, 110)">
+    <rect width="150" height="80" class="state-box" />
+    <rect width="150" height="28" class="state-header" />
+    <text x="75" y="19" class="state-name">Requested</text>
+    <text x="10" y="48" class="state-body-text">entry / checkAvailability()</text>
+    <text x="10" y="66" class="state-body-text">exit / holdTable()</text>
+  </g>
+
+  <line x1="270" y1="150" x2="350" y2="150" class="trans-line" />
+  <text x="310" y="140" class="trans-text" text-anchor="middle">autoConfirm()</text>
+
+  <!-- State 2: Confirmed -->
+  <g transform="translate(350, 110)">
+    <rect width="150" height="80" class="state-box" />
+    <rect width="150" height="28" class="state-header" fill="#0284c7" />
+    <text x="75" y="19" class="state-name">Confirmed</text>
+    <text x="10" y="48" class="state-body-text">entry / sendSMSAlert()</text>
+    <text x="10" y="66" class="state-body-text">do / reserveSeatingZone()</text>
+  </g>
+
+  <line x1="500" y1="150" x2="580" y2="150" class="trans-line" />
+  <text x="540" y="140" class="trans-text" text-anchor="middle">guestArrives()</text>
+
+  <!-- State 3: Seated / Occupied -->
+  <g transform="translate(580, 110)">
+    <rect width="150" height="80" class="state-box" />
+    <rect width="150" height="28" class="state-header" fill="#d97706" />
+    <text x="75" y="19" class="state-name">Seated (Active)</text>
+    <text x="10" y="48" class="state-body-text">entry / openTableTab()</text>
+    <text x="10" y="66" class="state-body-text">do / serveMeal()</text>
+  </g>
+
+  <line x1="730" y1="150" x2="800" y2="150" class="trans-line" />
+  <text x="765" y="140" class="trans-text" text-anchor="middle">billSettled()</text>
+
+  <!-- State 4: Completed -->
+  <g transform="translate(800, 110)">
+    <rect width="120" height="80" class="state-box" />
+    <rect width="120" height="28" class="state-header" fill="#059669" />
+    <text x="60" y="19" class="state-name">Completed</text>
+    <text x="10" y="48" class="state-body-text">entry / clearTable()</text>
+    <text x="10" y="66" class="state-body-text">exit / freeSlot()</text>
+  </g>
+
+  <line x1="860" y1="190" x2="860" y2="250" class="trans-line" />
+  <circle cx="860" cy="265" r="14" class="end-outer" />
+  <circle cx="860" cy="265" r="9" class="end-inner" />
+
+  <!-- Cancellation -->
+  <g transform="translate(230, 300)">
+    <rect width="150" height="70" class="state-box" stroke="#e11d48" />
+    <rect width="150" height="26" class="state-header" fill="#e11d48" />
+    <text x="75" y="18" class="state-name">Cancelled</text>
+    <text x="10" y="46" class="state-body-text">entry / releaseHold()</text>
+  </g>
+
+  <path d="M 195 190 L 195 335 L 230 335" fill="none" class="trans-cancel" />
+  <text x="140" y="270" class="trans-text" fill="#e11d48">cancel()</text>
+
+  <path d="M 425 190 L 425 335 L 380 335" fill="none" class="trans-cancel" />
+  <text x="435" y="270" class="trans-text" fill="#e11d48">cancelBooking()</text>
+
+  <line x1="305" y1="370" x2="305" y2="420" class="trans-line" stroke="#e11d48" />
+  <circle cx="305" cy="435" r="14" class="end-outer" />
+  <circle cx="305" cy="435" r="9" class="end-inner" />
+</svg>
