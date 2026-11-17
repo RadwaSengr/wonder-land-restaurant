@@ -3,182 +3,423 @@ const path = require('path');
 const fs = require('fs');
 
 const pptx = new pptxgen();
-pptx.layout = 'LAYOUT_16x9';
-pptx.author = 'Software Engineering Team';
-pptx.company = 'Wonder Land Restaurant System';
-pptx.title = 'Wonder Land Restaurant & Food Ordering Management System - UML & Software Engineering Project';
+
+// Enforce exact 16:9 widescreen dimensions (13.333 x 7.5 inches) for WPS Office, Microsoft PowerPoint, and Keynote
+pptx.defineLayout({ name: 'WIDESCREEN_16_9', width: 13.333, height: 7.5 });
+pptx.layout = 'WIDESCREEN_16_9';
+
+pptx.author = 'Wonder Land Software Engineering Team';
+pptx.company = 'Wonder Land Restaurant & Culinary Art';
+pptx.title = 'Wonder Land Restaurant Management System - Software Engineering & UML Architecture';
 
 // Color Palette
-const NAVY = '0F172A';
-const SLATE = '1E293B';
-const GOLD = 'E4B95B';
-const DARK_GOLD = 'B45309';
-const LIGHT_BG = 'F8FAFC';
+const NAVY = '0A1128';          // Deep luxury midnight blue
+const SLATE_DARK = '1C2541';    // Dark slate card surface
+const SLATE_LIGHT = '3A506B';   // Medium slate for badges
+const GOLD = 'E4B95B';          // Gourmet warm gold
+const GOLD_LIGHT = 'FDF6E2';    // Pale warm gold for highlight cards
+const GOLD_AMBER = 'D97706';    // Deep amber for warnings and triggers
 const WHITE = 'FFFFFF';
-const MUTED = '64748B';
-const SUCCESS = '16A34A';
+const LIGHT_BG = 'F8FAFC';      // Soft alabaster background
+const BORDER_LIGHT = 'E2E8F0';
+const TEXT_DARK = '0F172A';
+const TEXT_MUTED = '64748B';
+const SUCCESS = '10B981';
 const BLUE = '2563EB';
 const PURPLE = '7C3AED';
-const RED = 'DC2626';
 
-// Slide 1: Title Slide (Dark Luxury Theme)
-let s1 = pptx.addSlide();
-s1.background = { color: NAVY };
+const logoPath = path.join(__dirname, 'img', 'logo.png');
+const homeBgPath = path.join(__dirname, 'img', 'home_bg.jpeg');
+const aboutImgPath = path.join(__dirname, 'img', 'about_img.png');
+const margheritaPath = path.join(__dirname, 'img', 'margherita_authentic.jpg');
 
-s1.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: 0.35, h: 7.5, fill: { color: GOLD } });
-s1.addShape(pptx.ShapeType.rect, { x: 0.35, y: 0, w: 12.98, h: 0.15, fill: { color: GOLD } });
-
-s1.addText('🍽️ WONDER LAND RESTAURANT SYSTEM', {
-    x: 1.0, y: 1.1, w: 11.3, h: 0.5,
-    fontSize: 18, fontFace: 'Segoe UI', color: GOLD, bold: true, letterSpacing: 2
-});
-
-s1.addText('Software Engineering & UML System Architecture', {
-    x: 1.0, y: 1.6, w: 11.3, h: 1.2,
-    fontSize: 34, fontFace: 'Segoe UI', color: WHITE, bold: true, breakLine: true
-});
-
-s1.addText('Comprehensive UML Models, Use Case Specifications & Fully Realized GUI Implementation', {
-    x: 1.0, y: 3.0, w: 11.3, h: 0.6,
-    fontSize: 17, fontFace: 'Segoe UI', color: '94A3B8'
-});
-
-s1.addShape(pptx.ShapeType.roundRect, { x: 1.0, y: 4.1, w: 11.3, h: 2.6, fill: { color: SLATE }, line: { color: GOLD, width: 1.5 }, rectRadius: 0.15 });
-
-s1.addText('KEY ACADEMIC DELIVERABLES & VERIFIED SYSTEM HIGHLIGHTS:', {
-    x: 1.4, y: 4.3, w: 10.5, h: 0.35,
-    fontSize: 13, fontFace: 'Segoe UI', color: GOLD, bold: true
-});
-
-const s1Points = [
-    '• Complete Set of 10 Visual UML Models (Use Case, Class, Sequences, Activity, State Machine, Component, Deployment, ERD)',
-    '• Rigorous Use Case Specification: UC-05 Place Order via Cash on Delivery (COD) with complete 10-step flow and exception handling',
-    '• Interactive Customer Experience: Dynamic search, category tabs, cart drawer, COD checkout modal, and 5-stage live order tracker',
-    '• Staff & Kitchen Management Portal: Real-time telemetry KPIs, order dispatch, menu catalog CRUD, and 1-Click Excel (.csv) export',
-    '• 100% Traceability & Compliance: Every modeled UML step is physically implemented, functional, and verifiable in the live application.'
-];
-s1.addText(s1Points.join('\n'), {
-    x: 1.4, y: 4.75, w: 10.5, h: 1.8,
-    fontSize: 12, fontFace: 'Segoe UI', color: WHITE, lineSpacing: 20
-});
-
-// Helper for Content Slides
-function createContentSlide(title, category) {
+// ===========================================================================
+// Helper: Create Standard Content Slide with Professional Header & Footer
+// ===========================================================================
+function createSlide(title, categoryBadge, darkTheme = false) {
     let slide = pptx.addSlide();
-    slide.background = { color: LIGHT_BG };
 
-    // Header bar
-    slide.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: 13.33, h: 1.1, fill: { color: NAVY } });
-    slide.addShape(pptx.ShapeType.rect, { x: 0, y: 1.05, w: 13.33, h: 0.05, fill: { color: GOLD } });
-
-    slide.addText(category.toUpperCase(), {
-        x: 0.8, y: 0.15, w: 10, h: 0.3,
-        fontSize: 11, fontFace: 'Segoe UI', color: GOLD, bold: true, letterSpacing: 1.5
+    // 1. Full-Bleed Background Rectangle
+    slide.addShape(pptx.ShapeType.rect, {
+        x: 0, y: 0, w: 13.333, h: 7.5,
+        fill: { color: darkTheme ? NAVY : LIGHT_BG }
     });
 
+    // 2. Elegant Top Header Banner
+    slide.addShape(pptx.ShapeType.rect, {
+        x: 0, y: 0, w: 13.333, h: 1.15,
+        fill: { color: NAVY }
+    });
+    slide.addShape(pptx.ShapeType.rect, {
+        x: 0, y: 1.12, w: 13.333, h: 0.04,
+        fill: { color: GOLD }
+    });
+
+    // Logo in Header
+    if (fs.existsSync(logoPath)) {
+        slide.addImage({ path: logoPath, x: 0.6, y: 0.18, w: 0.8, h: 0.8 });
+    }
+
+    // Category Pill / Tag
+    slide.addText(categoryBadge.toUpperCase(), {
+        x: 1.6, y: 0.22, w: 8.5, h: 0.28,
+        fontSize: 10, fontFace: 'Segoe UI', color: GOLD, bold: true, letterSpacing: 1.5
+    });
+
+    // Title
     slide.addText(title, {
-        x: 0.8, y: 0.42, w: 11.5, h: 0.55,
-        fontSize: 22, fontFace: 'Segoe UI', color: WHITE, bold: true
+        x: 1.6, y: 0.48, w: 10.5, h: 0.55,
+        fontSize: 21, fontFace: 'Segoe UI', color: WHITE, bold: true
+    });
+
+    // System Branding Badge in Top Right
+    slide.addShape(pptx.ShapeType.roundRect, {
+        x: 10.8, y: 0.35, w: 1.9, h: 0.45,
+        fill: { color: SLATE_DARK }, line: { color: GOLD, width: 1 }, rectRadius: 0.1
+    });
+    slide.addText('WONDER LAND', {
+        x: 10.8, y: 0.45, w: 1.9, h: 0.25,
+        fontSize: 10, fontFace: 'Segoe UI', color: GOLD, bold: true, align: 'center', letterSpacing: 1
     });
 
     // Footer
-    slide.addText('Wonder Land Restaurant Management System • Software Engineering Project Deliverable', {
-        x: 0.8, y: 7.1, w: 10, h: 0.3,
-        fontSize: 10, fontFace: 'Segoe UI', color: MUTED
+    slide.addShape(pptx.ShapeType.line, {
+        x: 0.6, y: 7.05, w: 12.133, h: 0,
+        line: { color: darkTheme ? '1E293B' : BORDER_LIGHT, width: 1 }
+    });
+    slide.addText('Wonder Land Restaurant • Software Engineering & UML System Architecture Specification', {
+        x: 0.6, y: 7.12, w: 9.0, h: 0.3,
+        fontSize: 9.5, fontFace: 'Segoe UI', color: darkTheme ? '64748B' : TEXT_MUTED
+    });
+    slide.addText('Confidential • Academic Deliverable', {
+        x: 9.6, y: 7.12, w: 3.1, h: 0.3,
+        fontSize: 9.5, fontFace: 'Segoe UI', color: darkTheme ? '64748B' : TEXT_MUTED, align: 'right'
     });
 
     return slide;
 }
 
-// Slide 2: Project Overview & Executive Summary
-let s2 = createContentSlide('Executive Summary & Problem Statement', 'Project Initiation');
-s2.addShape(pptx.ShapeType.roundRect, { x: 0.8, y: 1.35, w: 5.6, h: 5.4, fill: { color: WHITE }, line: { color: 'E2E8F0', width: 1.2 }, rectRadius: 0.15 });
-s2.addText('🚨 The Traditional Dining Dilemma', { x: 1.1, y: 1.55, w: 5.0, h: 0.4, fontSize: 16, fontFace: 'Segoe UI', color: RED, bold: true });
-s2.addText([
-    '• Manual Phone Reservations: Lead to double bookings, unrecorded guest preferences, and high no-show rates without confirmation.',
-    '• Disconnected Delivery & Kitchen: Inability for customers to know the exact status of their food (Cooking vs Dispatched vs In Transit).',
-    '• Static Paper Menus: Inability to instantly update prices, highlight seasonal chef specials, or mark sold-out dishes dynamically.',
-    '• Lack of Analytics & Excel Audits: Restaurant managers lack real-time visibility into daily revenue, bestselling dishes, and exportable financial audits.'
-].join('\n\n'), { x: 1.1, y: 2.1, w: 5.0, h: 4.4, fontSize: 12.5, fontFace: 'Segoe UI', color: SLATE, lineSpacing: 20 });
+// ===========================================================================
+// Helper: Create Visual Diagram Showcase Slide
+// ===========================================================================
+function addDiagramSlide(title, category, svgFilename, analysis) {
+    let slide = createSlide(title, category, false);
+    const svgPath = path.join(__dirname, 'docs', 'diagrams', svgFilename);
 
-s2.addShape(pptx.ShapeType.roundRect, { x: 6.8, y: 1.35, w: 5.7, h: 5.4, fill: { color: WHITE }, line: { color: GOLD, width: 1.5 }, rectRadius: 0.15 });
-s2.addText('✨ The Wonder Land Digital Solution', { x: 7.1, y: 1.55, w: 5.1, h: 0.4, fontSize: 16, fontFace: 'Segoe UI', color: DARK_GOLD, bold: true });
-s2.addText([
-    '• Unified Customer Portal: Dynamic menu with live keyword search, category filtering, cart drawer, and frictionless Cash on Delivery (COD) checkout.',
-    '• Visual Order State Machine: Real-time 5-stage tracking (Pending ➔ Confirmed ➔ Cooking ➔ Delivery ➔ Completed) with dynamic cancellation lockouts.',
-    '• Automated Table Reservations: Dedicated zone and time-slot booking with instant verification and host synchronization.',
-    '• Back-Office Administrative Hub: Complete menu CRUD, live kitchen ticket board, revenue telemetry, and 1-Click Excel (.csv) export for audits.',
-    '• Zero-Install Architecture: Pure HTML5/ES6/LocalStorage design running instantly in any standard browser.'
-].join('\n\n'), { x: 7.1, y: 2.1, w: 5.1, h: 4.4, fontSize: 12.5, fontFace: 'Segoe UI', color: SLATE, lineSpacing: 20 });
+    // Left Stage: Large High-Resolution Diagram Container
+    slide.addShape(pptx.ShapeType.roundRect, {
+        x: 0.6, y: 1.35, w: 8.5, h: 5.5,
+        fill: { color: WHITE }, line: { color: BORDER_LIGHT, width: 1.2 }, rectRadius: 0.12
+    });
 
-// Slide 3: Stakeholders & System Actors
-let s3 = createContentSlide('System Stakeholders & Operational Actors', 'Requirements Analysis');
-const actors = [
-    { title: 'Customer / Guest', icon: '👤', color: BLUE, desc: 'Explores culinary menu, places online food orders with Cash on Delivery (COD) or Card, tracks delivery progress via live stepper, reserves tables, and submits dining reviews.' },
-    { title: 'Restaurant Admin / Manager', icon: '🛡️', color: DARK_GOLD, desc: 'Controls menu catalog (CRUD operations), updates dish availability, monitors financial KPIs, audits orders, and exports reports directly to Excel (.csv).' },
-    { title: 'Kitchen Staff / Chef', icon: '👨‍🍳', color: SUCCESS, desc: 'Receives live order tickets, tracks cooking pipeline, transitions order status from Confirmed to "In Kitchen" and "Out for Delivery".' },
-    { title: 'Dining Host / Delivery Courier', icon: '🚚', color: PURPLE, desc: 'Courier performs physical handover and collects Cash on Delivery (COD). Floor host seats arriving dining parties and manages table turnover.' }
-];
-
-actors.forEach((act, idx) => {
-    let col = idx % 2;
-    let row = Math.floor(idx / 2);
-    let x = 0.8 + col * 5.9;
-    let y = 1.35 + row * 2.75;
-
-    s3.addShape(pptx.ShapeType.roundRect, { x: x, y: y, w: 5.7, h: 2.5, fill: { color: WHITE }, line: { color: act.color, width: 1.5 }, rectRadius: 0.15 });
-    s3.addText(`${act.icon} Actor: ${act.title}`, { x: x + 0.3, y: y + 0.25, w: 5.1, h: 0.35, fontSize: 16, fontFace: 'Segoe UI', color: act.color, bold: true });
-    s3.addText(act.desc, { x: x + 0.3, y: y + 0.7, w: 5.1, h: 1.6, fontSize: 12.5, fontFace: 'Segoe UI', color: SLATE, lineSpacing: 20 });
-});
-
-// Helper for Visual Diagram Slides
-function addVisualDiagramSlide(title, category, svgPath, metadata) {
-    let slide = createContentSlide(title, category);
-
-    // Left Area: Diagram Image
     if (fs.existsSync(svgPath)) {
-        slide.addImage({ path: svgPath, x: 0.8, y: 1.35, w: 7.5, h: 5.4 });
-    } else {
-        slide.addShape(pptx.ShapeType.roundRect, { x: 0.8, y: 1.35, w: 7.5, h: 5.4, fill: { color: WHITE }, line: { color: 'CBD5E1', width: 1 }, rectRadius: 0.12 });
-        slide.addText(`[Visual Diagram: ${path.basename(svgPath)}]`, { x: 1.0, y: 3.5, w: 7.1, h: 0.5, fontSize: 16, fontFace: 'Segoe UI', color: MUTED, align: 'center' });
+        slide.addImage({ path: svgPath, x: 0.7, y: 1.45, w: 8.3, h: 5.3 });
     }
 
-    // Right Area: Specification & Engineering Analysis Card
-    slide.addShape(pptx.ShapeType.roundRect, { x: 8.5, y: 1.35, w: 4.0, h: 5.4, fill: { color: WHITE }, line: { color: metadata.cardColor || GOLD, width: 1.5 }, rectRadius: 0.12 });
-
-    slide.addText(metadata.cardTitle, {
-        x: 8.75, y: 1.55, w: 3.5, h: 0.4,
-        fontSize: 15, fontFace: 'Segoe UI', color: metadata.cardColor || DARK_GOLD, bold: true
+    // Right Stage: Executive Engineering & Traceability Card
+    slide.addShape(pptx.ShapeType.roundRect, {
+        x: 9.25, y: 1.35, w: 3.48, h: 5.5,
+        fill: { color: WHITE }, line: { color: analysis.accentColor || GOLD, width: 1.5 }, rectRadius: 0.12
     });
 
-    slide.addText(metadata.bullets.join('\n\n'), {
-        x: 8.75, y: 2.05, w: 3.5, h: 4.4,
-        fontSize: 11.5, fontFace: 'Segoe UI', color: SLATE, lineSpacing: 17
+    // Card Header Pill
+    slide.addShape(pptx.ShapeType.roundRect, {
+        x: 9.45, y: 1.55, w: 3.08, h: 0.45,
+        fill: { color: analysis.accentColor ? analysis.accentColor : SLATE_DARK }, rectRadius: 0.08
+    });
+    slide.addText(analysis.badge || 'ENGINEERING SPECIFICATION', {
+        x: 9.45, y: 1.62, w: 3.08, h: 0.3,
+        fontSize: 10.5, fontFace: 'Segoe UI', color: WHITE, bold: true, align: 'center', letterSpacing: 1
+    });
+
+    // Card Title
+    slide.addText(analysis.title, {
+        x: 9.45, y: 2.15, w: 3.08, h: 0.5,
+        fontSize: 14.5, fontFace: 'Segoe UI', color: TEXT_DARK, bold: true
+    });
+
+    // Key Bullet Points
+    slide.addText(analysis.bullets.join('\n\n'), {
+        x: 9.45, y: 2.7, w: 3.08, h: 3.3,
+        fontSize: 11, fontFace: 'Segoe UI', color: TEXT_DARK, lineSpacing: 16
+    });
+
+    // Live Code Traceability Footer Tag inside card
+    slide.addShape(pptx.ShapeType.roundRect, {
+        x: 9.45, y: 6.15, w: 3.08, h: 0.55,
+        fill: { color: GOLD_LIGHT }, line: { color: GOLD, width: 1 }, rectRadius: 0.08
+    });
+    slide.addText(`💻 Code: ${analysis.codeFile}`, {
+        x: 9.55, y: 6.25, w: 2.88, h: 0.35,
+        fontSize: 10, fontFace: 'Consolas', color: GOLD_AMBER, bold: true
     });
 
     return slide;
 }
 
-// Slide 4: Visual UML - Use Case Diagram
-addVisualDiagramSlide(
+// ===========================================================================
+// SLIDE 1: Title Slide (Luxury Gourmet Dark Theme)
+// ===========================================================================
+let s1 = pptx.addSlide();
+s1.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: 13.333, h: 7.5, fill: { color: NAVY } });
+
+// Background Image Accent on Right Side
+if (fs.existsSync(homeBgPath)) {
+    s1.addImage({ path: homeBgPath, x: 7.0, y: 0, w: 6.333, h: 7.5 });
+    // Gradient overlay box
+    s1.addShape(pptx.ShapeType.rect, {
+        x: 7.0, y: 0, w: 6.333, h: 7.5,
+        fill: { color: NAVY, transparency: 35 }
+    });
+}
+
+// Golden Decorative Left Border
+s1.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: 0.35, h: 7.5, fill: { color: GOLD } });
+
+// Logo on Left
+if (fs.existsSync(logoPath)) {
+    s1.addImage({ path: logoPath, x: 1.0, y: 0.9, w: 1.5, h: 1.5 });
+}
+
+// Brand Badge
+s1.addShape(pptx.ShapeType.roundRect, {
+    x: 2.7, y: 1.35, w: 4.8, h: 0.45,
+    fill: { color: SLATE_DARK }, line: { color: GOLD, width: 1.2 }, rectRadius: 0.1
+});
+s1.addText('⭐ FINE DINING & SOFTWARE ENGINEERING SYSTEM', {
+    x: 2.7, y: 1.45, w: 4.8, h: 0.25,
+    fontSize: 10.5, fontFace: 'Segoe UI', color: GOLD, bold: true, align: 'center', letterSpacing: 1.5
+});
+
+// Title & Subtitle
+s1.addText('Wonder Land Restaurant', {
+    x: 1.0, y: 2.7, w: 6.8, h: 1.0,
+    fontSize: 38, fontFace: 'Segoe UI', color: WHITE, bold: true
+});
+s1.addText('Integrated Food Ordering, Table Reservation & Back-Office Management System', {
+    x: 1.0, y: 3.75, w: 6.5, h: 0.9,
+    fontSize: 18, fontFace: 'Segoe UI', color: GOLD, bold: true, breakLine: true
+});
+s1.addText('Complete UML Software Design Document, Use Case Specifications & Fully Realized GUI Implementation', {
+    x: 1.0, y: 4.8, w: 6.5, h: 0.6,
+    fontSize: 13, fontFace: 'Segoe UI', color: '94A3B8'
+});
+
+// 4 Creative Metric Pills at the bottom
+const pills = [
+    { text: '📐 10 UML Models', color: BLUE },
+    { text: '💳 COD & Multi-Payment', color: GOLD_AMBER },
+    { text: '📍 Live 5-Stage Stepper', color: PURPLE },
+    { text: '📊 1-Click Excel Audit', color: SUCCESS }
+];
+
+pills.forEach((p, idx) => {
+    let px = 1.0 + idx * 2.85;
+    s1.addShape(pptx.ShapeType.roundRect, {
+        x: px, y: 5.75, w: 2.65, h: 0.8,
+        fill: { color: SLATE_DARK }, line: { color: p.color, width: 1.5 }, rectRadius: 0.1
+    });
+    s1.addText(p.text, {
+        x: px, y: 5.95, w: 2.65, h: 0.4,
+        fontSize: 12, fontFace: 'Segoe UI', color: WHITE, bold: true, align: 'center'
+    });
+});
+
+// ===========================================================================
+// SLIDE 2: Executive Summary & Project Motivation
+// ===========================================================================
+let s2 = createSlide('Executive Summary & Project Motivation', 'Project Initiation & Domain');
+
+// Card 1: Restaurant Heritage & Food Visual
+s2.addShape(pptx.ShapeType.roundRect, {
+    x: 0.6, y: 1.4, w: 3.8, h: 5.4,
+    fill: { color: WHITE }, line: { color: GOLD, width: 1.5 }, rectRadius: 0.12
+});
+if (fs.existsSync(aboutImgPath)) {
+    s2.addImage({ path: aboutImgPath, x: 0.75, y: 1.55, w: 3.5, h: 2.1 });
+}
+s2.addShape(pptx.ShapeType.roundRect, {
+    x: 0.8, y: 3.8, w: 3.4, h: 0.35,
+    fill: { color: NAVY }, rectRadius: 0.08
+});
+s2.addText('🍽️ CULINARY EXCELLENCE', {
+    x: 0.8, y: 3.86, w: 3.4, h: 0.22,
+    fontSize: 10.5, fontFace: 'Segoe UI', color: GOLD, bold: true, align: 'center', letterSpacing: 1
+});
+s2.addText([
+    '• 20+ Years Heritage: Wood-fired Neapolitan pizzas, prime steaks, artisan seafood pasta.',
+    '• 3 Dining Zones: Seaside Terrace, VIP Private Booths, and Grand Hall.',
+    '• Digital Modernization: Connecting gourmet dining with seamless home delivery.'
+].join('\n\n'), { x: 0.8, y: 4.3, w: 3.4, h: 2.3, fontSize: 11, fontFace: 'Segoe UI', color: TEXT_DARK, lineSpacing: 16 });
+
+// Card 2: Traditional Dining Pain Points
+s2.addShape(pptx.ShapeType.roundRect, {
+    x: 4.75, y: 1.4, w: 3.8, h: 5.4,
+    fill: { color: WHITE }, line: { color: 'FCA5A5', width: 1.2 }, rectRadius: 0.12
+});
+s2.addShape(pptx.ShapeType.roundRect, {
+    x: 4.95, y: 1.6, w: 3.4, h: 0.4,
+    fill: { color: 'DC2626' }, rectRadius: 0.08
+});
+s2.addText('🚨 TRADITIONAL PAIN POINTS', {
+    x: 4.95, y: 1.68, w: 3.4, h: 0.25,
+    fontSize: 11, fontFace: 'Segoe UI', color: WHITE, bold: true, align: 'center', letterSpacing: 1
+});
+s2.addText([
+    '• Manual Phone Reservations: Lead to double bookings, unrecorded preferences, and lost guest history.',
+    '• Blind Food Tracking: Customers have no real-time visibility into whether their dish is in prep or dispatched.',
+    '• Static Paper Menus: Inability to instantly reflect sold-out items or adjust seasonal chef prices.',
+    '• Zero Financial Audits: Manual pen-and-paper order books prevent automated sales and tax analytics.'
+].join('\n\n'), { x: 4.95, y: 2.2, w: 3.4, h: 4.4, fontSize: 11.5, fontFace: 'Segoe UI', color: TEXT_DARK, lineSpacing: 17 });
+
+// Card 3: The Wonder Land Digital Platform
+s2.addShape(pptx.ShapeType.roundRect, {
+    x: 8.9, y: 1.4, w: 3.8, h: 5.4,
+    fill: { color: WHITE }, line: { color: GOLD, width: 1.5 }, rectRadius: 0.12
+});
+s2.addShape(pptx.ShapeType.roundRect, {
+    x: 9.1, y: 1.6, w: 3.4, h: 0.4,
+    fill: { color: GOLD_AMBER }, rectRadius: 0.08
+});
+s2.addText('✨ THE WONDER LAND SOLUTION', {
+    x: 9.1, y: 1.68, w: 3.4, h: 0.25,
+    fontSize: 11, fontFace: 'Segoe UI', color: WHITE, bold: true, align: 'center', letterSpacing: 1
+});
+s2.addText([
+    '• Frictionless Customer Experience: Dynamic keyword search, category tabs, cart drawer, and Cash on Delivery (COD).',
+    '• Visual Order State Machine: Real-time 5-stage tracking (Pending ➔ Confirmed ➔ Cooking ➔ Delivery ➔ Completed).',
+    '• Automated Table Reservations: Instant zone and time-slot booking with live host synchronization.',
+    '• Back-Office Management Hub: Menu CRUD, kitchen ticket queue, and 1-Click Excel (.csv) report export.'
+].join('\n\n'), { x: 9.1, y: 2.2, w: 3.4, h: 4.4, fontSize: 11.5, fontFace: 'Segoe UI', color: TEXT_DARK, lineSpacing: 17 });
+
+// ===========================================================================
+// SLIDE 3: System Stakeholders & Operational Actors
+// ===========================================================================
+let s3 = createSlide('Operational Actors & Stakeholder Ecosystem', 'Requirements Engineering');
+
+const actorsList = [
+    {
+        title: 'Customer / Online Guest', icon: '👤', color: BLUE,
+        role: 'Primary External Actor',
+        duties: 'Explores culinary catalog, manages cart quantities, places orders with Cash on Delivery (COD) or Card, monitors live status on 5-node stepper, and books dining tables.'
+    },
+    {
+        title: 'Restaurant Admin / Manager', icon: '🛡️', color: GOLD_AMBER,
+        role: 'System Management Actor',
+        duties: 'Authenticates via secure PIN (admin123), controls menu catalog (Full CRUD), updates dish availability (Available / Sold Out), and exports Excel audit reports.'
+    },
+    {
+        title: 'Kitchen Staff / Executive Chef', icon: '👨‍🍳', color: SUCCESS,
+        role: 'Fulfillment & Production Actor',
+        duties: 'Inspects live order ticket queue, transitions orders from "Confirmed" to "In Kitchen" (Cooking actively), and packs orders for delivery dispatch.'
+    },
+    {
+        title: 'Delivery Courier & Floor Host', icon: '🚚', color: PURPLE,
+        role: 'Field & Logistics Actor',
+        duties: 'Courier delivers meals and collects Cash on Delivery (COD). Floor host seats arriving guests in booked dining zones (Main Hall, Seaside, VIP).'
+    }
+];
+
+actorsList.forEach((act, idx) => {
+    let col = idx % 2;
+    let row = Math.floor(idx / 2);
+    let x = 0.6 + col * 6.2;
+    let y = 1.45 + row * 2.75;
+
+    s3.addShape(pptx.ShapeType.roundRect, {
+        x: x, y: y, w: 5.9, h: 2.5,
+        fill: { color: WHITE }, line: { color: act.color, width: 1.5 }, rectRadius: 0.12
+    });
+
+    s3.addShape(pptx.ShapeType.roundRect, {
+        x: x + 0.3, y: y + 0.25, w: 5.3, h: 0.45,
+        fill: { color: act.color }, rectRadius: 0.08
+    });
+    s3.addText(`${act.icon} Actor: ${act.title}`, {
+        x: x + 0.4, y: y + 0.32, w: 5.1, h: 0.3,
+        fontSize: 13.5, fontFace: 'Segoe UI', color: WHITE, bold: true
+    });
+
+    s3.addText(`Role Scope: ${act.role}`, {
+        x: x + 0.3, y: y + 0.8, w: 5.3, h: 0.3,
+        fontSize: 11, fontFace: 'Segoe UI', color: act.color, bold: true
+    });
+
+    s3.addText(act.duties, {
+        x: x + 0.3, y: y + 1.15, w: 5.3, h: 1.2,
+        fontSize: 11.5, fontFace: 'Segoe UI', color: TEXT_DARK, lineSpacing: 17
+    });
+});
+
+// ===========================================================================
+// SLIDE 4: Layered Architecture & Technology Foundations
+// ===========================================================================
+let s4 = createSlide('Layered System Architecture & Technology Stack', 'System Architecture');
+
+const archTiers = [
+    {
+        title: '1. Presentation Layer (Client Web GUI)',
+        tech: 'Semantic HTML5 • CSS3 Custom Properties (:root) • Responsive Flex/Grid • FontAwesome 6',
+        desc: 'Delivers a responsive user experience across desktop, tablet, and mobile screens. Includes interactive search filters, sliding cart drawer, modal dialogs, and glowing CSS status steppers.'
+    },
+    {
+        title: '2. Application & Controller Engine',
+        tech: 'Vanilla ES6+ JavaScript • Event-Driven Architecture • State Machine • Tax/Total Calculator',
+        desc: 'Executes core restaurant business rules: cart operations, 14% VAT calculation, flat $3 delivery fee, inventory validation, PIN authentication, and live multi-tab synchronization.'
+    },
+    {
+        title: '3. Persistence & Reporting Engine',
+        tech: 'HTML5 LocalStorage Engine • JSON Object Serialization • Excel UTF-8 BOM CSV Exporter',
+        desc: 'Zero-database lightweight client storage guaranteeing persistence across refreshes. Features automated initial seed data and 1-Click Excel spreadsheet generation for financial audits.'
+    }
+];
+
+archTiers.forEach((tier, i) => {
+    s4.addShape(pptx.ShapeType.roundRect, {
+        x: 0.6, y: 1.45 + i * 1.8, w: 12.133, h: 1.6,
+        fill: { color: WHITE }, line: { color: i === 0 ? BLUE : (i === 1 ? GOLD_AMBER : SUCCESS), width: 1.5 }, rectRadius: 0.12
+    });
+
+    s4.addText(tier.title, {
+        x: 0.9, y: 1.6 + i * 1.8, w: 11.5, h: 0.35,
+        fontSize: 15, fontFace: 'Segoe UI', color: i === 0 ? BLUE : (i === 1 ? GOLD_AMBER : SUCCESS), bold: true
+    });
+    s4.addText(`Technologies: ${tier.tech}`, {
+        x: 0.9, y: 1.95 + i * 1.8, w: 11.5, h: 0.3,
+        fontSize: 11.5, fontFace: 'Segoe UI', color: TEXT_MUTED, bold: true
+    });
+    s4.addText(tier.desc, {
+        x: 0.9, y: 2.3 + i * 1.8, w: 11.5, h: 0.65,
+        fontSize: 11.5, fontFace: 'Segoe UI', color: TEXT_DARK
+    });
+});
+
+// ===========================================================================
+// SLIDE 5: Visual UML - Use Case Diagram
+// ===========================================================================
+addDiagramSlide(
     'Visual UML: Use Case Diagram',
     'UML Behavioral Modeling',
-    path.join(__dirname, 'docs', 'diagrams', '01_use_case_diagram.svg'),
+    '01_use_case_diagram.svg',
     {
-        cardTitle: 'Use Case Architecture & Actors',
-        cardColor: BLUE,
+        badge: 'UML USE CASE MODEL',
+        accentColor: BLUE,
+        title: 'Functional Boundary & Actor Goals',
         bullets: [
-            '• System Boundary: Encapsulates all 11 core use cases of the Wonder Land Restaurant System.',
-            '• Primary Actors: Customer (External), Admin/Manager (Internal), Kitchen Chef, and Floor Host.',
+            '• System Boundary: Encompasses all 11 functional use cases of the restaurant ecosystem.',
+            '• Primary Actors: Customer (External Guest), Admin/Manager (Internal), Chef, and Floor Host.',
             '• Core Use Cases: Browse Menu, Manage Cart, Place Order, Track Order, Table Booking, Menu CRUD, Order Dispatch.',
-            '• Dependency Relationships: <<include>> link from Checkout to Process Payment; <<extend>> link to Dietary Category Filters.',
-            '• Traceability: Maps directly to UI actions in index.html and admin.html.'
-        ]
+            '• <<include>> Relationship: UC04 (Checkout) strictly includes UC05 (Process Payment).',
+            '• <<extend>> Relationship: UC01 (Browse Menu) extends UC02 (Dietary Category Filter).'
+        ],
+        codeFile: 'index.html, admin.html, app.js'
     }
 );
 
-// Slide 5: Use Case Specification - UC-05 Place Order (COD)
-let s5 = createContentSlide('Use Case Specification: UC-05 Place Order (COD)', 'Formal Requirements Specification');
+// ===========================================================================
+// SLIDE 6: Use Case Specification - UC-05 Place Order (COD)
+// ===========================================================================
+let s6 = createSlide('Use Case Specification: UC-05 Place Order (COD)', 'Formal Requirements Specification');
 
 const uc05Rows = [
     [
@@ -188,103 +429,122 @@ const uc05Rows = [
     ['Use Case Identifier', 'UC-05: Place Food Order via Cash on Delivery (COD)'],
     ['Primary Actor', 'Customer (External Online Guest)'],
     ['Secondary Actors', 'Restaurant Kitchen Staff (Fulfillment), Delivery Courier (Cash Collector)'],
-    ['Pre-Conditions', '1. Customer has selected >= 1 available dish in active cart.\n2. Delivery address and phone number are valid within the delivery radius.'],
+    ['Pre-Conditions', '1. Customer has selected >= 1 available dish in active cart.\n2. Delivery address and mobile phone are valid within restaurant delivery radius.'],
     ['Trigger', 'Customer opens cart drawer, clicks "Proceed to Checkout", selects "Cash on Delivery", and clicks "Place Order Now".'],
-    ['Main Success Flow (Happy Path)', '1. Customer reviews cart summary (Dishes, Subtotal, 14% VAT, $3 Delivery Fee).\n2. Customer submits Full Name, Mobile Phone, and Delivery Address in Checkout Modal.\n3. Customer selects Payment Option: "Cash on Delivery (COD)".\n4. System validates inputs and checks live inventory availability in RestaurantDataStore.\n5. System instantiates Order entity with unique ID (#WL-xxxx) and status "Pending".\n6. System flags payment as "COD - Collect Upon Handover".\n7. System clears customer active cart and saves order to LocalStorage.\n8. System renders Order Receipt with print action and opens Live Order Tracker.\n9. System broadcasts cross-tab storage event; Admin/Kitchen portal updates dispatch board.'],
-    ['Alternative Flows & Exceptions', '4a. Required input missing: System flags empty input in red and halts submission.\n4b. Dish sold out: System alerts customer to remove unavailable dish before checkout.\n8a. Order cancellation: Customer can cancel while in Pending or Confirmed state.'],
+    ['Main Success Flow (10 Steps)', '1. Customer reviews cart summary (Dishes, Subtotal, 14% VAT, $3 Delivery Fee).\n2. Customer submits Full Name, Mobile Phone, and Delivery Address in Checkout Modal.\n3. Customer selects Payment Option: "Cash on Delivery (COD)".\n4. System validates inputs and checks live inventory availability in RestaurantDataStore.\n5. System instantiates Order entity with unique ID (#WL-xxxx) and status "Pending".\n6. System flags payment as "COD - Collect Upon Physical Handover".\n7. System clears customer active cart and saves order to LocalStorage.\n8. System renders Order Receipt with print action and opens Live Order Tracker.\n9. System broadcasts cross-tab storage event; Admin/Kitchen portal updates dispatch board.\n10. Delivery Courier collects cash upon physical food delivery and marks status "Delivered".'],
+    ['Alternative Flows & Exceptions', '4a. Required input missing: System highlights empty fields and halts submission.\n4b. Dish sold out: System alerts customer to remove unavailable dish before checkout.\n8a. Order cancellation: Customer can cancel while in Pending or Confirmed state.'],
     ['Post-Conditions', 'Order is committed to database; status is visible on customer live stepper; KOT queued in kitchen.']
 ];
 
-s5.addTable(uc05Rows, {
-    x: 0.8, y: 1.35, w: 11.7, h: 5.4,
-    colW: [2.8, 8.9],
+s6.addTable(uc05Rows, {
+    x: 0.6, y: 1.35, w: 12.133, h: 5.5,
+    colW: [2.6, 9.533],
     fontSize: 10.5,
     fontFace: 'Segoe UI',
-    border: { pt: 0.5, color: 'CBD5E1' },
+    border: { pt: 0.5, color: BORDER_LIGHT },
     align: 'left',
     valign: 'middle'
 });
 
-// Slide 6: Visual UML - Class Diagram & Domain Structure
-addVisualDiagramSlide(
+// ===========================================================================
+// SLIDE 7: Visual UML - Class Diagram & Domain Structure
+// ===========================================================================
+addDiagramSlide(
     'Visual UML: Class Diagram & Domain Structure',
     'UML Structural Modeling',
-    path.join(__dirname, 'docs', 'diagrams', '02_class_diagram.svg'),
+    '02_class_diagram.svg',
     {
-        cardTitle: 'Domain Model & OOP Relationships',
-        cardColor: SUCCESS,
+        badge: 'UML DOMAIN CLASS MODEL',
+        accentColor: SUCCESS,
+        title: 'OOP Architecture & Entity Relations',
         bullets: [
             '• Abstract User Base: Common attributes (#id, #fullName, #email, #phone) inherited by Customer and Admin.',
-            '• Order & OrderItem (Composition): Strong lifecycle ownership; Order contains 1..* OrderItem instances and calculates financial totals.',
+            '• Order & OrderItem (Composition): Order owns 1..* OrderItem instances and calculates financial totals (Subtotal, VAT, Delivery).',
             '• MenuItem & Category (Aggregation): Menu items belong to Category; items can be toggled as Available or Sold Out.',
-            '• Polymorphic Payment Hierarchy: Abstract Payment class with concrete subclasses: CashPayment (COD), CreditCardPayment, DigitalWalletPayment.',
+            '• Polymorphic Payment Hierarchy: Abstract Payment class extended by CashPayment (COD), CreditCardPayment, DigitalWalletPayment.',
             '• Referential Integrity: TableReservation and Review models linked to Customer entity.'
-        ]
+        ],
+        codeFile: 'app.js: class Order, OrderItem, MenuItem'
     }
 );
 
-// Slide 7: Visual UML - Sequence Diagram (Checkout & COD Order)
-addVisualDiagramSlide(
+// ===========================================================================
+// SLIDE 8: Visual UML - Sequence Diagram (Checkout & COD Order)
+// ===========================================================================
+addDiagramSlide(
     'Visual UML: Sequence Diagram (Checkout & COD Order)',
     'Dynamic Interaction Modeling',
-    path.join(__dirname, 'docs', 'diagrams', '03_sequence_order_food.svg'),
+    '03_sequence_order_food.svg',
     {
-        cardTitle: 'Checkout & COD Execution Flow',
-        cardColor: BLUE,
+        badge: 'INTERACTION SEQUENCE',
+        accentColor: BLUE,
+        title: 'Customer Checkout & COD Lifelines',
         bullets: [
             '• Participating Lifelines: :Customer, :WebGUI, :CartController, :PaymentGateway, and :RestaurantDataStore.',
-            '• Synchronous Messaging: selectItem() ➔ addItem() ➔ computeCartTotals() self-call updating subtotal, 14% tax, and delivery.',
-            '• COD Verification: Customer selects COD; submitOrder(isCOD: true) validates delivery address and flags pending handover.',
+            '• Synchronous Messaging: selectItem() ➔ addItem() ➔ computeCartTotals() self-call calculating subtotal, 14% tax, and delivery.',
+            '• COD Verification: Customer selects COD; submitOrder(isCOD: true) validates address and flags pending physical handover.',
             '• State Creation: Order persisted with status "Pending" and unique identifier (#WL-xxxx).',
             '• Real-Time Stepper: UI initializes live 5-stage tracker with polling query pollOrderStatus().'
-        ]
+        ],
+        codeFile: 'app.js: placeOrder(), renderOrderTracker()'
     }
 );
 
-// Slide 8: Visual UML - Sequence Diagram (Admin Management & Excel)
-addVisualDiagramSlide(
+// ===========================================================================
+// SLIDE 9: Visual UML - Sequence Diagram (Admin Management & Excel)
+// ===========================================================================
+addDiagramSlide(
     'Visual UML: Sequence Diagram (Admin Management & Excel)',
     'Dynamic Interaction Modeling',
-    path.join(__dirname, 'docs', 'diagrams', '05_sequence_admin_management.svg'),
+    '05_sequence_admin_management.svg',
     {
-        cardTitle: 'Admin Portal & Excel Export Flow',
-        cardColor: DARK_GOLD,
+        badge: 'INTERACTION SEQUENCE',
+        accentColor: GOLD_AMBER,
+        title: 'Admin Hub & Live Excel Export',
         bullets: [
             '• Participating Lifelines: :Admin, :AdminDashboardGUI, :AdminService, and :ExcelExportEngine.',
             '• PIN Authentication: enterAdminPin("admin123") verifies credentials and unlocks back-office telemetry.',
             '• State Machine Mutation: Admin updates order status (e.g., Pending ➔ "Cooking"); broadcasts cross-tab storage event.',
-            '• 1-Click Excel Export: clickExportOrdersExcelBtn() triggers query to database, extracts active order records.',
+            '• 1-Click Excel Export: clickExportOrdersExcelBtn() queries database, extracts active order records.',
             '• CSV Generation: Formats structured CSV with UTF-8 BOM, triggering browser file download "Wonder_Land_Orders_Report.csv".'
-        ]
+        ],
+        codeFile: 'admin.js: handleOrderStatusChange(), exportToExcel()'
     }
 );
 
-// Slide 9: Visual UML - Activity Diagram (End-to-End Workflow)
-addVisualDiagramSlide(
+// ===========================================================================
+// SLIDE 10: Visual UML - Activity Diagram (End-to-End Workflow)
+// ===========================================================================
+addDiagramSlide(
     'Visual UML: Activity Diagram (End-to-End Workflow)',
     'Business Process Modeling',
-    path.join(__dirname, 'docs', 'diagrams', '06_activity_order_processing.svg'),
+    '06_activity_order_processing.svg',
     {
-        cardTitle: 'Swimlane Architecture & Flow',
-        cardColor: PURPLE,
+        badge: 'ACTIVITY SWIMLANES',
+        accentColor: PURPLE,
+        title: 'Customer-to-Kitchen Workflow',
         bullets: [
             '• 4 Parallel Swimlanes: Customer Lane, Web Application (GUI) Lane, Payment Engine Lane, Kitchen & Dispatch Lane.',
             '• Customer Actions: Browse menu ➔ Select dishes ➔ Review cart ➔ Enter address ➔ Select COD or Card.',
             '• Decision Node: [Cash on Delivery] branches directly to instant order confirmation. [Card/Wallet] invokes gateway auth.',
             '• Fork Node: Concurrently triggers: Thread A: Notify customer with live tracker; Thread B: Print kitchen order ticket (KOT).',
             '• Merge Node: Food handover and physical COD collection complete the order lifecycle.'
-        ]
+        ],
+        codeFile: 'app.js, admin.js, style.css'
     }
 );
 
-// Slide 10: Visual UML - State Machine Diagram (Order Lifecycle)
-addVisualDiagramSlide(
+// ===========================================================================
+// SLIDE 11: Visual UML - State Machine Diagram (Order Lifecycle)
+// ===========================================================================
+addDiagramSlide(
     'Visual UML: State Machine Diagram (Order Lifecycle)',
     'Behavioral State Modeling',
-    path.join(__dirname, 'docs', 'diagrams', '08_state_order_lifecycle.svg'),
+    '08_state_order_lifecycle.svg',
     {
-        cardTitle: 'State Transitions & Guard Rules',
-        cardColor: DARK_GOLD,
+        badge: 'BEHAVIORAL STATE MACHINE',
+        accentColor: GOLD_AMBER,
+        title: 'Order States & Cancellation Guards',
         bullets: [
             '• State 1: [PENDING] - Initial state on checkout; KOT queued in kitchen; customer stepper at Node 1.',
             '• State 2: [CONFIRMED] - Kitchen accepts ticket; ingredients validated; customer stepper at Node 2.',
@@ -292,93 +552,117 @@ addVisualDiagramSlide(
             '• State 4: [OUT FOR DELIVERY] - Handed to courier; en route to customer destination coordinates.',
             '• State 5: [DELIVERED] - Handover & COD payment complete; terminal final state.',
             '• Guard Condition: cancelOrder() permitted ONLY when status == Pending || Confirmed.'
-        ]
+        ],
+        codeFile: 'app.js: renderOrderTracker(), cancelOrder()'
     }
 );
 
-// Slide 11: Visual UML - Component Architecture Diagram
-addVisualDiagramSlide(
+// ===========================================================================
+// SLIDE 12: Visual UML - Component Architecture Diagram
+// ===========================================================================
+addDiagramSlide(
     'Visual UML: Component Architecture Diagram',
     'System Structural Architecture',
-    path.join(__dirname, 'docs', 'diagrams', '10_component_diagram.svg'),
+    '10_component_diagram.svg',
     {
-        cardTitle: 'Modular 3-Tier Architecture',
-        cardColor: BLUE,
+        badge: 'COMPONENT SUBSYSTEMS',
+        accentColor: BLUE,
+        title: '3-Tier Subsystems & Interfaces',
         bullets: [
             '• Presentation Subsystem: Customer Portal GUI, Admin Management GUI, Table Reservation Modal.',
             '• Application Logic Subsystem: Order Processing Engine, Menu Catalog Service, Table Allocation Service.',
             '• Special Services: Payment Strategy Gateway, Excel Exporter & Telemetry Engine (handles live CSV downloads).',
             '• Persistence Tier: LocalStorage Persistent Adapter with JSON serialization and Mock Demo Seeder.',
             '• Clean Separation of Concerns: Components communicate through well-defined JavaScript API interfaces.'
-        ]
+        ],
+        codeFile: 'style.css, app.js, admin.js'
     }
 );
 
-// Slide 12: Visual UML - Deployment Diagram (Hardware & Topology)
-addVisualDiagramSlide(
+// ===========================================================================
+// SLIDE 13: Visual UML - Deployment Diagram (Hardware & Topology)
+// ===========================================================================
+addDiagramSlide(
     'Visual UML: Deployment Diagram (Hardware & Topology)',
     'Physical & Network Architecture',
-    path.join(__dirname, 'docs', 'diagrams', '11_deployment_diagram.svg'),
+    '11_deployment_diagram.svg',
     {
-        cardTitle: 'Hardware Nodes & Topology',
-        cardColor: SLATE,
+        badge: 'PHYSICAL DEPLOYMENT',
+        accentColor: SLATE_DARK,
+        title: 'Hardware Nodes & Execution Environment',
         bullets: [
             '• Node 1: Client Workstation / Mobile Device executing Web Browser Runtime (Chrome, Edge, Safari).',
             '• Browser Execution Environment: Holds JavaScript Virtual Machine, DOM Tree, CSSOM, and HTML5 LocalStorage Node.',
             '• Node 2: GitHub Pages / Web Hosting Server delivering static assets (HTML5, CSS3, JS, SVG, JPG).',
             '• Node 3: External CDN Node delivering FontAwesome vector icons and Google Web Fonts over HTTPS (Port 443).',
             '• Zero Server Overhead: Operates without backend runtime requirements; instant client-side execution.'
-        ]
+        ],
+        codeFile: 'index.html, admin.html, .nojekyll'
     }
 );
 
-// Slide 13: Visual UML - Entity-Relationship Diagram (ERD)
-addVisualDiagramSlide(
+// ===========================================================================
+// SLIDE 14: Visual UML - Entity-Relationship Diagram (ERD)
+// ===========================================================================
+addDiagramSlide(
     'Visual UML: Entity-Relationship Diagram (ERD)',
     'Relational Database Modeling',
-    path.join(__dirname, 'docs', 'diagrams', '14_entity_relationship_diagram.svg'),
+    '14_entity_relationship_diagram.svg',
     {
-        cardTitle: 'Database Schema & Cardinalities',
-        cardColor: SUCCESS,
+        badge: 'RELATIONAL DATA MODEL',
+        accentColor: SUCCESS,
+        title: 'Entities, PK/FK Keys & Cardinalities',
         bullets: [
             '• CUSTOMERS (1:N) ORDERS: One customer places multiple orders; FK: customer_id in ORDERS.',
             '• ORDERS (1:N) ORDER_ITEMS (N:1) MENU_ITEMS: Resolves M:N relationship between orders and dishes.',
             '• CATEGORIES (1:N) MENU_ITEMS: Categorizes dishes into Starters, Mains, Pizzas, Desserts; FK: category_id.',
             '• ORDERS (1:1) PAYMENTS: Stores payment method (COD, Card, Wallet), transaction date, amount, and status.',
             '• Primary & Foreign Keys: Fully normalized relational design adhering to 3rd Normal Form (3NF).'
-        ]
+        ],
+        codeFile: 'LocalStorage Key: WONDERLAND_SYSTEM_DB_V1'
     }
 );
 
-// Slide 14: System GUI Implementation - Customer Experience
-let s14 = createContentSlide('System GUI Implementation: Customer Experience', 'GUI Implementation');
-s14.addShape(pptx.ShapeType.roundRect, { x: 0.8, y: 1.35, w: 11.7, h: 5.4, fill: { color: WHITE }, line: { color: 'E2E8F0', width: 1.2 }, rectRadius: 0.15 });
+// ===========================================================================
+// SLIDE 15: System GUI Implementation - Customer Experience
+// ===========================================================================
+let s15 = createSlide('System GUI Implementation: Customer Experience', 'Live GUI Verification');
 
-const custGuiCards = [
+const custFeatures = [
     { title: 'Interactive Menu & Live Search', icon: '🔍', desc: 'Real-time keyword filtering + category tabs (Starters, Mains, Pizzas, Desserts). Cards display photos, prices, ratings, and "Add to Cart".' },
     { title: 'Slide-in Cart Drawer', icon: '🛒', desc: 'Floating badge with live item count. Slide-out panel to adjust quantities, remove dishes, and view subtotal, 14% VAT, and delivery fee.' },
-    { title: 'Frictionless Checkout Modal', icon: '💳', desc: 'Full address capture, special chef notes, and radio choice between Cash on Delivery, Credit Card, and Vodafone Cash/Fawry.' },
+    { title: 'Cash on Delivery Checkout Modal', icon: '💳', desc: 'Full address capture, special chef notes, and radio choice between Cash on Delivery (COD), Credit Card, and Digital Wallets.' },
     { title: 'Live Order Tracker (State Machine)', icon: '📍', desc: 'Search by Order ID (#WL-xxxx). Visual glowing stepper animates through 5 stages with order details and cancel action.' },
     { title: 'Table Reservation Modal', icon: '🍽️', desc: 'Select Date, Time slot, Guest count, and Seating Zone (Main Hall, Seaside Patio, VIP Room) with instant booking ID.' },
     { title: 'Verified Guest Reviews', icon: '⭐', desc: 'Submit ratings and commentary directly from the page; automatically published to live testimonials and persisted.' }
 ];
 
-custGuiCards.forEach((cg, idx) => {
+custFeatures.forEach((cg, idx) => {
     let col = idx % 3;
     let row = Math.floor(idx / 3);
-    let x = 1.1 + col * 3.8;
-    let y = 1.55 + row * 2.55;
+    let x = 0.6 + col * 4.1;
+    let y = 1.45 + row * 2.65;
 
-    s14.addShape(pptx.ShapeType.roundRect, { x: x, y: y, w: 3.6, h: 2.35, fill: { color: LIGHT_BG }, line: { color: GOLD, width: 1.5 }, rectRadius: 0.12 });
-    s14.addText(`${cg.icon} ${cg.title}`, { x: x + 0.2, y: y + 0.2, w: 3.2, h: 0.35, fontSize: 13, fontFace: 'Segoe UI', color: DARK_GOLD, bold: true });
-    s14.addText(cg.desc, { x: x + 0.2, y: y + 0.6, w: 3.2, h: 1.55, fontSize: 11.5, fontFace: 'Segoe UI', color: SLATE, lineSpacing: 18 });
+    s15.addShape(pptx.ShapeType.roundRect, {
+        x: x, y: y, w: 3.9, h: 2.45,
+        fill: { color: WHITE }, line: { color: GOLD, width: 1.5 }, rectRadius: 0.12
+    });
+    s15.addText(`${cg.icon} ${cg.title}`, {
+        x: x + 0.25, y: y + 0.25, w: 3.4, h: 0.35,
+        fontSize: 13, fontFace: 'Segoe UI', color: GOLD_AMBER, bold: true
+    });
+    s15.addText(cg.desc, {
+        x: x + 0.25, y: y + 0.7, w: 3.4, h: 1.6,
+        fontSize: 11.5, fontFace: 'Segoe UI', color: TEXT_DARK, lineSpacing: 18
+    });
 });
 
-// Slide 15: System GUI Implementation - Staff & Admin Portal with Excel Export
-let s15 = createContentSlide('Staff & Admin Portal with Live Excel Export', 'GUI Implementation');
-s15.addShape(pptx.ShapeType.roundRect, { x: 0.8, y: 1.35, w: 11.7, h: 5.4, fill: { color: WHITE }, line: { color: 'E2E8F0', width: 1.2 }, rectRadius: 0.15 });
+// ===========================================================================
+// SLIDE 16: Staff & Admin Portal with Live Excel Export
+// ===========================================================================
+let s16 = createSlide('Staff & Admin Portal with Live Excel Export', 'Live GUI Verification');
 
-const adminGuiCards = [
+const adminFeatures = [
     { title: 'Security Gate PIN Access', icon: '🔒', desc: 'Protected by administrative credentials (default PIN: admin123) with session lock and unlock capabilities.' },
     { title: 'Real-Time KPI Dashboard', icon: '📊', desc: 'Live calculation of Total Sales Revenue, Total Orders Placed, Active Kitchen Queue, and Table Bookings.' },
     { title: '1-Click Excel (.csv) Export', icon: '📗', desc: 'Download complete structured spreadsheet with Order IDs, customer phones, addresses, line items, COD payments, and statuses.' },
@@ -387,22 +671,33 @@ const adminGuiCards = [
     { title: 'Table Reservations Control', icon: '🪑', desc: 'View party size and seating zone; action buttons to Seat arriving guests or Cancel/Free tables.' }
 ];
 
-adminGuiCards.forEach((cg, idx) => {
+adminFeatures.forEach((cg, idx) => {
     let col = idx % 3;
     let row = Math.floor(idx / 3);
-    let x = 1.1 + col * 3.8;
-    let y = 1.55 + row * 2.55;
+    let x = 0.6 + col * 4.1;
+    let y = 1.45 + row * 2.65;
 
-    s15.addShape(pptx.ShapeType.roundRect, { x: x, y: y, w: 3.6, h: 2.35, fill: { color: LIGHT_BG }, line: { color: BLUE, width: 1.5 }, rectRadius: 0.12 });
-    s15.addText(`${cg.icon} ${cg.title}`, { x: x + 0.2, y: y + 0.2, w: 3.2, h: 0.35, fontSize: 13, fontFace: 'Segoe UI', color: BLUE, bold: true });
-    s15.addText(cg.desc, { x: x + 0.2, y: y + 0.6, w: 3.2, h: 1.55, fontSize: 11.5, fontFace: 'Segoe UI', color: SLATE, lineSpacing: 18 });
+    s16.addShape(pptx.ShapeType.roundRect, {
+        x: x, y: y, w: 3.9, h: 2.45,
+        fill: { color: WHITE }, line: { color: BLUE, width: 1.5 }, rectRadius: 0.12
+    });
+    s16.addText(`${cg.icon} ${cg.title}`, {
+        x: x + 0.25, y: y + 0.25, w: 3.4, h: 0.35,
+        fontSize: 13, fontFace: 'Segoe UI', color: BLUE, bold: true
+    });
+    s16.addText(cg.desc, {
+        x: x + 0.25, y: y + 0.7, w: 3.4, h: 1.6,
+        fontSize: 11.5, fontFace: 'Segoe UI', color: TEXT_DARK, lineSpacing: 18
+    });
 });
 
-// Slide 16: UML-to-Implementation Traceability Matrix
-let s16 = createContentSlide('UML-to-Implementation Traceability Matrix', 'Verification & Compliance');
-s16.addText('Proving that 100% of modeled UML interactions are physically realized and executable in the code:', {
-    x: 0.8, y: 1.25, w: 11.7, h: 0.35,
-    fontSize: 13, fontFace: 'Segoe UI', color: SLATE, italic: true
+// ===========================================================================
+// SLIDE 17: UML-to-Implementation Traceability Matrix
+// ===========================================================================
+let s17 = createSlide('UML-to-Implementation Traceability Matrix', 'Verification & Compliance');
+s17.addText('Proving that 100% of modeled UML interactions are physically realized and executable in the code:', {
+    x: 0.6, y: 1.25, w: 12.133, h: 0.3,
+    fontSize: 12, fontFace: 'Segoe UI', color: TEXT_MUTED, italic: true
 });
 
 const traceRows = [
@@ -423,18 +718,21 @@ const traceRows = [
     ['Entity-Relationship Diagram (14)', 'HTML5 LocalStorage Key: WONDERLAND_SYSTEM_DB_V1', 'Structured JSON relational entities: orders, menu, reservations, reviews']
 ];
 
-s16.addTable(traceRows, {
-    x: 0.8, y: 1.6, w: 11.7, h: 5.2,
-    colW: [2.8, 4.4, 4.5],
+s17.addTable(traceRows, {
+    x: 0.6, y: 1.6, w: 12.133, h: 5.2,
+    colW: [2.8, 4.5, 4.833],
     fontSize: 10,
     fontFace: 'Segoe UI',
-    border: { pt: 0.5, color: 'CBD5E1' },
+    border: { pt: 0.5, color: BORDER_LIGHT },
     align: 'left',
     valign: 'middle'
 });
 
-// Slide 17: Testing & Quality Assurance
-let s17 = createContentSlide('Testing, Verification & Quality Assurance', 'Quality Assurance');
+// ===========================================================================
+// SLIDE 18: Testing & Quality Assurance
+// ===========================================================================
+let s18 = createSlide('Testing, Verification & Quality Assurance', 'Quality Assurance');
+
 const testCards = [
     { title: 'Functional Unit Testing', desc: 'Verified cart calculations (Subtotal + 14% VAT + $3 Delivery Fee). Verified that reducing item quantity to zero removes the line item automatically.' },
     { title: 'State Transition Testing', desc: 'Verified that updating order status in admin.html (e.g. from Confirmed to "In Kitchen") immediately updates the open tracker in index.html via storage events.' },
@@ -445,31 +743,48 @@ const testCards = [
 testCards.forEach((tc, idx) => {
     let col = idx % 2;
     let row = Math.floor(idx / 2);
-    let x = 0.8 + col * 5.9;
-    let y = 1.35 + row * 2.75;
+    let x = 0.6 + col * 6.2;
+    let y = 1.45 + row * 2.75;
 
-    s17.addShape(pptx.ShapeType.roundRect, { x: x, y: y, w: 5.7, h: 2.5, fill: { color: WHITE }, line: { color: SUCCESS, width: 1.5 }, rectRadius: 0.15 });
-    s17.addText(`✅ ${tc.title}`, { x: x + 0.3, y: y + 0.25, w: 5.1, h: 0.35, fontSize: 15, fontFace: 'Segoe UI', color: SUCCESS, bold: true });
-    s17.addText(tc.desc, { x: x + 0.3, y: y + 0.7, w: 5.1, h: 1.6, fontSize: 12.5, fontFace: 'Segoe UI', color: SLATE, lineSpacing: 20 });
+    s18.addShape(pptx.ShapeType.roundRect, {
+        x: x, y: y, w: 5.9, h: 2.5,
+        fill: { color: WHITE }, line: { color: SUCCESS, width: 1.5 }, rectRadius: 0.12
+    });
+    s18.addText(`✅ ${tc.title}`, {
+        x: x + 0.3, y: y + 0.25, w: 5.3, h: 0.35,
+        fontSize: 15, fontFace: 'Segoe UI', color: SUCCESS, bold: true
+    });
+    s18.addText(tc.desc, {
+        x: x + 0.3, y: y + 0.7, w: 5.3, h: 1.6,
+        fontSize: 12, fontFace: 'Segoe UI', color: TEXT_DARK, lineSpacing: 20
+    });
 });
 
-// Slide 18: Conclusion & Summary
-let s18 = pptx.addSlide();
-s18.background = { color: NAVY };
+// ===========================================================================
+// SLIDE 19: Project Conclusion & Live Cloud Links
+// ===========================================================================
+let s19 = pptx.addSlide();
+s19.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: 13.333, h: 7.5, fill: { color: NAVY } });
+s19.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: 0.35, h: 7.5, fill: { color: GOLD } });
 
-s18.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: 0.35, h: 7.5, fill: { color: GOLD } });
+if (fs.existsSync(logoPath)) {
+    s19.addImage({ path: logoPath, x: 1.0, y: 0.8, w: 1.3, h: 1.3 });
+}
 
-s18.addText('PROJECT CONCLUSION & SUMMARY', {
-    x: 1.0, y: 1.0, w: 11.3, h: 0.5,
-    fontSize: 16, fontFace: 'Segoe UI', color: GOLD, bold: true, letterSpacing: 2
+s19.addText('PROJECT CONCLUSION & VERIFIED SUCCESS', {
+    x: 2.6, y: 1.0, w: 9.5, h: 0.4,
+    fontSize: 14, fontFace: 'Segoe UI', color: GOLD, bold: true, letterSpacing: 2
 });
 
-s18.addText('A Complete, End-to-End Software Engineering Solution', {
-    x: 1.0, y: 1.5, w: 11.3, h: 0.8,
-    fontSize: 28, fontFace: 'Segoe UI', color: WHITE, bold: true
+s19.addText('Wonder Land Restaurant Management System', {
+    x: 2.6, y: 1.4, w: 9.5, h: 0.7,
+    fontSize: 30, fontFace: 'Segoe UI', color: WHITE, bold: true
 });
 
-s18.addShape(pptx.ShapeType.roundRect, { x: 1.0, y: 2.5, w: 11.3, h: 3.8, fill: { color: SLATE }, line: { color: GOLD, width: 1.5 }, rectRadius: 0.15 });
+s19.addShape(pptx.ShapeType.roundRect, {
+    x: 1.0, y: 2.4, w: 11.333, h: 3.8,
+    fill: { color: SLATE_DARK }, line: { color: GOLD, width: 1.5 }, rectRadius: 0.15
+});
 
 const summaryPoints = [
     '🎯 Complete Requirements Fulfillment: Covers all requested UML diagrams (Use Case, Class, Sequences, Activity, State, Component, Deployment, ERD).',
@@ -479,13 +794,13 @@ const summaryPoints = [
     '⚡ Live Cloud Deployment: Hosted on GitHub Pages: https://radwasengr.github.io/wonder-land-restaurant/'
 ];
 
-s18.addText(summaryPoints.join('\n\n'), {
-    x: 1.4, y: 2.8, w: 10.5, h: 3.2,
+s19.addText(summaryPoints.join('\n\n'), {
+    x: 1.4, y: 2.7, w: 10.5, h: 3.2,
     fontSize: 13, fontFace: 'Segoe UI', color: WHITE, lineSpacing: 22
 });
 
-s18.addText('Thank You! Questions & Discussion Welcomed.', {
-    x: 1.0, y: 6.6, w: 11.3, h: 0.4,
+s19.addText('Thank You! Questions & Discussion Welcomed.', {
+    x: 1.0, y: 6.5, w: 11.333, h: 0.4,
     fontSize: 16, fontFace: 'Segoe UI', color: GOLD, bold: true, align: 'center'
 });
 
